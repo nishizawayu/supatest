@@ -29,9 +29,9 @@ const AccordionItem: FC<AccordionItemProps> = ({ title, content }) => {
 };
 
 const Form: FC = () => {
-  const [planpoint, setPlanPoint] = useState(80);
-  const [cpoint, setCPoint] = useState(3);
-  const [ppoint, setPPoint] = useState(3);
+  const [planpoint, setPlanPoint] = useState(50);
+  const [cpoint, setCPoint] = useState(50);
+  const [ppoint, setPPoint] = useState(50);
 
   const Manner: FC = () => {
     const Acotext = ["まずまず", "とてもいい", "すごくいい"];
@@ -153,12 +153,12 @@ const Form: FC = () => {
           min="0"
           max="100"
           className="range max-w-xs range-primary mt-4"
-          step="1"
+          step="10"
           defaultValue={planpoint}
           onChange={(event) => setPlanPoint(Number(event.target.value))}
         />
         <div className="w-full flex justify-between text-xs px-2 max-w-xs">
-          <p>0</p> <p>25</p> <p>50</p> <p>75</p>
+          <p>0</p> <p>20</p> <p>40</p> <p>60</p><p>80</p>
           <p>100</p>
         </div>
       </div>
@@ -170,15 +170,16 @@ const Form: FC = () => {
         </div>
         <input
           type="range"
-          min="1"
-          max="5"
+          min="0"
+          max="100"
           className="range max-w-xs range-primary mt-4"
-          step="1"
+          step="10"
           defaultValue={cpoint}
           onChange={(event) => setCPoint(Number(event.target.value))}
         />
         <div className="w-full flex justify-between text-xs px-2 max-w-xs">
-          <p>1</p> <p>2</p> <p>3</p> <p>4</p> <p>5</p>
+        <p>0</p> <p>20</p> <p>40</p> <p>60</p><p>80</p>
+        <p>100</p>
         </div>
       </div>
 
@@ -189,15 +190,16 @@ const Form: FC = () => {
         </div>
         <input
           type="range"
-          min="1"
-          max="5"
+          min="0"
+          max="100"
           className="range max-w-xs range-primary mt-4"
-          step="1"
+          step="10"
           defaultValue={ppoint}
           onChange={(event) => setPPoint(Number(event.target.value))}
         />
         <div className="w-full flex justify-between text-xs px-2 max-w-xs">
-          <p>1</p> <p>2</p> <p>3</p> <p>4</p> <p>5</p>
+            <p>0</p> <p>20</p> <p>40</p> <p>60</p><p>80</p>
+            <p>100</p>
         </div>
       </div>
 
