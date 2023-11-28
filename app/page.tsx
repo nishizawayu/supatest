@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import Mypage from './mypage/page'
+import Tag from './(form)/tag/page'
 
 export default async function Index() {
   const cookieStore = cookies()

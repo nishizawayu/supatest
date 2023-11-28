@@ -38,7 +38,11 @@ const Score: FC = () => {
 
   return (
     <div>
-      <p className="w-[80%] mx-auto mt-6">&lt;戻る</p>
+      <p className="w-[80%] mx-auto mt-6">
+        <Link href="nummber">
+          &lt;戻る
+        </Link>
+      </p>
 
       <h2 className="text-xl font-bold text-center mt-6">作品の評価をお願いします。</h2>
 

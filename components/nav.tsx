@@ -17,7 +17,7 @@ const Navigation = () => {
             </li>
 
             <li>
-                <Link href="/">
+                <Link href="/notes">
                     おもてなし
                 </Link>
             </li>
