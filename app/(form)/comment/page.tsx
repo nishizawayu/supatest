@@ -39,7 +39,9 @@ const Comment: FC = () => {
               console.log(inputText);
             }}
           >
-            next<span className="text-base ml-1">&gt;</span>
+            <Link href="/tag">
+              next<span className="text-base ml-1">&gt;</span>
+            </Link>
           </button>
         </div>
       </div>

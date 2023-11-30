@@ -22,7 +22,7 @@ const Tag = ()=>{
                     <button
                     className="bg-[#00ff00] px-8 my-16 rounded-md flex items-center"
                     >
-                    <Link href="/comment">
+                    <Link href="/finish">
                         next<span className="text-base ml-1">&gt;</span>
                     </Link>
 
