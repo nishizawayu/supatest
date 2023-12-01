@@ -6,6 +6,7 @@ import React, { ChangeEvent,useState } from 'react';
 const nummber = () => {
     const router = useRouter()
     const [inputvalue,setInputvalue] = useState<string>("");
+    const [errmsg,setErrMsg] = useState<string>("");
 
     const allowedWords:string[] = [];
     for (let i=0; i<2; i++){
@@ -60,8 +61,9 @@ const nummber = () => {
             <section>
                 <h2 className="text-xl font-bold text-center mt-6">評価する学生の学籍番号入力してください</h2>
                 
-                <div className="flex justify-center mt-12">
-                    <input type="number" placeholder="0101" className="input input-bordered w-full max-w-xs" onInput={handleInputChange} maxLength={4}/>
+                <div className="flex flex-wrap justify-center mt-12">
+                    <input type="number" placeholder="0101" className="input input-bordered w-full max-w-xs" value={inputvalue} onInput={handleInputChange} maxLength={4}/>
+                    <p className="w-full max-w-xs text-[#d54747]">{errmsg}</p>
                 </div>
 
                 <div className="font-bold text-l flex justify-center">
@@ -75,7 +77,8 @@ const nummber = () => {
                                 console.log(filteredValue);
                                 router.push("/score");
                             } catch (error) {
-                                console.error((error as Error).message);
+                                setInputvalue("");
+                                setErrMsg("※正しい値を入力してください。");
                                 // エラーの処理を追加
                             }
                         }}
