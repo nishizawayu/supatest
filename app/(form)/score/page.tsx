@@ -1,9 +1,7 @@
 'use client'
 import { useState, FC } from "react";
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
-import Navigation from "@/components/nav";
-import Comment from "../comment/page";
-import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 interface AccordionItemProps {
   title: string;
@@ -36,22 +34,24 @@ const Score: FC = () => {
   const [cpoint, setCPoint] = useState(50);
   const [ppoint, setPPoint] = useState(50);
 
+  const router = useRouter();
+
   return (
     <div>
-      <p className="w-[80%] mx-auto mt-6">
-        <Link href="nummber">
+      <button 
+        className="mt-6 ml-8"
+        onClick={()=>{
+          router.push("/nummber")
+        }}  
+      >
           &lt;戻る
-        </Link>
-      </p>
+      </button>
 
       <h2 className="text-xl font-bold text-center mt-6">作品の評価をお願いします。</h2>
 
       <div className="w-full max-w-xs mx-auto mt-10">
         <div className="flex justify-between">
-          <div className="block">
-            <p className="font-bold">人柄</p>
-            <p className="font-bold"><small>マナー・プレゼンを受けての印象</small></p>
-          </div>
+          <p className="font-bold">企画</p>
           <p className="font-bold">{planpoint}点</p>
         </div>
         <input
@@ -71,10 +71,7 @@ const Score: FC = () => {
 
       <div className="w-full max-w-xs mx-auto mt-10">
         <div className="flex justify-between">
-          <div className="block">
-              <p className="font-bold">技術力</p>
-              <p className="font-bold"><small>ああああ</small></p>
-          </div>
+          <p className="font-bold">完成度</p>
           <p className="font-bold">{cpoint}点</p>
         </div>
         <input
@@ -94,10 +91,7 @@ const Score: FC = () => {
 
       <div className="w-full max-w-xs mx-auto mt-10">
         <div className="flex justify-between">
-          <div className="block">
-            <p className="font-bold">作品</p>
-            <p className="font-bold"><small>いいいいい</small></p>
-          </div>
+          <p className="font-bold">プレゼン</p>
           <p className="font-bold">{ppoint}点</p>
         </div>
         <input
@@ -122,12 +116,10 @@ const Score: FC = () => {
             console.log(planpoint);
             console.log(cpoint);
             console.log(ppoint);
+            router.push("/comment")
           }}
         >
-          <Link href="/comment">
             next<span className="text-base ml-1">&gt;</span>
-          </Link>
-
         </button>
       </div>
 
