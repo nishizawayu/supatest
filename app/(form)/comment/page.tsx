@@ -1,8 +1,9 @@
 'use client'
 import { useState, FC } from "react";
-import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 const Comment: FC = () => {
+    const router = useRouter()
     const [inputText, setInputText] = useState<string>('');
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -11,11 +12,14 @@ const Comment: FC = () => {
 
     return (
       <div>
-        <p className="w-[80%] mx-auto mt-6">
-          <Link href="/score">
+        <button 
+          className="mt-6 ml-8"
+          onClick={()=>{
+            router.push("/score");
+          }}
+        >
             &lt;戻る
-          </Link>
-        </p>
+        </button>
         <section className="w-full max-w-xs mx-auto">
           <h2 className="text-xl font-bold text-center mt-6">よろしければコメントを<br/>お願いします</h2>
           <div className="mt-16">
@@ -37,11 +41,10 @@ const Comment: FC = () => {
             className="bg-[#00ff00] px-8 my-16 rounded-md flex items-center"
             onClick={() => {
               console.log(inputText);
+              router.push("/tag");
             }}
           >
-            <Link href="/tag">
               next<span className="text-base ml-1">&gt;</span>
-            </Link>
           </button>
         </div>
       </div>

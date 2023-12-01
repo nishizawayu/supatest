@@ -1,8 +1,8 @@
 'use client'
-import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 const end = ()=>{
-
+    const router = useRouter();
     return(
         <div>
             <section>
@@ -10,12 +10,12 @@ const end = ()=>{
 
                 <div className="font-bold text-2xl flex justify-center">
                     <button
-                    className="bg-[#00ff00] px-8 my-16 rounded-md flex items-center"
+                        className="bg-[#00ff00] px-8 my-16 rounded-md flex items-center"
+                        onClick={()=>{
+                            router.push("/nummber");
+                        }}
                     >
-                    <Link href="/nummber">
                         next<span className="text-base ml-1">&gt;</span>
-                    </Link>
-
                     </button>
                 </div>
                 
