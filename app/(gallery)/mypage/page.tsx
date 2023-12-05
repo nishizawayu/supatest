@@ -1,15 +1,75 @@
 'use client'
 import { useState } from 'react';
 import Navigation from '@/components/nav';
+import { useRouter, useSearchParams } from 'next/navigation';
+import getStudendata from '../studentsdata/page';
 
-export default function Mypage() {
+interface StudentsdataProps {
+    uid: string;
+}
+  
+const Graph = (deta1:number,deta2:number,deta3:number) =>{
+    return(
+        <>
+            <section className='bg-[#B1B1B1] py-4 mt-4'>
+                <h3 className=' font-bold text-lg mb-4 ml-4'>平均スコア</h3>
+                <div className='flex flex-wrap text-center justify-center'>
+                    <div className='w-[80%]'>
+                        <div className="radial-progress bg-[#908D8D] text-[#CBCBCB] text-center text-lg font-bold" role="progressbar">
+                            <p className='text-[#000] text-sm mask mask-circle w-[7rem] h-[5.5rem] bg-[#B1B1B1] flex flex-col justify-center'>
+                                企画<br/>
+                                <span className='text-2xl font-bold'>{deta1}%</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div className='w-[40%]'>
+                        <div className="radial-progress bg-[#908D8D] text-[#CBCBCB] text-center text-lg font-bold" role="progressbar">
+                            <p className='text-[#000] text-sm mask mask-circle w-[7rem] h-[5.5rem] bg-[#B1B1B1] flex flex-col justify-center'>
+                                完成度<br/>
+                                <span className='text-2xl font-bold'>{deta2}%</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div className='w-[40%]'>
+                        <div className="radial-progress bg-[#908D8D] text-[#CBCBCB] text-center text-lg font-bold" role="progressbar">
+                            <p className='text-[#000] text-sm mask mask-circle w-[7rem] h-[5.5rem] bg-[#B1B1B1] flex flex-col justify-center'>
+                                プレゼン<br/>
+                                <span className='text-2xl font-bold'>{deta3}%</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </>
+    )
+}
+
+const Graph2 =  (deta1:number,deta2:number,deta3:number) =>{
+    return(
+        <section className='py-4 mt-4'>
+            <div>
+                <progress className="progress w-56" value={deta1} max="100"></progress>
+                <progress className="progress progress-accent w-56" value={deta2} max="100"></progress>
+                <progress className="progress progress-secondary w-56" value={deta3} max="100"></progress>
+            </div>
+        </section>
+    )
+    
+}
+
+const Mypage: React.FC = () => {
+
+    const router = useRouter();
+    const searchParams = useSearchParams()
+    // ブース番号
+    const usernum = searchParams.get("id")
+    // 名前
+    const username = searchParams.get("name")
 
     // ここの部分をサーバーと接続してデータを扱う-------------
-
-    // 各自の名前
-    const username = "齋藤 元"; 
+    
     // ブース番号
-    const usernum = 1;
+    // const usernum = router.query.uid === uid;
 
     // 全体の評価された人数
     const nop = 10;
@@ -36,60 +96,11 @@ export default function Mypage() {
 
     // -------------------------------------------------
 
-    const Graph = (deta1:number,deta2:number,deta3:number) =>{
-        return(
-            <>
-                <section className='bg-[#B1B1B1] py-4 mt-4'>
-                    <h3 className=' font-bold text-lg mb-4 ml-4'>平均スコア</h3>
-                    <div className='flex flex-wrap text-center justify-center'>
-                        <div className='w-[80%]'>
-                            <div className="radial-progress bg-[#908D8D] text-[#CBCBCB] text-center text-lg font-bold" style={{"--value":deta1, "--size": "7rem"}} role="progressbar">
-                                <p className='text-[#000] text-sm mask mask-circle w-[7rem] h-[5.5rem] bg-[#B1B1B1] flex flex-col justify-center'>
-                                    企画<br/>
-                                    <span className='text-2xl font-bold'>{deta1}%</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div className='w-[40%]'>
-                            <div className="radial-progress bg-[#908D8D] text-[#CBCBCB] text-center text-lg font-bold" style={{"--value":deta2, "--size": "7rem"}} role="progressbar">
-                                <p className='text-[#000] text-sm mask mask-circle w-[7rem] h-[5.5rem] bg-[#B1B1B1] flex flex-col justify-center'>
-                                    完成度<br/>
-                                    <span className='text-2xl font-bold'>{deta2}%</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div className='w-[40%]'>
-                            <div className="radial-progress bg-[#908D8D] text-[#CBCBCB] text-center text-lg font-bold" style={{"--value":deta3, "--size": "7rem"}} role="progressbar">
-                                <p className='text-[#000] text-sm mask mask-circle w-[7rem] h-[5.5rem] bg-[#B1B1B1] flex flex-col justify-center'>
-                                    プレゼン<br/>
-                                    <span className='text-2xl font-bold'>{deta3}%</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </>
-        )
-    }
-
-    const Graph2 =  (deta1:number,deta2:number,deta3:number) =>{
-        return(
-            <section className='py-4 mt-4'>
-                <div>
-                    <progress className="progress w-56" value={deta1} max="100"></progress>
-                    <progress className="progress progress-accent w-56" value={deta2} max="100"></progress>
-                    <progress className="progress progress-secondary w-56" value={deta3} max="100"></progress>
-                </div>
-            </section>
-        )
-        
-    }
-
     return (
         <div>
             <section className='w-[90%] mt-8 mx-auto'>
                 <div className='inline-flex items-center flex-row-reverse gap-5'>
-                    <h2 className='text-3xl'>
+                    <h2 className='text-3xl text-black'>
                         {username}
                     </h2>
                     <p className='text-3xl bg-gray-400 w-10 h-10 text-white flex justify-center items-center'>{usernum}</p>
@@ -174,3 +185,5 @@ export default function Mypage() {
   
     )
 }
+
+export default Mypage
