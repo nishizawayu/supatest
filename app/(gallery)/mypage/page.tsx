@@ -4,10 +4,6 @@ import Navigation from '@/components/nav';
 import { useRouter, useSearchParams } from 'next/navigation';
 import getStudendata from '../studentsdata/page';
 
-interface StudentsdataProps {
-    uid: string;
-}
-  
 const Graph = (deta1:number,deta2:number,deta3:number) =>{
     return(
         <>
