@@ -4,42 +4,6 @@ import Navigation from '@/components/nav';
 import { useRouter, useSearchParams } from 'next/navigation';
 import getStudendata from '../studentsdata/page';
 
-const Graph = (deta1:number,deta2:number,deta3:number) =>{
-    return(
-        <>
-            <section className='bg-[#B1B1B1] py-4 mt-4'>
-                <h3 className=' font-bold text-lg mb-4 ml-4'>平均スコア</h3>
-                <div className='flex flex-wrap text-center justify-center'>
-                    <div className='w-[80%]'>
-                        <div className="radial-progress bg-[#908D8D] text-[#CBCBCB] text-center text-lg font-bold" role="progressbar">
-                            <p className='text-[#000] text-sm mask mask-circle w-[7rem] h-[5.5rem] bg-[#B1B1B1] flex flex-col justify-center'>
-                                企画<br/>
-                                <span className='text-2xl font-bold'>{deta1}%</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div className='w-[40%]'>
-                        <div className="radial-progress bg-[#908D8D] text-[#CBCBCB] text-center text-lg font-bold" role="progressbar">
-                            <p className='text-[#000] text-sm mask mask-circle w-[7rem] h-[5.5rem] bg-[#B1B1B1] flex flex-col justify-center'>
-                                完成度<br/>
-                                <span className='text-2xl font-bold'>{deta2}%</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div className='w-[40%]'>
-                        <div className="radial-progress bg-[#908D8D] text-[#CBCBCB] text-center text-lg font-bold" role="progressbar">
-                            <p className='text-[#000] text-sm mask mask-circle w-[7rem] h-[5.5rem] bg-[#B1B1B1] flex flex-col justify-center'>
-                                プレゼン<br/>
-                                <span className='text-2xl font-bold'>{deta3}%</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </>
-    )
-}
-
 const Graph2 =  (deta1:number,deta2:number,deta3:number) =>{
     return(
         <section className='py-4 mt-4'>
@@ -75,6 +39,8 @@ const Mypage: React.FC = () => {
     const day2 = 5;
     // 3日目の評価された人数
     const day3 = 2;
+
+    const sum = 250;
 
     // -------------------------------------------------
 
@@ -121,60 +87,46 @@ const Mypage: React.FC = () => {
                     </p>
                 </div>
 
-                <div>
-                        {
-                            Graph2(detaarr[0],detaarr[1],detaarr[2])
-                        }
-                </div>
-
-
                 {/* タブで切り替わるコンテンツ */}
-                <div className="mt-4">
+                <div className="mt-4 pb-9 border-b-8 border-dashed border-black">
                     {/* 全体 */}
                     {activeTab === 1 && 
                         <>
                             <p className='font-bold text-lg mt-8'>{nop}人に評価されています。</p>
-                            <section>
-                                {
-                                    Graph(detaarr[0],detaarr[1],detaarr[2])
-                                }
-                            </section>
+                            <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum}pt</p>
                         </>
                     }
                     {/* 1日目 */}
                     {activeTab === 2 && 
                         <>
                             <p className='font-bold text-lg mt-8'>{day1}人に評価されています。</p>
-                            <section>
-                                {
-                                    Graph(detaarr[0],detaarr[1],detaarr[2])
-                                }
-                            </section>
+                            <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum}pt</p>
                         </>
                     }
                     {/* 2日目 */}
                     {activeTab === 3 && 
                         <>
                             <p className='font-bold text-lg mt-8'>{day2}人に評価されています。</p>
-                            <section>
-                                {
-                                    Graph(detaarr[0],detaarr[1],detaarr[2])
-                                }
-                            </section>
+                            <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum}pt</p>
                         </>
                     }
                     {/* 3日目 */}
                     {activeTab === 4 &&
                         <>
                             <p className='font-bold text-lg mt-8'>{day3}人に評価されています。</p>
-                            <section>
-                                {
-                                    Graph(detaarr[0],detaarr[1],detaarr[2])
-                                }
-                            </section>
+                            <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum}pt</p>
                         </>
                     }
                 </div>
+
+                    
+                
+                <div>
+                    {
+                        Graph2(detaarr[0],detaarr[1],detaarr[2])
+                    }
+                </div>
+
             </section>
         <Navigation/>
         </div>

@@ -1,35 +1,20 @@
-import Link from 'next/link';
 import Navigation from '@/components/nav';
-import getStudendata from '../studentsdata/page';
+import StudentView from '../studentview/page';
 
 const Students = async() => {
-  let id;  // ここは string 型で問題ありません
-  const studentarr = await getStudendata();
+  let id:number = 2;  // ここは string 型で問題ありません
   return (
     <div>
       <p>
         見たい学生をタップしてください
       </p>
       
-      <ul>
-        <li>1年生</li>
-        <li>2年生</li>
+      <ul className='flex w-full text-center'>
+        <li className='w-[50%]'>1年生</li>
+        <li className='w-[50%]'>2年生</li>
       </ul>
-      <div className='pb-[120px]'>
-        <ul>
-          {
-            studentarr?.map((data:any,index:number)=>{
-              return (
-                <li key={index}>
-                  <Link href={`/mypage?id=${data.id}&name=${encodeURIComponent(data.name)}`}>
-                    {data.name}
-                  </Link>
-                </li>
-              )
-            })
-          }
-        </ul>
-      </div>
+      
+      <StudentView id={id}/>
       <Navigation />
     </div>
   );
