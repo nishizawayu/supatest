@@ -15,12 +15,12 @@ const Navigation = () => {
                     評価をする
                 </Link>
             </li>
-
+{/* 
             <li>
                 <Link href="/notes">
                     おもてなし
                 </Link>
-            </li>
+            </li> */}
                 
         </ul>
     </nav>
