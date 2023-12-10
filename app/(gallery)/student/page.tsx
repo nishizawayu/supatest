@@ -10,7 +10,7 @@ const Students = async() => {
       </p>
       
       <ul className='flex w-full text-center'>
-        <li className='w-[50%]'>1年生</li>
+        <li className='w-[50%'>1年生</li>
         <li className='w-[50%]'>2年生</li>
       </ul>
       
