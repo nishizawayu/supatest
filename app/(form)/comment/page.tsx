@@ -41,7 +41,6 @@ const Comment: FC = () => {
               className="w-full p-2 border border-gray-300 rounded-md resize-none"
               style={{ backgroundColor: 'white', minHeight: '200px' }}
             />
-            <p className="mt-2">You entered: {inputText}</p>
           </div>
         </section>
         <div className="font-bold text-2xl flex justify-center">
