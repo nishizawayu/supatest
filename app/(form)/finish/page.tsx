@@ -15,7 +15,7 @@ const end = ()=>{
                             router.push("/nummber");
                         }}
                     >
-                        next<span className="text-base ml-1">&gt;</span>
+                        終了<span className="text-base ml-1">&gt;</span>
                     </button>
                 </div>
                 
