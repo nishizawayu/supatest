@@ -11,7 +11,7 @@ const Navigation = () => {
                 </Link>
             </li>
             <li>
-                <Link href="/nummber">
+                <Link href="/first">
                     評価をする
                 </Link>
             </li>

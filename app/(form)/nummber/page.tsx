@@ -3,7 +3,11 @@ import Navigation from "@/components/nav";
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent,useState } from 'react';
 
-const nummber = () => {
+interface NummverProps {
+    studentarr: {id:number, uid:string, name:string}[]
+}
+
+const Nummber: React.FC<NummverProps> = ({studentarr}) => {
     const router = useRouter()
     const [inputvalue,setInputvalue] = useState<string>("");
     const [errmsg,setErrMsg] = useState<string>("");
@@ -75,7 +79,7 @@ const nummber = () => {
                                 // フィルターの処理
                                 const filteredValue = filterSpecificWords(inputvalue, allowedWords);
                                 console.log(filteredValue);
-                                router.push("/score");
+                                router.push(`/score?uid=${filteredValue}`);
                             } catch (error) {
                                 setInputvalue("");
                                 setErrMsg("※正しい値を入力してください。");
@@ -93,4 +97,4 @@ const nummber = () => {
     )
 }
 
-export default nummber;
+export default Nummber;
