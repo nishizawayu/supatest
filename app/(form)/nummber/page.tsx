@@ -79,6 +79,7 @@ const Nummber: React.FC<NummverProps> = ({studentarr}) => {
                                 // フィルターの処理
                                 const filteredValue = filterSpecificWords(inputvalue, allowedWords);
                                 console.log(filteredValue);
+                                localStorage.setItem('filteredValue', filteredValue.toString());
                                 router.push(`/score?uid=${filteredValue}`);
                             } catch (error) {
                                 setInputvalue("");

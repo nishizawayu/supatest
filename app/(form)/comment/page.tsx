@@ -10,6 +10,14 @@ const Comment: FC = () => {
       setInputText(e.target.value);
     };
 
+    const handleNextClick = () => {
+      // ローカルストレージに値を保存
+      localStorage.setItem('inputText', inputText.toString());
+  
+      // '/tag'ページに移動
+      router.push("/tag");
+    };
+
     return (
       <div>
         <button 
@@ -38,10 +46,7 @@ const Comment: FC = () => {
         <div className="font-bold text-2xl flex justify-center">
           <button
             className="bg-[#00ff00] px-8 my-16 rounded-md flex items-center"
-            onClick={() => {
-              console.log(inputText);
-              router.push("/tag");
-            }}
+            onClick={handleNextClick}
           >
               next<span className="text-base ml-1">&gt;</span>
           </button>

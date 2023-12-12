@@ -17,6 +17,14 @@ const Tag = ()=>{
         }
     };
 
+    const handleNextClick = () => {
+        // ローカルストレージに値を保存
+        localStorage.setItem('selectedTags', selectedTags.toString());
+    
+        // '/finish'ページに移動
+        router.push("/save");
+      };
+
 
     return(
         <div>
@@ -44,10 +52,7 @@ const Tag = ()=>{
                 <div className="font-bold text-2xl flex justify-center">
                     <button
                         className="bg-[#00ff00] px-8 my-16 rounded-md flex items-center"
-                        onClick={()=>{
-                            console.log(selectedTags);
-                            router.push("/finish")
-                        }}
+                        onClick={handleNextClick}
                     >
                         next<span className="text-base ml-1">&gt;</span>
                     </button>
