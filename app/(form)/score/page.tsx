@@ -36,6 +36,16 @@ const Score: FC = () => {
 
   const router = useRouter();
 
+  const handleNextClick = () => {
+    // ローカルストレージに値を保存
+    localStorage.setItem('planpoint', planpoint.toString());
+    localStorage.setItem('cpoint', cpoint.toString());
+    localStorage.setItem('ppoint', ppoint.toString());
+
+    // '/comment'ページに移動
+    router.push("/comment");
+  };
+
   return (
     <div>
       <button 
@@ -110,7 +120,7 @@ const Score: FC = () => {
       </div>
 
       <div className="font-bold text-2xl flex justify-center">
-        <button
+        {/* <button
           className="bg-[#00ff00] px-8 my-16 rounded-md flex items-center"
           onClick={() => {
             console.log(planpoint);
@@ -120,6 +130,10 @@ const Score: FC = () => {
           }}
         >
             next<span className="text-base ml-1">&gt;</span>
+        </button> */}
+
+        <button onClick={handleNextClick}>
+          next<span className="text-base ml-1">&gt;</span>
         </button>
       </div>
 
