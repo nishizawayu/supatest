@@ -3,14 +3,15 @@ import Navigation from "@/components/nav";
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent,useState } from 'react';
 
-interface NummverProps {
-    studentarr: {id:number, uid:string, name:string}[]
-}
+// interface NummberProps {
+//     studentarr: {id:number, uid:string, name:string}[]
+// }
 
-const Nummber: React.FC<NummverProps> = ({studentarr}) => {
+const Nummber= () => {
     const router = useRouter()
     const [inputvalue,setInputvalue] = useState<string>("");
     const [errmsg,setErrMsg] = useState<string>("");
+
 
     const allowedWords:string[] = [];
     for (let i=0; i<2; i++){

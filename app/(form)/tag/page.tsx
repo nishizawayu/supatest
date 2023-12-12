@@ -22,7 +22,7 @@ const Tag = ()=>{
         localStorage.setItem('selectedTags', selectedTags.toString());
     
         // '/finish'ページに移動
-        router.push("/save");
+        router.push("/finish");
       };
 
 
