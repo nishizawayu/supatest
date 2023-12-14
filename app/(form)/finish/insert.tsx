@@ -17,7 +17,6 @@ const insertdata = async(uid:string,score_1:string,score_2:string,score_3:string
         tag: tag,
         uid: uid,
     })
-    .select()
     if(error){
         console.log(error);
     }
