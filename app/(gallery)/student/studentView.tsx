@@ -35,7 +35,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                         currentData?.map((data: any, index: number) => {
                             return (
                                 <li key={index}>
-                                    <Link href={`/mypage?id=${data.id}&uid=${data.uid}&name=${encodeURIComponent(data.name)}`}>
+                                    <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&name=${encodeURIComponent(data.name)}`}>
                                         {data.name}
                                     </Link>
                                 </li>
