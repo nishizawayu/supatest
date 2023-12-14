@@ -5,7 +5,8 @@ import { cookies } from 'next/headers';
 const getStudendata = async() =>{
     const cookieStore = cookies()
     const supabase = createClient(cookieStore);
-    const { data: students } = await supabase.from("students").select("*");
+
+    const { data: students } = await supabase.from("students").select("*").order('total_evaluation_score', { ascending: false }).order('id', { ascending: true });
     if(students != null){
         console.log(students);
         return students;
