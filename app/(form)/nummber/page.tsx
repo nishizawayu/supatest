@@ -26,7 +26,7 @@ const Nummber= () => {
                 }
             }
         }else if(i == 1){
-            for (let j = 1; j <= 34; j++) {
+            for (let j = 1; j <= 41; j++) {
                 if (j < 10) {
                 const num = "020" + j;
                     allowedWords.push(num);
