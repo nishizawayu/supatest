@@ -1,5 +1,5 @@
 'use client'
-import { useState,useMemo, useEffect } from 'react';
+import { useState} from 'react';
 import Navigation from '@/components/nav';
 import {useSearchParams } from 'next/navigation';
 
@@ -50,11 +50,17 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
     const day3 = day3arr.length;
 
     let sum:[number,number,number,number] = [0,0,0,0];
+    let score1:[number,number,number,number] = [0,0,0,0];
+    let score2:[number,number,number,number] = [0,0,0,0];
+    let score3:[number,number,number,number] = [0,0,0,0];
 
     // 合計値の計算　---------------------------------------------------------
     // 全体
     currentData.map((data)=>{
         sum[0] = sum[0] + data.score_1 + data.score_2 + data.score_3 + 100;
+        score1[0] += data.score_1;
+        score2[0] += data.score_2;
+        score3[0] += data.score_3;
     })
     // 1日目
     day1arr.map((data)=>{
@@ -96,7 +102,7 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
                         <h2 className='text-3xl text-black'>
                             {username}
                         </h2>
-                        <p className='text-3xl bg-gray-400 w-10 h-10 text-white flex justify-center items-center'>{usernum}</p>
+                        <p className='text-3xl bg-gray-400 w-12 h-12 text-white flex justify-center items-center'>{usernum}</p>
                     </div>
                     {/* タブメニュー */}
                     <div className='flex mt-16 text-lg justify-around w-full text-center items-center'>
@@ -124,32 +130,37 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
                         {activeTab === 1 && 
                             <>
                                 <div className='w-[90%] mx-auto mt-8 text-lg font-bold'>
-                                    <p>{currentData.length}/{goal}</p>
+                                    <h3>目標プレゼン人数</h3>
+                                    <p className='text-center text-4xl mt-9'>{currentData.length}/{goal}<span className='text-base ml-3'>名</span></p>
                                 </div>
                                 <div className="w-[90%] mx-auto mt-4 pb-9 border-b-8 border-dashed border-black">
                                     <p className='font-bold text-lg mt-8'>{nop}人に評価されています。</p>
                                     <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum[0]}pt</p>
+                                    <p className='text-2xl font-bold text-center mt-3'><span className='text-base mr-3'>企画</span>{score1[0]}pt</p>
+                                    <p className='text-2xl font-bold text-center mt-3'><span className='text-base mr-3'>完成度</span>{score2[0]}pt</p>
+                                    <p className='text-2xl font-bold text-center mt-3'><span className='text-base mr-3'>プレゼン</span>{score3[0]}pt</p>
                                 </div>
                                 
-                                <div>
+                                <div className='w-[90%] mx-auto'>
                                     {
                                         currentData?.map((data,index)=>{
                                             return(
                                                 <>
-                                                    <div className='w-[90%] mx-auto mt-8 text-lg font-bold'>
+                                                    <div className='mt-8 text-lg font-bold'>
                                                         <p>企画:{data.score_1}点</p>
                                                         <p>完成度:{data.score_2}点</p>
                                                         <p>プレゼン:{data.score_3}点</p>
                                                     </div>
                                                     
-                                                    <div className='w-[90%] mx-auto mt-12 py-4 bg-slate-300'>
+                                                    <h3 className='mt-12 text-lg font-bold'>コメント</h3>
+                                                    <div className='mt-4 py-6 bg-slate-300'>
                                                         <p key={index} 
                                                         className='text-lg font-bold text-center'
                                                         >{data.comment}
                                                         </p>
                                                     </div>
 
-                                                    <div className='w-[90%] mx-auto mt-8 text-lg font-bold'>
+                                                    <div className='mt-8 text-lg font-bold'>
                                                         <p>#{data.tag}</p>
                                                     </div>
                                                 </>
@@ -173,20 +184,21 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
                                         day1arr?.map((data,index)=>{
                                             return(
                                                 <>
-                                                   <div className='w-[90%] mx-auto mt-8 text-lg font-bold'>
+                                                   <div className='mt-8 text-lg font-bold'>
                                                         <p>企画:{data.score_1}点</p>
                                                         <p>完成度:{data.score_2}点</p>
                                                         <p>プレゼン:{data.score_3}点</p>
                                                     </div>
                                                     
-                                                    <div className='w-[90%] mx-auto mt-12 py-4 bg-slate-300'>
+                                                    <h3 className='mt-12 text-lg font-bold'>コメント</h3>
+                                                    <div className='mt-4 py-6 bg-slate-300'>
                                                         <p key={index} 
                                                         className='text-lg font-bold text-center'
                                                         >{data.comment}
                                                         </p>
                                                     </div>
 
-                                                    <div className='w-[90%] mx-auto mt-8 text-lg font-bold'>
+                                                    <div className='mt-8 text-lg font-bold'>
                                                         <p>#{data.tag}</p>
                                                     </div>
                                                 </>
@@ -209,20 +221,21 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
                                         day2arr?.map((data,index)=>{
                                             return(
                                                 <>
-                                                    <div className='w-[90%] mx-auto mt-8 text-lg font-bold'>
+                                                    <div className='mt-8 text-lg font-bold'>
                                                         <p>企画:{data.score_1}点</p>
                                                         <p>完成度:{data.score_2}点</p>
                                                         <p>プレゼン:{data.score_3}点</p>
                                                     </div>
                                                     
-                                                    <div className='w-[90%] mx-auto mt-12 py-4 bg-slate-300'>
+                                                    <h3 className='mt-12 text-lg font-bold'>コメント</h3>
+                                                    <div className='mt-4 py-6 bg-slate-300'>
                                                         <p key={index} 
                                                         className='text-lg font-bold text-center'
                                                         >{data.comment}
                                                         </p>
                                                     </div>
 
-                                                    <div className='w-[90%] mx-auto mt-8 text-lg font-bold'>
+                                                    <div className='mt-8 text-lg font-bold'>
                                                         <p>#{data.tag}</p>
                                                     </div>
                                                 </>
@@ -246,20 +259,21 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
                                         day3arr?.map((data,index)=>{
                                             return(
                                                 <>
-                                                    <div className='w-[90%] mx-auto mt-8 text-lg font-bold'>
+                                                    <div className='mt-8 text-lg font-bold'>
                                                         <p>企画:{data.score_1}点</p>
                                                         <p>完成度:{data.score_2}点</p>
                                                         <p>プレゼン:{data.score_3}点</p>
                                                     </div>
                                                     
-                                                    <div className='w-[90%] mx-auto mt-12 py-4 bg-slate-300'>
+                                                    <h3 className='mt-12 text-lg font-bold'>コメント</h3>
+                                                    <div className='mt-4 py-6 bg-slate-300'>
                                                         <p key={index} 
                                                         className='text-lg font-bold text-center'
                                                         >{data.comment}
                                                         </p>
                                                     </div>
 
-                                                    <div className='w-[90%] mx-auto mt-8 text-lg font-bold'>
+                                                    <div className='mt-8 text-lg font-bold'>
                                                         <p>#{data.tag}</p>
                                                     </div>
                                                 </>
