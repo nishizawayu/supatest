@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 const Tag = ()=>{
 
     const router = useRouter();
-    const tagarr:string[]=["すごい","かっこいい","神秘的","可愛い","きれい","才能あり","努力家"];
+    const tagarr:string[]=["すごい","プロ級","明るい","可愛い","きれい","才能あり","努力家","話上手","伸び代しかない","圧倒的"];
     // タグ用
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
 

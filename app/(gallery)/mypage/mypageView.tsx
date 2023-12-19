@@ -40,13 +40,13 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
     // 全体の評価された人数
     const nop = currentData.length;
     // 1日目の評価された人数
-    const day1arr = currentData.filter((v)=> v.date == "2023-12-14");
+    const day1arr = currentData.filter((v)=> v.date == "2023-12-19");
     const day1 = day1arr.length;
     // 2日目の評価された人数
     const day2arr = currentData.filter((v)=> v.date == "2023-12-15");
     const day2 = day2arr.length;
     // 3日目の評価された人数
-    const day3arr = currentData.filter((v)=> v.date == "2023-12-16");
+    const day3arr = currentData.filter((v)=> v.date == "2023-12-20");
     const day3 = day3arr.length;
 
     let sum:[number,number,number,number] = [0,0,0,0];
@@ -147,9 +147,9 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
                                             return(
                                                 <>
                                                     <div className='mt-8 text-lg font-bold'>
-                                                        <p>企画:{data.score_1}点</p>
-                                                        <p>完成度:{data.score_2}点</p>
-                                                        <p>プレゼン:{data.score_3}点</p>
+                                                        <p>企画:{data.score_1}pt</p>
+                                                        <p>完成度:{data.score_2}pt</p>
+                                                        <p>プレゼン:{data.score_3}pt</p>
                                                     </div>
                                                     
                                                     <h3 className='mt-12 text-lg font-bold'>コメント</h3>
@@ -185,9 +185,9 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
                                             return(
                                                 <>
                                                    <div className='mt-8 text-lg font-bold'>
-                                                        <p>企画:{data.score_1}点</p>
-                                                        <p>完成度:{data.score_2}点</p>
-                                                        <p>プレゼン:{data.score_3}点</p>
+                                                        <p>企画:{data.score_1}pt</p>
+                                                        <p>完成度:{data.score_2}pt</p>
+                                                        <p>プレゼン:{data.score_3}pt</p>
                                                     </div>
                                                     
                                                     <h3 className='mt-12 text-lg font-bold'>コメント</h3>
@@ -222,9 +222,9 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
                                             return(
                                                 <>
                                                     <div className='mt-8 text-lg font-bold'>
-                                                        <p>企画:{data.score_1}点</p>
-                                                        <p>完成度:{data.score_2}点</p>
-                                                        <p>プレゼン:{data.score_3}点</p>
+                                                        <p>企画:{data.score_1}pt</p>
+                                                        <p>完成度:{data.score_2}pt</p>
+                                                        <p>プレゼン:{data.score_3}pt</p>
                                                     </div>
                                                     
                                                     <h3 className='mt-12 text-lg font-bold'>コメント</h3>
@@ -260,9 +260,9 @@ const MypageView :React.FC<MypageViewProps> = ({studentarr,scoredata}) => {
                                             return(
                                                 <>
                                                     <div className='mt-8 text-lg font-bold'>
-                                                        <p>企画:{data.score_1}点</p>
-                                                        <p>完成度:{data.score_2}点</p>
-                                                        <p>プレゼン:{data.score_3}点</p>
+                                                        <p>企画:{data.score_1}pt</p>
+                                                        <p>完成度:{data.score_2}pt</p>
+                                                        <p>プレゼン:{data.score_3}pt</p>
                                                     </div>
                                                     
                                                     <h3 className='mt-12 text-lg font-bold'>コメント</h3>

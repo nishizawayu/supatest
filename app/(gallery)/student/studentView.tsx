@@ -36,7 +36,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
             </p>
 
             <ul className='flex w-full text-center flex-wrap mt-4'>
-                <li className={`w-[33%] ${studentStatus === 0 ? "bg-sky-200" : ""}`} onClick={() => setStudentStatus(0)}>全体</li>
+                <li className={`w-[33%] ${studentStatus === 0 ? "bg-sky-200" : ""}`} onClick={() => setStudentStatus(0)}>リセット</li>
                 <li className={`w-[33%] ${studentStatus === 1 ? "bg-sky-200" : ""}`} onClick={() => setStudentStatus(1)}>1年生</li>
                 <li className={`w-[33%] ${studentStatus === 2 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(2)}>2年生</li>
                 <li className={`w-[33%] ${studentStatus === 3 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(3)}>エンジニア</li>
@@ -44,11 +44,11 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                 <li className={`w-[33%] ${studentStatus === 5 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(5)}>Bチーム</li>
             </ul>
             <div className='pb-[120px] mt-8'>
-                <ul className="flex flex-wrap w-[96%] mx-auto">
+                <ul className="w-[90%] mx-auto">
                     {
                         currentData?.map((data: any, index: number) => {
                             return (
-                                <li key={index} className="w-[33%] text-center border border-slate-400 bg-slate-100 py-2">
+                                <li key={index}>
                                     <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&name=${encodeURIComponent(data.name)}`}>
                                         {data.name}
                                     </Link>
