@@ -64,33 +64,39 @@ const Nummber= () => {
     return(
         <div>
             <section>
-                <h2 className="text-xl font-bold text-center mt-6">評価する学生の学籍番号入力してください</h2>
-                
-                <div className="flex flex-wrap justify-center mt-12">
-                    <input type="number" placeholder="0101" className="input input-bordered w-full max-w-xs" value={inputvalue} onInput={handleInputChange} maxLength={4}/>
-                    <p className="w-full max-w-xs text-[#d54747]">{errmsg}</p>
-                </div>
+                <h1 className="text-xl font-bold text-center mt-6">評価する</h1>
 
-                <div className="font-bold text-l flex justify-center">
-                    <button
-                        className="bg-[#00ff00] px-8 my-16 rounded-md flex items-center"
-                        onClick={()=>{
-                            //特定の言葉以外が入れられたら排除
-                            try {
-                                // フィルターの処理
-                                const filteredValue = filterSpecificWords(inputvalue, allowedWords);
-                                console.log(filteredValue);
-                                localStorage.setItem('filteredValue', filteredValue.toString());
-                                router.push(`/score?uid=${filteredValue}`);
-                            } catch (error) {
-                                setInputvalue("");
-                                setErrMsg("※正しい値を入力してください。");
-                                // エラーの処理を追加
-                            }
-                        }}
-                    >
-                            評価をする
-                    </button>
+                <div className="mt-[50%]">
+                    <div className="flex flex-wrap justify-center">
+                        <div className="text-left w-full max-w-xs">
+                            <h2 className="text-base font-bold">ブース番号を入力</h2>
+                            <p className="text-xs mb-2">評価する学生のブース番号を入力してください</p>
+                        </div>
+                            <input type="number" placeholder="0101" className="input input-bordered w-full max-w-xs mx-6" value={inputvalue} onInput={handleInputChange} maxLength={4}/>
+                            <p className="w-full max-w-xs text-[#d54747]">{errmsg}</p>
+                    </div>
+
+                    <div className="font-bold text-l flex justify-end mt-8 mr-10">
+                        <button
+                            className="btn bg-black text-white"
+                            onClick={()=>{
+                                //特定の言葉以外が入れられたら排除
+                                try {
+                                    // フィルターの処理
+                                    const filteredValue = filterSpecificWords(inputvalue, allowedWords);
+                                    console.log(filteredValue);
+                                    localStorage.setItem('filteredValue', filteredValue.toString());
+                                    router.push(`/score?uid=${filteredValue}`);
+                                } catch (error) {
+                                    setInputvalue("");
+                                    setErrMsg("※正しい値を入力してください。");
+                                    // エラーの処理を追加
+                                }
+                            }}
+                        >
+                            次へ<span className="ml-[2px]">&gt;</span>
+                        </button>
+                    </div>
                 </div>
                 
             </section>
