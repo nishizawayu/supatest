@@ -5,7 +5,7 @@ import Thankyou from './(omotenasi)/thankyou/page'
 export default async function Index() {
   return (
     <div>
-        <Thankyou/>
+        <Students/>
     </div>
   )
 }
