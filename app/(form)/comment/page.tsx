@@ -20,37 +20,42 @@ const Comment: FC = () => {
 
     return (
       <div>
-        <button 
-          className="mt-6 ml-8"
-          onClick={()=>{
-            router.push("/score");
-          }}
-        >
-            &lt;戻る
-        </button>
-        <section className="w-full max-w-xs mx-auto">
-          <h2 className="text-xl font-bold text-center mt-6">よろしければコメントを<br/>お願いします</h2>
-          <div className="mt-16">
-            <label htmlFor="textInput" className="block text-lg mb-2">
-              Enter Text:
-            </label>
-            <textarea
-              id="textInput"
-              value={inputText}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-md resize-none"
-              style={{ backgroundColor: 'white', minHeight: '200px' }}
-            />
+        <section className="w-full max-w-xs mx-auto"></section>
+          <h1 className="text-xl font-bold text-center mt-6">プレゼンの感想をお願いします</h1>
+
+          <div className="mt-[50%]">
+            <div className="flex justify-center flex-wrap">
+              <div className="text-left w-full max-w-xs">
+                <h2 className="text-base font-bold">コメントを入力</h2>
+                <p className="text-xs mb-2">プレゼンの感想やアドバイスを入力してください</p>
+              </div>
+              <textarea
+                id="textInput"
+                value={inputText}
+                onChange={handleChange}
+                className="textarea textarea-bordered w-full max-w-xs h-[116px]"
+                placeholder="Bio"
+              />
+            </div>
+            <div className="flex justify-between">
+              <div className="font-bold text-l mt-8 ml-10">
+                <button 
+                  className="btn bg-white text-[#808080]"
+                  onClick={()=>{
+                    router.push("/score")
+                  }}  
+                >
+                  <span className="mr-[2px]">&lt;</span>戻る
+                </button>
+              </div>
+              <div className="font-bold text-l mt-8 mr-10">
+                <button onClick={handleNextClick} className="btn bg-black text-white">
+                  次へ<span className="ml-[2px]">&gt;</span>
+                </button>
+              </div>
+            </div>
           </div>
-        </section>
-        <div className="font-bold text-2xl flex justify-center">
-          <button
-            className="bg-[#00ff00] px-8 my-16 rounded-md flex items-center"
-            onClick={handleNextClick}
-          >
-              next<span className="text-base ml-1">&gt;</span>
-          </button>
-        </div>
+        <section />
       </div>
     );
   };
