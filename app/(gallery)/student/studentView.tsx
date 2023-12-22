@@ -79,6 +79,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                     {
                         currentData?.map((data: any, index: number) => {
                             return (
+
                                 <li key={index} className="">
                                     <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&name=${encodeURIComponent(data.name)}`}>
                                         <div className="flex border-b items-center justify-between">
@@ -99,6 +100,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                                             </div>
                                             <p className="text-base font-bold">10000<span className="text-[10px] font-normal">点</span></p>
                                         </div>
+
                                     </Link>
                                 </li>
                             )
