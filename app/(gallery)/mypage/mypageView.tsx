@@ -5,26 +5,17 @@ import {useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import blueman from "@/app/(images)/blue-man.png" 
 import man from "@/app/(images)/man.png"
+import { useRouter } from 'next/navigation';
 
 interface MypageViewProps {
     scoredata : {score_1:number, score_2:number, score_3:number, comment:string, tag:string, uid:string, date:string}[]
     studentdata: {id:number, uid:string, name:string,goal:number,job:string, team:string}[]
 }
 
-const Graph2 =  (deta1:number,deta2:number,deta3:number) =>{
-    return(
-        <section className='py-4 mt-4'>
-            <div>
-                <progress className="progress w-56" value={deta1} max="100"></progress>
-                <progress className="progress progress-accent w-56" value={deta2} max="100"></progress>
-                <progress className="progress progress-secondary w-56" value={deta3} max="100"></progress>
-            </div>
-        </section>
-    )    
-}
-
 // 描画用
 const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
+    const router = useRouter()
+
     const searchParams = useSearchParams()
     // ブース番号
     const usernum = searchParams.get("id")
@@ -37,21 +28,21 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     // チーム名
     const team = searchParams.get("team")
 
-
     const currentData= scoredata.filter((v) => v.uid == uid)
+
     const goaldata = studentdata.filter((v) => v.uid == uid)
     // ここの部分をサーバーと接続してデータを扱う-------------
     
     // 全体の評価された人数
     const nop = currentData.length;
     // 1日目の評価された人数
-    const day1arr = currentData.filter((v)=> v.date == "2023-12-19");
+    const day1arr = currentData.filter((v)=> v.date == "2023-12-20");
     const day1 = day1arr.length;
     // 2日目の評価された人数
-    const day2arr = currentData.filter((v)=> v.date == "2023-12-15");
+    const day2arr = currentData.filter((v)=> v.date == "2023-12-21");
     const day2 = day2arr.length;
     // 3日目の評価された人数
-    const day3arr = currentData.filter((v)=> v.date == "2023-12-20");
+    const day3arr = currentData.filter((v)=> v.date == "2023-12-22");
     const day3 = day3arr.length;
 
     let sum:[number,number,number,number] = [0,0,0,0];
@@ -79,11 +70,6 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     day3arr.map((data)=>{
         sum[3] = sum[3] + data.score_1 + data.score_2 + data.score_3 + 100;
     })
-    
-    // --------------------------------------------------------------------
-
-
-    // -------------------------------------------------
 
     //タブの開閉用---------------------------------------
     const [activeTab, setActiveTab] = useState(1);
@@ -93,19 +79,13 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     };
     // -------------------------------------------------
 
-    // グラフの数値用
-    // テスト用（後で消す）
-    const detaarr = [20,90,50] 
-
-    // -------------------------------------------------
-
     const goalview = () =>{
         const items = [];
         for(let i=0; i<currentData.length; i++){
-            items.push(<li key={i}><Image src={blueman} width={25} height={25} alt="プレゼンした人数" /></li>)
+            items.push(<li key={`presented-${i}`}><Image src={blueman} width={25} height={25} alt="プレゼンした人数" /></li>)
         }
         for(let i=0; i<goaldata[0].goal-currentData.length; i++){
-            items.push(<li key={i}><Image src={man} width={25} height={25} alt="プレゼンした人数" /></li>)
+            items.push(<li key={`remaining-${i}`}><Image src={man} width={25} height={25} alt="プレゼンした人数" /></li>)
         }
         return items;
     }
@@ -113,6 +93,16 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     return (
         <>
             <div>
+                <div className="font-bold text-l mt-8 ml-10">
+                    <button 
+                    className="btn bg-black text-[#fff]"
+                    onClick={()=>{
+                        router.push("/student")
+                    }}  
+                    >
+                    <span className="mr-[2px]">&lt;</span>戻る
+                    </button>
+                </div>
                 <section className='w-[90%] mt-8 mx-auto pb-20'>
                     <div className='relative'>
                         <div className='pl-8 inline-flex flex-wrap flex-col-reverse gap-1'>   
@@ -121,8 +111,24 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                             </h2>
                             <p className='relative z-10 text-black text-xl'>{team}</p>
                         </div>
-                        <p className='text-[84px] text-[#b8b8b8] absolute left-0 top-[-45%]'>{usernum}</p>
+                        <p className='text-[84px] text-[#d8d7d7] absolute left-0 top-[-45%]'>{usernum}</p>
                     </div>
+                    <div className='mt-1 pl-8 flex gap-2'>
+                        {
+                            // @ts-ignore
+                            [...new Set(currentData.reduce<string[]>((pre,cur) => {
+                                pre.push(cur.tag)
+                                return pre
+                            },[]))].map((data,index)=>{
+                                return(
+                                    <>
+                                        <p key={`tag-${data}-${index}`}>#{data}</p>
+                                    </>
+                                )
+                            })
+                        }
+                    </div>
+                    
                     {/* タブメニュー */}
                     <div role="tablist" className='mt-8 text-xl tabs tabs-bordered'>
                         <p className= {activeTab === 1 ? 'tab tab-active font-bold' :'tab'} 
@@ -174,23 +180,41 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                         currentData?.map((data,index)=>{
                                             return(
                                                 <>
-                                                    <div className='mt-8 text-lg font-bold'>
-                                                        <p>企画:{data.score_1}pt</p>
-                                                        <p>完成度:{data.score_2}pt</p>
-                                                        <p>プレゼン:{data.score_3}pt</p>
+                                                <div key={`currentData-${data.uid}-${index}`} className='mt-8'>
+                                                    <div className='p-6 border-white rounded-3xl shadow-[1px_2px_4px_2px_rgba(0,0,0,0.25)]'>
+                                                        <section className='text-lg font-bold'>
+                                                            <h3>点数</h3>
+                                                            <div className='flex justify-center gap-4 mt-6'>
+                                                                <p className='text-sm'>企画:{data.score_1}点</p>
+                                                                <p className='text-sm'>完成度:{data.score_2}点</p>
+                                                                <p className='text-sm'>プレゼン:{data.score_3}点</p>
+                                                            </div>
+                                                        </section>
+                                                        
+                                                        <section>
+                                                            <h3 className='mt-12 text-lg font-bold'>コメント</h3>
+                                                            <div className='py-6'>
+                                                                <div className='w-[90%] mx-auto text-left border-b-2 border-black'>
+                                                                    <p className='text-lg font-bold inline-block'>
+                                                                        {data.comment}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        
+                                                        <section>
+                                                            <div className='mt-8 text-lg font-bold'>
+                                                                <h3>タグ</h3>
+                                                                <div className='w-full text-center'>
+                                                                    <p className='mt-6 inline-block border-b-2 border-black px-4'>#{data.tag}</p>
+                                                                </div>
+                                                            </div>
+                                                        </section>
                                                     </div>
                                                     
-                                                    <h3 className='mt-12 text-lg font-bold'>コメント</h3>
-                                                    <div className='mt-4 py-6 bg-slate-300'>
-                                                        <p key={index} 
-                                                        className='text-lg font-bold text-center'
-                                                        >{data.comment}
-                                                        </p>
-                                                    </div>
-
-                                                    <div className='mt-8 text-lg font-bold'>
-                                                        <p>#{data.tag}</p>
-                                                    </div>
+                                                    
+                                                </div>
+                                                    
                                                 </>
                                                 
                                             )
@@ -212,22 +236,23 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                         day1arr?.map((data,index)=>{
                                             return(
                                                 <>
-                                                   <div className='mt-8 text-lg font-bold'>
-                                                        <p>企画:{data.score_1}pt</p>
-                                                        <p>完成度:{data.score_2}pt</p>
-                                                        <p>プレゼン:{data.score_3}pt</p>
-                                                    </div>
-                                                    
-                                                    <h3 className='mt-12 text-lg font-bold'>コメント</h3>
-                                                    <div className='mt-4 py-6 bg-slate-300'>
-                                                        <p key={index} 
-                                                        className='text-lg font-bold text-center'
-                                                        >{data.comment}
-                                                        </p>
-                                                    </div>
+                                                    <div key={`day1-${data.uid}-${index}`}>
+                                                        <div className='mt-8 text-lg font-bold'>
+                                                            <p>企画:{data.score_1}pt</p>
+                                                            <p>完成度:{data.score_2}pt</p>
+                                                            <p>プレゼン:{data.score_3}pt</p>
+                                                        </div>
+                                                        
+                                                        <h3 className='mt-12 text-lg font-bold'>コメント</h3>
+                                                        <div className='mt-4 py-6 bg-slate-300'>
+                                                            <p className='text-lg font-bold text-center'
+                                                            >{data.comment}
+                                                            </p>
+                                                        </div>
 
-                                                    <div className='mt-8 text-lg font-bold'>
-                                                        <p>#{data.tag}</p>
+                                                        <div className='mt-8 text-lg font-bold'>
+                                                            <p>#{data.tag}</p>
+                                                        </div>
                                                     </div>
                                                 </>
                                             )
@@ -249,6 +274,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                         day2arr?.map((data,index)=>{
                                             return(
                                                 <>
+                                                 <div key={`day2-${data.uid}-${index}`}>
                                                     <div className='mt-8 text-lg font-bold'>
                                                         <p>企画:{data.score_1}pt</p>
                                                         <p>完成度:{data.score_2}pt</p>
@@ -257,8 +283,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                                     
                                                     <h3 className='mt-12 text-lg font-bold'>コメント</h3>
                                                     <div className='mt-4 py-6 bg-slate-300'>
-                                                        <p key={index} 
-                                                        className='text-lg font-bold text-center'
+                                                        <p className='text-lg font-bold text-center'
                                                         >{data.comment}
                                                         </p>
                                                     </div>
@@ -266,6 +291,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                                     <div className='mt-8 text-lg font-bold'>
                                                         <p>#{data.tag}</p>
                                                     </div>
+                                                 </div>
                                                 </>
                                                 
                                             )
@@ -287,22 +313,23 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                         day3arr?.map((data,index)=>{
                                             return(
                                                 <>
-                                                    <div className='mt-8 text-lg font-bold'>
-                                                        <p>企画:{data.score_1}pt</p>
-                                                        <p>完成度:{data.score_2}pt</p>
-                                                        <p>プレゼン:{data.score_3}pt</p>
-                                                    </div>
-                                                    
-                                                    <h3 className='mt-12 text-lg font-bold'>コメント</h3>
-                                                    <div className='mt-4 py-6 bg-slate-300'>
-                                                        <p key={index} 
-                                                        className='text-lg font-bold text-center'
-                                                        >{data.comment}
-                                                        </p>
-                                                    </div>
+                                                    <div key={`day3-${data.uid}-${index}`}>
+                                                        <div className='mt-8 text-lg font-bold'>
+                                                            <p>企画:{data.score_1}pt</p>
+                                                            <p>完成度:{data.score_2}pt</p>
+                                                            <p>プレゼン:{data.score_3}pt</p>
+                                                        </div>
+                                                        
+                                                        <h3 className='mt-12 text-lg font-bold'>コメント</h3>
+                                                        <div className='mt-4 py-6 bg-slate-300'>
+                                                            <p className='text-lg font-bold text-center'
+                                                            >{data.comment}
+                                                            </p>
+                                                        </div>
 
-                                                    <div className='mt-8 text-lg font-bold'>
-                                                        <p>#{data.tag}</p>
+                                                        <div className='mt-8 text-lg font-bold'>
+                                                            <p className=' inline-block'>#{data.tag}</p>
+                                                        </div>
                                                     </div>
                                                 </>
                                             )
