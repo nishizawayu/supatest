@@ -11,7 +11,7 @@ const Mypage = async () => {
 
   return (
     <div>
-      <MypageView studentarr={studentarr} scoredata={scorearr}/>
+      <MypageView scoredata={scorearr} studentdata={studentarr}/>
       <Navigation />
     </div>
   );

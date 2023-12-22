@@ -3,7 +3,7 @@ import Link from "next/link"
 import { useMemo, useState } from "react"
 
 interface StudentViewProps {
-    studentarr: {id:number, uid:string, name:string, job:string, team:string}[]
+    studentarr: {id:number, uid:string, name:string,goal:number,job:string, team:string}[]
 }
 
 // 描画用
@@ -49,7 +49,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                         currentData?.map((data: any, index: number) => {
                             return (
                                 <li key={index}>
-                                    <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&name=${encodeURIComponent(data.name)}`}>
+                                    <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&team=${data.team}&name=${encodeURIComponent(data.name)}`}>
                                         {data.name}
                                     </Link>
                                 </li>
