@@ -4,6 +4,7 @@ import { useMemo, useState } from "react"
 
 interface StudentViewProps {
     studentarr: {id:number, uid:string, name:string, job:string, team:string, school_year:string}[]
+    scoredata : {score_1:number, score_2:number, score_3:number, comment:string, tag:string, uid:string, date:string}[]
 }
 
 // 描画用
@@ -81,7 +82,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                             return (
 
                                 <li key={index} className="">
-                                    <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&name=${encodeURIComponent(data.name)}`}>
+                                    <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&team=${data.team}&name=${encodeURIComponent(data.name)}`}>
                                         <div className="flex border-b items-center justify-between">
                                             <div className="flex items-center">
                                                 <p className="text-[24px]">{index+1}</p>

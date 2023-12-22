@@ -113,7 +113,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                         </div>
                         <p className='text-[84px] text-[#d8d7d7] absolute left-0 top-[-45%]'>{usernum}</p>
                     </div>
-                    <div className='mt-1 pl-8 flex gap-2'>
+                    <div className='mt-1 pl-8 flex gap-2 relative z-10'>
                         {
                             // @ts-ignore
                             [...new Set(currentData.reduce<string[]>((pre,cur) => {
@@ -168,9 +168,9 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                             <p className='text-6xl font-bold text-center mt-3 text-[#F17C7C]'>{sum[0]}<span className='text-2xl'>点</span></p>
                                         
                                         <div className='w-[80%] mx-auto mt-8'>
-                                            <p className='font-bold'>企画<progress className="progress progress-info" value={score1[0]} max={sum[0]-currentData.length*100}></progress></p>
-                                            <p className='font-bold mt-4'>実装<progress className="progress progress-info" value={score2[0]} max={sum[0]-currentData.length*100}></progress></p>
-                                            <p className='font-bold mt-4'>プレゼン<progress className="progress progress-info" value={score3[0]} max={sum[0]-currentData.length*100}></progress></p>
+                                            <p className='font-bold'>企画<progress className="progress progress-success" value={score1[0]} max={sum[0]-currentData.length*100}></progress></p>
+                                            <p className='font-bold mt-4'>実装<progress className="progress progress-success" value={score2[0]} max={sum[0]-currentData.length*100}></progress></p>
+                                            <p className='font-bold mt-4'>プレゼン<progress className="progress progress-success" value={score3[0]} max={sum[0]-currentData.length*100}></progress></p>
                                         </div>
                                     </section>
                                 </div>
