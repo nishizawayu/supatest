@@ -99,7 +99,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p className="text-base font-bold">10000<span className="text-[10px] font-normal">点</span></p>
+                                            <p className="text-base font-bold">{data.total_evaluation_score}<span className="text-[10px] font-normal">点</span></p>
                                         </div>
 
                                     </Link>
