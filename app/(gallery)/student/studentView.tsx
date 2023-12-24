@@ -55,7 +55,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                 <li className={`w-[33%] ${studentStatus === 4 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(4)}>デザイナー</li>
                 <li className={`w-[33%] ${studentStatus === 5 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(5)}>Bチーム</li>
             </ul> */}
-            <div className="flex justify-between mx-6 mt-8">
+            <div className="flex justify-between mx-6 mt-8 sticky top-5 bottom-5">
                 <select value={studentYear} className="select select-primary pl-3 pr-8"  onChange={(e) => setStudentYear(parseInt(e.target.value))}>
                     <option disabled value="">学生</option>
                     <option value={1}>1年</option>
