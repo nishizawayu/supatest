@@ -33,7 +33,7 @@ const Comment: FC = () => {
                 id="textInput"
                 value={inputText}
                 onChange={handleChange}
-                className="textarea textarea-bordered w-full max-w-xs h-[116px]"
+                className="textarea textarea-bordered w-full max-w-xs h-[116px] text-base"
                 placeholder="Bio"
               />
             </div>
