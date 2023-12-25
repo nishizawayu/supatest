@@ -40,7 +40,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     const day1arr = currentData.filter((v)=> v.date == "2023-12-24");
     const day1 = day1arr.length;
     // 2日目の評価された人数
-    const day2arr = currentData.filter((v)=> v.date == "2023-12-21");
+    const day2arr = currentData.filter((v)=> v.date == "2023-12-25");
     const day2 = day2arr.length;
     // 3日目の評価された人数
     const day3arr = currentData.filter((v)=> v.date == "2023-12-22");
@@ -311,7 +311,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                             <>
                                 <div className="mt-4 pb-9 border-b-8 border-dashed border-black">
                                     <p className='font-bold text-lg mt-8'>{day2}人に評価されています。</p>
-                                    <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum[2]}pt</p>
+                                    <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum[2]}<span className='text-base'>点</span></p>
                                 </div>
                                 
                                 <div className='w-[90%] mx-auto'>
@@ -373,7 +373,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                             <>
                                 <div className="mt-4 pb-9 border-b-8 border-dashed border-black">
                                     <p className='font-bold text-lg mt-8'>{day3}人に評価されています。</p>
-                                    <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum[3]}pt</p>
+                                    <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum[3]}<span className='text-base'>点</span></p>
                                 </div>
                                 
                                 <div className='w-[90%] mx-auto'>
