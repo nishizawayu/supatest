@@ -30,17 +30,19 @@ const AccordionItem: FC<AccordionItemProps> = ({ title, content }) => {
 };
 
 const Score: FC = () => {
-  const [planpoint, setPlanPoint] = useState(50);
-  const [cpoint, setCPoint] = useState(50);
-  const [ppoint, setPPoint] = useState(50);
+  const [score_1, setScore_1] = useState(50);
+  const [score_2, setScore_2] = useState(50);
+  const [score_3, setScore_3] = useState(50);
+  const [score_4, setScore_4] = useState(50);
 
   const router = useRouter();
 
   const handleNextClick = () => {
     // ローカルストレージに値を保存
-    localStorage.setItem('planpoint', planpoint.toString());
-    localStorage.setItem('cpoint', cpoint.toString());
-    localStorage.setItem('ppoint', ppoint.toString());
+    localStorage.setItem('score_1', score_1.toString());
+    localStorage.setItem('score_2', score_2.toString());
+    localStorage.setItem('score_3', score_3.toString());
+    localStorage.setItem('score_4', score_4.toString());
 
     // '/comment'ページに移動
     router.push("/comment");
@@ -50,20 +52,20 @@ const Score: FC = () => {
     <div>
       <h1 className="text-xl font-bold text-center mt-6">作品の評価をお願いします</h1>
 
-      <div className="mt-[100px]">
+      <div className="mt-[32px]">
         <div className="w-full max-w-xs mx-auto mt-10">
           <div className="flex justify-between">
             <h2 className="font-bold text-base">企画</h2>
-            <p className="font-bold text-base">{planpoint}<span className="text-xs">点</span></p>
+            <p className="font-bold text-base">{score_1}<span className="text-xs">点</span></p>
           </div>
           <input
             type="range"
             min="0"
             max="100"
-            className="range max-w-xs range-primary mt-4"
+            className="range range-lg max-w-xs range-primary mt-4"
             step="10"
-            defaultValue={planpoint}
-            onChange={(event) => setPlanPoint(Number(event.target.value))}
+            defaultValue={score_1}
+            onChange={(event) => setScore_1(Number(event.target.value))}
           />
           <div className="w-full flex justify-between text-xs px-2 max-w-xs">
             <p>0</p> <p>20</p> <p>40</p> <p>60</p><p>80</p><p>100</p>
@@ -72,36 +74,56 @@ const Score: FC = () => {
 
         <div className="w-full max-w-xs mx-auto mt-8">
           <div className="flex justify-between">
-            <p className="font-bold text-base">完成度</p>
-            <p className="font-bold text-base">{cpoint}<span className="text-xs">点</span></p>
+            <p className="font-bold text-base">デザイン</p>
+            <p className="font-bold text-base">{score_2}<span className="text-xs">点</span></p>
           </div>
           <input
             type="range"
             min="0"
             max="100"
-            className="range max-w-xs range-secondary mt-4"
+            className="range range-lg max-w-xs range-secondary mt-4"
             step="10"
-            defaultValue={cpoint}
-            onChange={(event) => setCPoint(Number(event.target.value))}
+            defaultValue={score_2}
+            onChange={(event) => setScore_2(Number(event.target.value))}
           />
           <div className="w-full flex justify-between text-xs px-2 max-w-xs">
             <p>0</p> <p>20</p> <p>40</p> <p>60</p><p>80</p><p>100</p>
+          </div>
+        </div>
+
+        <div className="w-full max-w-xs mx-auto mt-8">
+          <div className="flex justify-between">
+            <p className="font-bold text-base">実装</p>
+            <p className="font-bold text-base">{score_3}<span className="text-xs">点</span></p>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            className="range range-lg max-w-xs range-accent mt-4"
+            step="10"
+            defaultValue={score_3}
+            onChange={(event) => setScore_3(Number(event.target.value))}
+          />
+          <div className="w-full flex justify-between text-xs px-2 max-w-xs">
+              <p>0</p> <p>20</p> <p>40</p> <p>60</p><p>80</p>
+              <p>100</p>
           </div>
         </div>
 
         <div className="w-full max-w-xs mx-auto mt-8">
           <div className="flex justify-between">
             <p className="font-bold text-base">プレゼン</p>
-            <p className="font-bold text-base">{ppoint}<span className="text-xs">点</span></p>
+            <p className="font-bold text-base">{score_4}<span className="text-xs">点</span></p>
           </div>
           <input
             type="range"
             min="0"
             max="100"
-            className="range max-w-xs range-accent mt-4"
+            className="range range-lg max-w-xs range-accent mt-4"
             step="10"
-            defaultValue={ppoint}
-            onChange={(event) => setPPoint(Number(event.target.value))}
+            defaultValue={score_4}
+            onChange={(event) => setScore_4(Number(event.target.value))}
           />
           <div className="w-full flex justify-between text-xs px-2 max-w-xs">
               <p>0</p> <p>20</p> <p>40</p> <p>60</p><p>80</p>
