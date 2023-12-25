@@ -8,8 +8,8 @@ import man from "@/app/(images)/man.png"
 import { useRouter } from 'next/navigation';
 
 interface MypageViewProps {
-    scoredata : {score_1:number, score_2:number, score_3:number, comment:string, tag:string, uid:string, date:string}[]
-    studentdata: {id:number, uid:string, name:string,goal:number,job:string, team:string}[]
+    scoredata : {score_1:number, score_2:number, score_3:number,score_4:number,comment:string, tag:string, uid:string, date:string}[]
+    studentdata: {id:number, uid:string, name:string,goal:number,job:string,schoolyear:string,team:string}[]
 }
 
 // 描画用
@@ -31,12 +31,13 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     const currentData= scoredata.filter((v) => v.uid == uid)
 
     const goaldata = studentdata.filter((v) => v.uid == uid)
+
     // ここの部分をサーバーと接続してデータを扱う-------------
     
     // 全体の評価された人数
     const nop = currentData.length;
     // 1日目の評価された人数
-    const day1arr = currentData.filter((v)=> v.date == "2023-12-20");
+    const day1arr = currentData.filter((v)=> v.date == "2023-12-24");
     const day1 = day1arr.length;
     // 2日目の評価された人数
     const day2arr = currentData.filter((v)=> v.date == "2023-12-21");
@@ -49,26 +50,28 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     let score1:[number,number,number,number] = [0,0,0,0];
     let score2:[number,number,number,number] = [0,0,0,0];
     let score3:[number,number,number,number] = [0,0,0,0];
+    let score4:[number,number,number,number] = [0,0,0,0];
 
     // 合計値の計算　---------------------------------------------------------
     // 全体
     currentData.map((data)=>{
-        sum[0] = sum[0] + data.score_1 + data.score_2 + data.score_3 + 100;
+        sum[0] = sum[0] + data.score_1 + data.score_2 + data.score_3 + data.score_4 + 100;
         score1[0] += data.score_1;
         score2[0] += data.score_2;
         score3[0] += data.score_3;
+        score4[0] += data.score_4;
     })
     // 1日目
     day1arr.map((data)=>{
-        sum[1] = sum[1] + data.score_1 + data.score_2 + data.score_3 + 100;
+        sum[1] = sum[1] + data.score_1 + data.score_2 + data.score_3 + data.score_4 + 100; + 100;
     })
     // 2日目
     day2arr.map((data)=>{
-        sum[2] = sum[2] + data.score_1 + data.score_2 + data.score_3 + 100;
+        sum[2] = sum[2] + data.score_1 + data.score_2 + data.score_3 + data.score_4 + 100; + 100;
     })
     // 3日目
     day3arr.map((data)=>{
-        sum[3] = sum[3] + data.score_1 + data.score_2 + data.score_3 + 100;
+        sum[3] = sum[3] + data.score_1 + data.score_2 + data.score_3 + data.score_4 + 100; + 100;
     })
 
     //タブの開閉用---------------------------------------
@@ -82,10 +85,10 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     const goalview = () =>{
         const items = [];
         for(let i=0; i<currentData.length; i++){
-            items.push(<li key={`presented-${i}`}><Image src={blueman} width={25} height={25} alt="プレゼンした人数" /></li>)
+            items.push(<li key={`presented-${i}`}><Image src={blueman} width={22} height={22} alt="プレゼンした人数" /></li>)
         }
         for(let i=0; i<goaldata[0].goal-currentData.length; i++){
-            items.push(<li key={`remaining-${i}`}><Image src={man} width={25} height={25} alt="プレゼンした人数" /></li>)
+            items.push(<li key={`remaining-${i}`}><Image src={man} width={22} height={22} alt="プレゼンした人数" /></li>)
         }
         return items;
     }
@@ -93,7 +96,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     return (
         <>
             <div>
-                <div className="font-bold text-l mt-8 ml-10">
+                <div className="font-bold text-l mt-8 ml-8">
                     <button 
                     className="btn bg-black text-[#fff]"
                     onClick={()=>{
@@ -114,6 +117,8 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                         <p className='text-[84px] text-[#d8d7d7] absolute left-0 top-[-45%]'>{usernum}</p>
                     </div>
                     <div className='mt-1 pl-8 flex gap-2 relative z-10'>
+                        <p className='inline-block mt-3 pb-1 px-2 font-bold bg-[#e3e3e3] rounded-md'>#{goaldata[0].schoolyear}</p>
+                        <p className='inline-block mt-3 pb-1 px-2 font-bold bg-[#e3e3e3] rounded-md'>#{goaldata[0].job}</p>
                         {
                             // @ts-ignore
                             [...new Set(currentData.reduce<string[]>((pre,cur) => {
@@ -122,7 +127,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                             },[]))].map((data,index)=>{
                                 return(
                                     <>
-                                        <p key={`tag-${data}-${index}`}>#{data}</p>
+                                        <p key={`tag-${data}-${index}`} className='inline-block mt-3 pb-1 px-2 font-bold bg-[#e3e3e3] rounded-md'>#{data}</p>
                                     </>
                                 )
                             })
@@ -156,8 +161,13 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                             <>
                                 <section className='w-[90%] mx-auto text-center mt-8 text-lg font-bold border-white rounded-3xl shadow-[1px_2px_4px_2px_rgba(0,0,0,0.25)] px-5 py-8'>
                                     <h3 className='text-[#5B5B5B]'>目標プレゼン人数</h3>
-                                    <p className='text-center text-3xl ml-[2%] mr-[2%] mt-6 text-[#818181]'><span className='text-6xl text-black font-bold'>{currentData.length}</span><span className='text-black text-2xl'>人</span>/{goal}<span className='text-base ml-3'>人</span></p>
-                                    <ul className='flex w-[80%] mx-auto mt-6 flex-wrap list-none gap-2'>
+                                    <p className='text-center align-bottom text-3xl ml-[2%] mr-[2%] mt-6 text-[#818181]'>
+                                        <span className='text-6xl text-black font-bold'>{currentData.length}</span>
+                                        <span className='text-black text-2xl'>人</span>
+                                        <span className='text-xl ml-1'>/</span>
+                                        {goal}<span className='text-base ml-3'>人</span>
+                                    </p>
+                                    <ul className='inline-flex w-[80%] mx-auto mt-6 flex-wrap list-none gap-2'>
                                         {goalview()}
                                     </ul>
                                 </section>
@@ -165,12 +175,13 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                 <div className='border-b-8 border-dashed border-black pb-12'>
                                     <section className="w-[90%] mx-auto mt-12 border-white rounded-3xl shadow-[1px_2px_4px_2px_rgba(0,0,0,0.25)] py-12">
                                             <h3 className='text-center text-lg font-bold text-[#5B5B5B]'>合計スコア</h3>
-                                            <p className='text-6xl font-bold text-center mt-3 text-[#F17C7C]'>{sum[0]}<span className='text-2xl'>点</span></p>
+                                            <p className='text-6xl font-bold text-center mt-6 text-black'>{sum[0]}<span className='text-2xl text-[#818181]'>点</span></p>
                                         
                                         <div className='w-[80%] mx-auto mt-8'>
-                                            <p className='font-bold'>企画<progress className="progress progress-success" value={score1[0]} max={sum[0]-currentData.length*100}></progress></p>
-                                            <p className='font-bold mt-4'>実装<progress className="progress progress-success" value={score2[0]} max={sum[0]-currentData.length*100}></progress></p>
-                                            <p className='font-bold mt-4'>プレゼン<progress className="progress progress-success" value={score3[0]} max={sum[0]-currentData.length*100}></progress></p>
+                                            <p className='font-bold'>企画<progress className="progress progress-primary" value={score1[0]} max={currentData.length*100}></progress></p>
+                                            <p className='font-bold mt-4'>デザイン<progress className="progress progress-primary" value={score2[0]} max={currentData.length*100}></progress></p>
+                                            <p className='font-bold mt-4'>実装<progress className="progress progress-primary" value={score3[0]} max={currentData.length*100}></progress></p>
+                                            <p className='font-bold mt-4'>プレゼン<progress className="progress progress-primary" value={score4[0]} max={currentData.length*100}></progress></p>
                                         </div>
                                     </section>
                                 </div>
@@ -183,16 +194,29 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                                 <div key={`currentData-${data.uid}-${index}`} className='mt-8'>
                                                     <div className='p-6 border-white rounded-3xl shadow-[1px_2px_4px_2px_rgba(0,0,0,0.25)]'>
                                                         <section className='text-lg font-bold'>
-                                                            <h3>点数</h3>
-                                                            <div className='flex justify-center gap-4 mt-6'>
-                                                                <p className='text-sm'>企画:{data.score_1}点</p>
-                                                                <p className='text-sm'>完成度:{data.score_2}点</p>
-                                                                <p className='text-sm'>プレゼン:{data.score_3}点</p>
+                                                            <h3 className='text-center'>点数</h3>
+                                                            <div className='w-[80%] mx-auto mt-8'>
+                                                                <div>
+                                                                    <p className='font-bold flex justify-between'>企画<span>{data.score_1}<span className='text-xs'>点</span></span></p>
+                                                                    <progress className="progress progress-accent" value={data.score_1} max={100}></progress>
+                                                                </div>
+                                                                <div className='mt-4'>
+                                                                    <p className='font-bold flex justify-between'>デザイン<span>{data.score_2}<span className='text-xs'>点</span></span></p>
+                                                                    <progress className="progress progress-accent" value={data.score_2} max={100}></progress>
+                                                                </div>
+                                                                <div className='mt-4'>
+                                                                    <p className='font-bold flex justify-between'>実装<span>{data.score_3}<span className='text-xs'>点</span></span></p>
+                                                                    <progress className="progress progress-accent" value={data.score_3} max={100}></progress>
+                                                                </div>
+                                                                <div className='mt-4'>
+                                                                    <p className='font-bold flex justify-between'>プレゼン<span>{data.score_4}<span className='text-xs'>点</span></span></p>
+                                                                    <progress className="progress progress-accent" value={data.score_4} max={100}></progress>
+                                                                </div>
                                                             </div>
                                                         </section>
                                                         
                                                         <section>
-                                                            <h3 className='mt-12 text-lg font-bold'>コメント</h3>
+                                                            <h3 className='mt-8 text-lg font-bold text-center'>コメント</h3>
                                                             <div className='py-6'>
                                                                 <div className='w-[90%] mx-auto text-left border-b-2 border-black'>
                                                                     <p className='text-lg font-bold inline-block'>
@@ -203,11 +227,8 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                                         </section>
                                                         
                                                         <section>
-                                                            <div className='mt-8 text-lg font-bold'>
-                                                                <h3>タグ</h3>
-                                                                <div className='w-full text-center'>
-                                                                    <p className='mt-6 inline-block border-b-2 border-black px-4'>#{data.tag}</p>
-                                                                </div>
+                                                            <div className='mt-2 text-lg font-bold'>
+                                                                <p className='inline-block pb-1 px-2 font-bold bg-[#ececec] rounded-md'>#{data.tag}</p>
                                                             </div>
                                                         </section>
                                                     </div>
@@ -228,33 +249,57 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                             <>
                                 <div className="mt-4 pb-9 border-b-8 border-dashed border-black">
                                     <p className='font-bold text-lg mt-8'>{day1}人に評価されています。</p>
-                                    <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum[1]}pt</p>
+                                    <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum[1]}<span className='text-base'>点</span></p>
                                 </div>
                                 
-                                <div>
+                                <div className='w-[90%] mx-auto'>
                                     {
                                         day1arr?.map((data,index)=>{
                                             return(
-                                                <>
-                                                    <div key={`day1-${data.uid}-${index}`}>
-                                                        <div className='mt-8 text-lg font-bold'>
-                                                            <p>企画:{data.score_1}pt</p>
-                                                            <p>完成度:{data.score_2}pt</p>
-                                                            <p>プレゼン:{data.score_3}pt</p>
-                                                        </div>
+                                            <>
+                                                <div key={`day1-${data.uid}-${index}`} className='mt-8'>
+                                                    <div className='p-6 border-white rounded-3xl shadow-[1px_2px_4px_2px_rgba(0,0,0,0.25)]'>
+                                                        <section className='text-lg font-bold'>
+                                                            <h3 className='text-center'>点数</h3>
+                                                            <div className='w-[80%] mx-auto mt-8'>
+                                                                <div>
+                                                                    <p className='font-bold flex justify-between'>企画<span>{data.score_1}<span className='text-xs'>点</span></span></p>
+                                                                    <progress className="progress progress-accent" value={data.score_1} max={100}></progress>
+                                                                </div>
+                                                                <div className='mt-4'>
+                                                                    <p className='font-bold flex justify-between'>デザイン<span>{data.score_2}<span className='text-xs'>点</span></span></p>
+                                                                    <progress className="progress progress-accent" value={data.score_2} max={100}></progress>
+                                                                </div>
+                                                                <div className='mt-4'>
+                                                                    <p className='font-bold flex justify-between'>実装<span>{data.score_3}<span className='text-xs'>点</span></span></p>
+                                                                    <progress className="progress progress-accent" value={data.score_3} max={100}></progress>
+                                                                </div>
+                                                                <div className='mt-4'>
+                                                                    <p className='font-bold flex justify-between'>プレゼン<span>{data.score_4}<span className='text-xs'>点</span></span></p>
+                                                                    <progress className="progress progress-accent" value={data.score_4} max={100}></progress>
+                                                                </div>
+                                                            </div>
+                                                        </section>
                                                         
-                                                        <h3 className='mt-12 text-lg font-bold'>コメント</h3>
-                                                        <div className='mt-4 py-6 bg-slate-300'>
-                                                            <p className='text-lg font-bold text-center'
-                                                            >{data.comment}
-                                                            </p>
-                                                        </div>
-
-                                                        <div className='mt-8 text-lg font-bold'>
-                                                            <p>#{data.tag}</p>
-                                                        </div>
+                                                        <section>
+                                                            <h3 className='mt-12 text-lg font-bold text-center'>コメント</h3>
+                                                            <div className='py-6'>
+                                                                <div className='w-[90%] mx-auto text-left border-b-2 border-black'>
+                                                                    <p className='text-lg font-bold inline-block'>
+                                                                        {data.comment}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                        
+                                                        <section>
+                                                            <div className='mt-2 text-lg font-bold'>
+                                                                <p className='inline-block pb-1 px-2 font-bold bg-[#ececec] rounded-md'>#{data.tag}</p>
+                                                            </div>
+                                                        </section>
                                                     </div>
-                                                </>
+                                                </div>
+                                            </>
                                             )
                                         })
                                     }
@@ -269,31 +314,54 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                     <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum[2]}pt</p>
                                 </div>
                                 
-                                <div>
+                                <div className='w-[90%] mx-auto'>
                                     {
                                         day2arr?.map((data,index)=>{
                                             return(
                                                 <>
-                                                 <div key={`day2-${data.uid}-${index}`}>
-                                                    <div className='mt-8 text-lg font-bold'>
-                                                        <p>企画:{data.score_1}pt</p>
-                                                        <p>完成度:{data.score_2}pt</p>
-                                                        <p>プレゼン:{data.score_3}pt</p>
+                                                    <div key={`day2-${data.uid}-${index}`} className='mt-8'>
+                                                        <div className='p-6 border-white rounded-3xl shadow-[1px_2px_4px_2px_rgba(0,0,0,0.25)]'>
+                                                            <section className='text-lg font-bold'>
+                                                                <h3 className='text-center'>点数</h3>
+                                                                <div className='w-[80%] mx-auto mt-8'>
+                                                                    <div>
+                                                                        <p className='font-bold flex justify-between'>企画<span>{data.score_1}<span className='text-xs'>点</span></span></p>
+                                                                        <progress className="progress progress-accent" value={data.score_1} max={100}></progress>
+                                                                    </div>
+                                                                    <div className='mt-4'>
+                                                                        <p className='font-bold flex justify-between'>デザイン<span>{data.score_2}<span className='text-xs'>点</span></span></p>
+                                                                        <progress className="progress progress-accent" value={data.score_2} max={100}></progress>
+                                                                    </div>
+                                                                    <div className='mt-4'>
+                                                                        <p className='font-bold flex justify-between'>実装<span>{data.score_3}<span className='text-xs'>点</span></span></p>
+                                                                        <progress className="progress progress-accent" value={data.score_3} max={100}></progress>
+                                                                    </div>
+                                                                    <div className='mt-4'>
+                                                                        <p className='font-bold flex justify-between'>プレゼン<span>{data.score_4}<span className='text-xs'>点</span></span></p>
+                                                                        <progress className="progress progress-accent" value={data.score_4} max={100}></progress>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                            
+                                                            <section>
+                                                                <h3 className='mt-12 text-lg font-bold text-center'>コメント</h3>
+                                                                <div className='py-6'>
+                                                                    <div className='w-[90%] mx-auto text-left border-b-2 border-black'>
+                                                                        <p className='text-lg font-bold inline-block'>
+                                                                            {data.comment}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                            
+                                                            <section>
+                                                                <div className='mt-2 text-lg font-bold'>
+                                                                    <p className='inline-block pb-1 px-2 font-bold bg-[#ececec] rounded-md'>#{data.tag}</p>
+                                                                </div>
+                                                            </section>
+                                                        </div>
                                                     </div>
-                                                    
-                                                    <h3 className='mt-12 text-lg font-bold'>コメント</h3>
-                                                    <div className='mt-4 py-6 bg-slate-300'>
-                                                        <p className='text-lg font-bold text-center'
-                                                        >{data.comment}
-                                                        </p>
-                                                    </div>
-
-                                                    <div className='mt-8 text-lg font-bold'>
-                                                        <p>#{data.tag}</p>
-                                                    </div>
-                                                 </div>
                                                 </>
-                                                
                                             )
                                         })
                                     }
@@ -308,27 +376,51 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                     <p className='text-4xl font-bold text-center mt-9'><span className='text-base mr-3'>合計</span>{sum[3]}pt</p>
                                 </div>
                                 
-                                <div>
+                                <div className='w-[90%] mx-auto'>
                                     {
                                         day3arr?.map((data,index)=>{
                                             return(
                                                 <>
-                                                    <div key={`day3-${data.uid}-${index}`}>
-                                                        <div className='mt-8 text-lg font-bold'>
-                                                            <p>企画:{data.score_1}pt</p>
-                                                            <p>完成度:{data.score_2}pt</p>
-                                                            <p>プレゼン:{data.score_3}pt</p>
-                                                        </div>
-                                                        
-                                                        <h3 className='mt-12 text-lg font-bold'>コメント</h3>
-                                                        <div className='mt-4 py-6 bg-slate-300'>
-                                                            <p className='text-lg font-bold text-center'
-                                                            >{data.comment}
-                                                            </p>
-                                                        </div>
-
-                                                        <div className='mt-8 text-lg font-bold'>
-                                                            <p className=' inline-block'>#{data.tag}</p>
+                                                    <div key={`day3-${data.uid}-${index}`} className='mt-8'>
+                                                        <div className='p-6 border-white rounded-3xl shadow-[1px_2px_4px_2px_rgba(0,0,0,0.25)]'>
+                                                            <section className='text-lg font-bold'>
+                                                                <h3 className='text-center'>点数</h3>
+                                                                <div className='w-[80%] mx-auto mt-8'>
+                                                                    <div>
+                                                                        <p className='font-bold flex justify-between'>企画<span>{data.score_1}<span className='text-xs'>点</span></span></p>
+                                                                        <progress className="progress progress-accent" value={data.score_1} max={100}></progress>
+                                                                    </div>
+                                                                    <div className='mt-4'>
+                                                                        <p className='font-bold flex justify-between'>デザイン<span>{data.score_2}<span className='text-xs'>点</span></span></p>
+                                                                        <progress className="progress progress-accent" value={data.score_2} max={100}></progress>
+                                                                    </div>
+                                                                    <div className='mt-4'>
+                                                                        <p className='font-bold flex justify-between'>実装<span>{data.score_3}<span className='text-xs'>点</span></span></p>
+                                                                        <progress className="progress progress-accent" value={data.score_3} max={100}></progress>
+                                                                    </div>
+                                                                    <div className='mt-4'>
+                                                                        <p className='font-bold flex justify-between'>プレゼン<span>{data.score_4}<span className='text-xs'>点</span></span></p>
+                                                                        <progress className="progress progress-accent" value={data.score_4} max={100}></progress>
+                                                                </div>
+                                                                </div>
+                                                            </section>
+                                                            
+                                                            <section>
+                                                                <h3 className='mt-12 text-lg font-bold text-center'>コメント</h3>
+                                                                <div className='py-6'>
+                                                                    <div className='w-[90%] mx-auto text-left border-b-2 border-black'>
+                                                                        <p className='text-lg font-bold inline-block'>
+                                                                            {data.comment}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+                                                            
+                                                            <section>
+                                                                <div className='mt-2 text-lg font-bold'>
+                                                                    <p className='inline-block pb-1 px-2 font-bold bg-[#ececec] rounded-md'>#{data.tag}</p>
+                                                                </div>
+                                                            </section>
                                                         </div>
                                                     </div>
                                                 </>
