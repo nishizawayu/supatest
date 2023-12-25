@@ -3,33 +3,38 @@ import Link from "next/link"
 import { useMemo, useState } from "react"
 
 interface StudentViewProps {
-    studentarr: {id:number, uid:string, name:string, job:string, team:string, school_year:string}[]
+    studentarr: {id:number, uid:string, name:string, job:string, team:string, school_year:string, most_common_tag:string}[]
     scoredata : {score_1:number, score_2:number, score_3:number, comment:string, tag:string, uid:string, date:string}[]
 }
 
 // 描画用
 const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
-    const [studentStatus, setStudentStatus] = useState(0)
+    const [studentYear, setStudentYear] = useState(0)
+    const [studentJob, setStudentJob] = useState(0)
+    const [studentCharacter, setStudentCharacter] = useState(0)
     const currentData = useMemo(() => {
-        if(studentStatus === 1) {
+        if(studentYear === 1) {
             return studentarr.filter((v) => v.id <=35)
         } 
-        else if(studentStatus === 2) {
+        else if(studentYear === 2) {
             return studentarr.filter((v) => v.id >35)
         } 
-        else if(studentStatus === 3) {
+        else if(studentJob === 3) {
             return studentarr.filter((v) => v.job == "エンジニア")
         }
-        else if(studentStatus === 4) {
+        else if(studentJob === 4) {
             return studentarr.filter((v) => v.job == "デザイナー")
         }
-        else if(studentStatus === 5) {
-            return studentarr.filter((v) => v.team == "Bチーム")
+        else if(studentCharacter === 5) {
+            return studentarr.filter((v) => v.most_common_tag == "すごい")
+        }
+        else if(studentCharacter === 6) {
+            return studentarr.filter((v) => v.most_common_tag == "面白い")
         }
         else {
             return studentarr
         }
-    }, [studentStatus])
+    }, [studentJob,studentYear,studentCharacter])
     return (
         <>
             <h1 className="text-xl font-bold text-center mt-7">
@@ -51,29 +56,30 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                 <li className={`w-[33%] ${studentStatus === 4 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(4)}>デザイナー</li>
                 <li className={`w-[33%] ${studentStatus === 5 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(5)}>Bチーム</li>
             </ul> */}
-            <div className="flex justify-between mx-6 mt-8">
-                <select className="select select-primary pl-3 pr-8"  onChange={(e) => setStudentStatus(parseInt(e.target.value))}>
-                    <option disabled selected>学生</option>
+            <div className="flex justify-between mx-6 mt-8 sticky top-5 bottom-5">
+                <select value={studentYear} className="select select-primary pl-3 pr-8"  onChange={(e) => setStudentYear(parseInt(e.target.value))}>
+                    <option disabled value="">学生</option>
                     <option value={1}>1年</option>
                     <option value={2}>2年</option>
                     <option value={0}>全て</option>
                 </select>
 
-                <select className="select select-primary pl-3" onChange={(e) => setStudentStatus(parseInt(e.target.value))}>
-                    <option disabled selected>職種</option>
+                <select value={studentJob} className="select select-primary pl-3" onChange={(e) => setStudentJob(parseInt(e.target.value))}>
+                    <option disabled value="">職種</option>
                     <option value={3}>エンジニア</option>
                     <option value={4}>デザイナー</option>
-                    <option>その他</option>
+                    <option value={0}>その他</option>
                     <option value={0}>全て</option>
                 </select>
 
-                <select className="select select-primary pl-3 pr-12">
-                    <option disabled selected>特徴</option>
-                    <option>努力家</option>
-                    <option>面白い</option>
-                    <option>全て</option>
+                <select value={studentCharacter} className="select select-primary pl-3 pr-12" onChange={(e) => setStudentCharacter(parseInt(e.target.value))}>
+                    <option disabled value="">特徴</option>
+                    <option value={5}>すごい</option>
+                    <option value={6}>面白い</option>
+                    <option value={0}>全て</option>
                 </select>
             </div>
+
 
             <div className='pb-[120px] mt-8'>
                 <ul className="w-[90%] mx-6">
@@ -95,7 +101,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                                                     <div className="flex text-xs mb-4 font-normal">
                                                         <p>#{data.schoolyear}</p>
                                                         <p className="ml-2">#{data.job}</p>
-                                                        <p className="ml-2">#面白い</p>
+                                                        <p className="ml-2">#{data.most_common_tag}</p>
                                                     </div>
                                                 </div>
                                             </div>
