@@ -7,15 +7,7 @@ const Tag = ()=>{
     const router = useRouter();
     const tagarr:string[]=["すごい","プロ級","明るい","可愛い","きれい","面白い","努力家","天才"];
     // タグ用
-    const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
-    const toggleTag = (tag: string) => {
-        if (selectedTags.includes(tag)) {
-          setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
-        } else {
-          setSelectedTags([...selectedTags, tag]);
-        }
-    };
+    const [selectedTags, setSelectedTags] = useState<string>("");
 
     const handleNextClick = () => {
         // ローカルストレージに値を保存
@@ -41,7 +33,7 @@ const Tag = ()=>{
                             tagarr.map((deta:string,index:number)=>(
                                 <p key={index} className={`w-[130px] border rounded-lg border-[#000000] text-base font-bold text-center py-4 cursor-pointer ${selectedTags.includes(deta) ? 'bg-gray-300' : ''}`}
                                 onClick={()=>{
-                                    toggleTag(deta);
+                                    setSelectedTags(deta);
                                 }}>#{deta}</p>
                             ))
                         }
