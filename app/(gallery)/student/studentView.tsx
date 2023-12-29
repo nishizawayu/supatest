@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link"
+import TestImage from "@/app/TestImage/page"
 import { useMemo, useState } from "react"
 
 interface StudentViewProps {
@@ -87,7 +88,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                         currentData?.map((data: any, index: number) => {
                             return (
 
-                                <li key={index} className="">
+                                <li key={index}>
                                     <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&team=${data.team}&name=${encodeURIComponent(data.name)}`}>
                                         <div className="flex border-b items-center justify-between">
                                             <div className="flex items-center">
