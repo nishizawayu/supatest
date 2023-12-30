@@ -1,25 +1,20 @@
 'use client'
-import React, {useState } from 'react';
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
+import React, {useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import { Swiper as SwiperClass } from 'swiper';
 
 const Slider = ()=> {
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
     return (
         <>
         <div className='relative h-[100vh]'>
             <Swiper
-                style={{
-                    '--swiper-navigation-color': '#fff',
-                    '--swiper-pagination-color': '#fff',
-                }}
                 spaceBetween={10}
                 navigation={true}
                 thumbs={{ swiper: thumbsSwiper }}
