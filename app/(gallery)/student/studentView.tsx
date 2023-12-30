@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import TestImage from "@/app/TestImage/page"
+import TestImage from "@/app/(Slider)/TestImage/page"
 import { useMemo, useState } from "react"
 
 interface StudentViewProps {
@@ -49,14 +49,6 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                 </button>
             </div>
 
-            {/* <ul className='flex w-full text-center flex-wrap mt-4'>
-                <li className={`w-[33%] ${studentStatus === 0 ? "bg-sky-200" : ""}`} onClick={() => setStudentStatus(0)}>リセット</li>
-                <li className={`w-[33%] ${studentStatus === 1 ? "bg-sky-200" : ""}`} onClick={() => setStudentStatus(1)}>1年生</li>
-                <li className={`w-[33%] ${studentStatus === 2 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(2)}>2年生</li>
-                <li className={`w-[33%] ${studentStatus === 3 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(3)}>エンジニア</li>
-                <li className={`w-[33%] ${studentStatus === 4 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(4)}>デザイナー</li>
-                <li className={`w-[33%] ${studentStatus === 5 ? "bg-sky-200" : ""}`}  onClick={() => setStudentStatus(5)}>Bチーム</li>
-            </ul> */}
             <div className="flex justify-between mx-6 mt-8 sticky top-5 bottom-5">
                 <select value={studentYear} className="select select-primary pl-3 pr-8"  onChange={(e) => setStudentYear(parseInt(e.target.value))}>
                     <option disabled value="">学生</option>

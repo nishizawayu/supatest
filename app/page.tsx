@@ -1,12 +1,13 @@
 import Students from './(gallery)/student/page'
-import TestImage from './TestImage/page'
-import Slider from './Slider/page'
+import TestImage from './(Slider)/TestImage/page'
+import Slider from './(Slider)/Swiper/page'
+import Teams from './(Slider)/teams/page'
 
 export default async function Index() {
-  // TestImage("バケモノ");
+  // TestImage(pronpt)
   return (
     <div>
-        <Slider/>
+        <Teams/>
     </div>
   )
 }
