@@ -7,7 +7,7 @@ export default async function Index() {
   // TestImage(pronpt)
   return (
     <div>
-        <Teams/>
+        <Students/>
     </div>
   )
 }

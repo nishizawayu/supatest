@@ -1,5 +1,6 @@
 'use client'
 import { useState} from 'react';
+import React from 'react';
 import Navigation from '@/components/nav';
 import {useSearchParams } from 'next/navigation';
 import Image from 'next/image';
@@ -126,9 +127,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                 return pre
                             },[]))].map((data,index)=>{
                                 return(
-                                    <>
-                                        <p key={`tag-${data}-${index}`} className='inline-block mt-3 pb-1 px-2 font-bold bg-[#e3e3e3] rounded-md'>#{data}</p>
-                                    </>
+                                    <p key={`tag-${data}`} className='inline-block mt-3 pb-1 px-2 font-bold bg-[#e3e3e3] rounded-md'>#{data}</p>
                                 )
                             })
                         }
@@ -190,8 +189,8 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                     {
                                         currentData?.map((data,index)=>{
                                             return(
-                                                <>
-                                                <div key={`currentData-${data.uid}-${index}`} className='mt-8'>
+                                                <React.Fragment key={`all-${index}`}>
+                                                <div key={`currentData-${data.uid}`} className='mt-8'>
                                                     <div className='p-6 border-white rounded-3xl shadow-[1px_2px_4px_2px_rgba(0,0,0,0.25)]'>
                                                         <section className='text-lg font-bold'>
                                                             <h3 className='text-center'>点数</h3>
@@ -236,7 +235,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                                                     
                                                 </div>
                                                     
-                                                </>
+                                                </React.Fragment>
                                                 
                                             )
                                         })
