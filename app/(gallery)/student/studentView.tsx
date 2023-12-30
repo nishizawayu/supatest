@@ -77,10 +77,9 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
             <div className='pb-[120px] mt-8'>
                 <ul className="w-[90%] mx-6">
                     {
-                        currentData?.map((data: any, index: number) => {
+                        currentData?.map((data:any, index:number) => {
                             return (
-
-                                <li key={index}>
+                                <li key={data.id}>
                                     <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&team=${data.team}&name=${encodeURIComponent(data.name)}`}>
                                         <div className="flex border-b items-center justify-between">
                                             <div className="flex items-center">

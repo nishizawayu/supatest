@@ -42,18 +42,18 @@ const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr })=> {
     },[])
 
     return (
-      <div>
-        {teamsarr?.map((data:any,index:number)=>{
-            return(
-                <>
-                <div className='flex' key={`teams${index}`}>
-                    <p key={`teamsname${index}`}>{data.name}</p>
-                    <p key={`teamsscore${index}`} className='ml-8'>合計点：{data.teampoint}</p>
+        <div>
+          {teamsarr?.map((team, index) => {
+            return (
+              <React.Fragment key={`team-${team.id}`}> {/* ここで key を割り当てる */}
+                <div className='flex'>
+                  <p>{team.name}</p>
+                  <p className='ml-8'>合計点：{team.teampoint}</p>
                 </div>
-                </>
+              </React.Fragment>
             )
-        })}
-      </div>
+          })}
+        </div>
     )
 }
 
