@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 const Tag = ()=>{
 
     const router = useRouter();
-    const tagarr:string[]=["すごい","プロ級","明るい","可愛い","きれい","面白い","努力家","天才"];
+    const tagarr:string[]=["すごい","プロ級","センス⚪️","きれい","面白い","努力家","心に響く"];
     // タグ用
     const [selectedTags, setSelectedTags] = useState<string>("");
 
@@ -45,7 +45,7 @@ const Tag = ()=>{
                         <button 
                         className="btn bg-white text-[#808080]"
                         onClick={()=>{
-                            router.push("/score")
+                            router.push("/comment")
                         }}  
                         >
                         <span className="mr-[2px]">&lt;</span>戻る

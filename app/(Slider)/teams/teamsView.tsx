@@ -1,43 +1,57 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect,useMemo } from 'react'
 import TestImage from '@/app/(Slider)/TestImage/page'
+import Navigation from '@/components/nav'
+import Link from 'next/link'
 
 interface TeamsViewProps {
     teamsarr: {id:number,name:string,tid:string,teampoint:number,level:number}[]
+    scoredata:{score_1:number, score_2:number, score_3:number,score_4:number,comment:string,tag:string,uid:string,date:string,tid:number}[]
 }
 
-const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr })=> {
-    const pronpt = `これから送る条件を記憶し、キャラクターを作成してください
-    要素
+const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr,scoredata })=> {
+    const tag = "かっこいい"
+    const level = 5;
+    const pronpt = [`これから送る条件を記憶し、モンスターを作成してください。要素
     ・漢字をいくつか渡すのでそれのイメージにあったもの
     ・イラストのテイストはファンタジーのみではなく、自由に作成してください
+    ・levelが1の時は卵
     ・キャラクターはレベルを持っており、特定のレベルに達成すると進化します。
-    ・1回目の生成はその生物の卵を生成してください
-    
     レベルについて
     初期値:1
     最大値:100
     レベルが上がる＝経験を積むと捉えてください
     
     レベルが上がった時
-    指定のレベルに達したらキャラクターを進化させてください
+    指定のレベルに達したらキャラクターを成長させてください
     
-    進化について
-    進化する際は芋虫→蛹→蝶このようにいくつかの段階を応じて進化させてください
-    レベルに応じたを見た目にどんどん反映させてください。
-    さらに追加で与えた要素も追加して、進化させてください。
+    成長について
+    さらに追加で与えた要素も追加して、見た目を生成してください。
     
     イラストについて
-    ・手書きのイラスト風。
     ・イラストの中に実際の漢字は含めないであくまで印象のみを反映させてください。
-    ・周りの要素は含めずそのもの単体を1パターンだけ生成してください。`
+    ・周りの要素は含めずそのもの単体を1パターンだけ生成してください。
+
+    現在のレベル
+    ${level}
+
+    要素（ここの言葉に含まれる意味を噛み砕いてください）
+    ${tag}
+
+    I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:`,
+
+    ]
   
     console.log(teamsarr)
     useEffect(()=>{
-        teamsarr.map((data:any,index:number)=>{
-            if(data.teampoint == 100){
-                TestImage(pronpt,data.tid)
-            }
+        teamsarr.map((data:any,index:number)=>{  
+          const teamdata = scoredata.filter((v) => v.tid == index+1)
+          if(teamdata.length == 199){
+              TestImage(pronpt[0],data.tid)
+          }
+          else if(teamdata.length == 7){
+            TestImage(pronpt[1],data.tid)
+          }
         })
     },[])
 
@@ -47,12 +61,15 @@ const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr })=> {
             return (
               <React.Fragment key={`team-${team.id}`}> {/* ここで key を割り当てる */}
                 <div className='flex'>
-                  <p>{team.name}</p>
-                  <p className='ml-8'>合計点：{team.teampoint}</p>
+                  <Link href="">
+                    <p>{team.name}</p>
+                    <p className='ml-8'>合計点：{team.teampoint}</p>
+                  </Link>
                 </div>
               </React.Fragment>
             )
           })}
+          <Navigation/>
         </div>
     )
 }
