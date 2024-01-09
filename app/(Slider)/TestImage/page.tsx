@@ -1,8 +1,8 @@
-'use server'
 import OpenAI from "openai";
 import insertteamdata from "./insert";
 
-const TestImage = async(prompts: string, tid: number) => {
+// @ts-ignore
+const TestImage = async(prompts, tid) => {
   const apiKey = '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';
   const openai = new OpenAI({apiKey:apiKey});
   try {

@@ -46,7 +46,7 @@ const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr,scoredata })=> {
     useEffect(()=>{
         teamsarr.map((data:any,index:number)=>{  
           const teamdata = scoredata.filter((v) => v.tid == index+1)
-          if(teamdata.length == 199){
+          if(teamdata.length == 100){
               TestImage(pronpt[0],data.tid)
           }
           else if(teamdata.length == 7){

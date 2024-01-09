@@ -20,15 +20,15 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
 
     const searchParams = useSearchParams()
     // ブース番号
-    const usernum = searchParams.get("id")
+    const usernum = searchParams?.get("id") ?? "";
     // 名前
-    const username = searchParams.get("name")
+    const username = searchParams?.get("name") ?? "";
     // uid
-    const uid = searchParams.get("uid")    
+    const uid = searchParams?.get("uid") ?? "";  
     // 目標人数
-    const goal = searchParams.get("goal")
+    const goal = searchParams?.get("goal") ?? "";
     // チーム名
-    const team = searchParams.get("team")
+    const team = searchParams?.get("team") ?? "";
 
     const currentData= scoredata.filter((v) => v.uid == uid)
 
