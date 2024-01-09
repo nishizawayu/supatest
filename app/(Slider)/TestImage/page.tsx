@@ -2,7 +2,7 @@
 import OpenAI from "openai";
 import insertteamdata from "./insert";
 
-const TestImage = async(prompts:any, tid: number) => {
+const TestImage = async(prompts: string, tid: number) => {
   const apiKey = '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';
   const openai = new OpenAI({apiKey:apiKey});
   try {
