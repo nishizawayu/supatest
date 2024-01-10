@@ -2,12 +2,23 @@
 import Link from "next/link"
 import TestImage from "@/app/(Slider)/TestImage/page"
 import { useEffect, useMemo, useState } from "react"
+import Image from "next/image"
+import rank1 from "@/app/(images)/rank1.png"
+import rank2 from "@/app/(images)/rank2.png"
+import rank3 from "@/app/(images)/rank3.png"
+import rank4 from "@/app/(images)/rank4.png"
+import rank5 from "@/app/(images)/rank5.png"
+import rank6 from "@/app/(images)/rank6.png"
+import rank7 from "@/app/(images)/rank7.png"
+import rank8 from "@/app/(images)/rank8.png"
+import rank9 from "@/app/(images)/rank9.png"
 
 interface StudentViewProps {
     studentarr: {id:number, uid:string, name:string, job:string, team:string, school_year:string, most_common_tag:string}[]
     scoredata : {score_1:number, score_2:number, score_3:number, comment:string, tag:string, uid:string, date:string}[]
 }
 
+const rankImages = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9,];
 // 描画用
 const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
     const [studentYear, setStudentYear] = useState(0)
@@ -15,33 +26,33 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
     const [studentCharacter, setStudentCharacter] = useState(0)
     const [studentserch,setStudentserch] = useState("");
     const currentData = useMemo(() => {
+        let result = studentarr;
+    
         if(studentYear === 1) {
-            return studentarr.filter((v) => v.id <=35)
-        } 
-        else if(studentYear === 2) {
-            return studentarr.filter((v) => v.id >35)
-        } 
-        else if(studentJob === 3) {
-            return studentarr.filter((v) => v.job == "エンジニア")
+            result = result.filter((v) => v.id <=35);
+        } else if(studentYear === 2) {
+            result = result.filter((v) => v.id >35);
         }
-        else if(studentJob === 4) {
-            return studentarr.filter((v) => v.job == "デザイナー")
+    
+        if(studentJob === 3) {
+            result = result.filter((v) => v.job == "エンジニア");
+        } else if(studentJob === 4) {
+            result = result.filter((v) => v.job == "デザイナー");
         }
-        else if(studentCharacter === 5) {
-            return studentarr.filter((v) => v.most_common_tag == "すごい")
+    
+        if(studentCharacter === 5) {
+            result = result.filter((v) => v.most_common_tag == "すごい");
+        } else if(studentCharacter === 6) {
+            result = result.filter((v) => v.most_common_tag == "面白い");
         }
-        else if(studentCharacter === 6) {
-            return studentarr.filter((v) => v.most_common_tag == "面白い")
+    
+        if(studentserch >= "0101"){
+            result = result.filter((v)=> v.uid == studentserch);
         }
-        // 検索機能
-        else if(studentserch >= "0101"){
-            return studentarr.filter((v)=> v.uid == studentserch)
-        }
-        else {
-            return studentarr
-        }
-        
-    }, [studentJob,studentYear,studentCharacter,studentserch])
+    
+        return result;
+    }, [studentJob,studentYear,studentCharacter,studentserch]);
+    
 
     const handleInputChange = (event:any) => {
         const value = event.target.value
@@ -66,25 +77,24 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
 
             <div className="flex justify-between mx-6 mt-8 sticky top-5 bottom-5">
                 <select value={studentYear} className="select select-primary pl-3 pr-8"  onChange={(e) => setStudentYear(parseInt(e.target.value))}>
-                    <option disabled value="">学生</option>
+                    <option disabled value={0}>学生</option>
                     <option value={1}>1年</option>
                     <option value={2}>2年</option>
-                    <option value={0}>全て</option>
+                    <option value={100}>全て</option>
                 </select>
 
                 <select value={studentJob} className="select select-primary pl-3" onChange={(e) => setStudentJob(parseInt(e.target.value))}>
-                    <option disabled value="">職種</option>
+                    <option disabled value={0}>職種</option>
                     <option value={3}>エンジニア</option>
                     <option value={4}>デザイナー</option>
-                    <option value={0}>その他</option>
-                    <option value={0}>全て</option>
+                    <option value={100}>全て</option>
                 </select>
 
                 <select value={studentCharacter} className="select select-primary pl-3 pr-12" onChange={(e) => setStudentCharacter(parseInt(e.target.value))}>
-                    <option disabled value="">特徴</option>
+                    <option disabled value={0}>特徴</option>
                     <option value={5}>すごい</option>
                     <option value={6}>面白い</option>
-                    <option value={0}>全て</option>
+                    <option value={100}>全て</option>
                 </select>
             </div>
 
@@ -98,7 +108,11 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                                     <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&team=${data.team}&name=${encodeURIComponent(data.name)}`}>
                                         <div className="flex border-b items-center justify-between">
                                             <div className="flex items-center">
-                                                <p className="text-[24px]">{index+1}</p>
+                                                {
+                                                    index < 9 ? 
+                                                    <Image src={rankImages[index]} alt={`${index+1}位`} width={32} className=" my-2"/> : // インデックスが3未満の場合、画像を表示します
+                                                    <p className="ml-1 text-[24px]">{index+1}</p> // インデックスが3以上の場合、順位をテキストとして表示します
+                                                }
                                                 <div className="ml-6">
                                                     <div className="flex items-center mt-4">
                                                         <p className="text-sm font-medium">{data.name}</p>
