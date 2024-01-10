@@ -47,10 +47,10 @@ const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr,scoredata })=> {
         teamsarr.map((data:any,index:number)=>{  
           const teamdata = scoredata.filter((v) => v.tid == index+1)
           if(teamdata.length == 100){
-              TestImage(pronpt[0],data.tid)
+              TestImage(pronpt[0],teamdata[0].tid)
           }
           else if(teamdata.length == 7){
-            TestImage(pronpt[1],data.tid)
+            TestImage(pronpt[1],teamdata[0].tid)
           }
         })
     },[])
