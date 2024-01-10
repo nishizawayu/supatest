@@ -1,21 +1,51 @@
-import OpenAI from "openai";
-import insertteamdata from "./insert";
-
+// import seveimage from "../seveImage/seveImage";
+"use server"
 // @ts-ignore
 const TestImage = async(prompts, tid) => {
-  const apiKey = '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';
-  const openai = new OpenAI({apiKey:apiKey});
   try {
-    const image = await openai.images.generate({ model: "dall-e-3", prompt: prompts });
-
-    console.log(image.data);
-    // 画像のURLがあれば、それをサーバーに送ります
-    if(image.data[0]?.url) {
-      insertteamdata(image.data[0].url, tid)
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://hyouka-app.vercel.app/' : 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/generateImage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ prompts }),
+    });
+  
+    if (!response.ok) {
+      const errorDetails = await response.json();
+      console.error('Error details:', errorDetails);
+      throw new Error(`Server error: ${response.status}`);
     }
-  } catch (error) {
-    // エラーをログに出力
-    console.error("Error generating image:", error);
+  
+    const imageData = await response.json();
+
+    const imageBufferBase64 = imageData.imageData[0];
+
+    const imageBuffer = Buffer.from(imageBufferBase64, 'base64');
+
+    const sharp = require('sharp');
+    try {
+      const compressedBuffer = await sharp(imageBuffer)
+        .resize(800, 800)
+        .toFormat('jpeg', { quality: 80 })
+        .toBuffer();
+
+      const compressedBase64 = compressedBuffer.toString('base64');
+      const baseUrl = process.env.NODE_ENV === 'production' ? 'https://hyouka-app.vercel.app/' : 'http://localhost:3000';
+      // APIルートを呼び出し、圧縮された画像をサーバーに保存
+      await fetch(`${baseUrl}/api/saveImage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageBufferBase64: compressedBase64, tid }),
+      });
+    } catch (err) {
+      console.error('Error compressing image:', err);
+    }
+    } catch (error) {
+  console.error("Error generating image:", error);
   }
 }
 

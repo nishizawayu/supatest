@@ -7,7 +7,7 @@ import TestImages from './tesuimage/page'
 export default async function Index() {
   return (
     <div>
-        <Teams/>
+        <Students/>
     </div>
   )
 }
