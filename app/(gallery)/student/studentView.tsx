@@ -77,24 +77,24 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
 
             <div className="flex justify-between mx-6 mt-8 sticky top-5 bottom-5">
                 <select value={studentYear} className="select select-primary pl-3 pr-8"  onChange={(e) => setStudentYear(parseInt(e.target.value))}>
-                    <option disabled value="">学生</option>
+                    <option disabled value={0}>学生</option>
                     <option value={1}>1年</option>
                     <option value={2}>2年</option>
-                    <option value={0}>全て</option>
+                    <option value={100}>全て</option>
                 </select>
 
                 <select value={studentJob} className="select select-primary pl-3" onChange={(e) => setStudentJob(parseInt(e.target.value))}>
-                    <option disabled value="">職種</option>
+                    <option disabled value={0}>職種</option>
                     <option value={3}>エンジニア</option>
                     <option value={4}>デザイナー</option>
-                    <option value={0}>全て</option>
+                    <option value={100}>全て</option>
                 </select>
 
                 <select value={studentCharacter} className="select select-primary pl-3 pr-12" onChange={(e) => setStudentCharacter(parseInt(e.target.value))}>
-                    <option disabled value="">特徴</option>
+                    <option disabled value={0}>特徴</option>
                     <option value={5}>すごい</option>
                     <option value={6}>面白い</option>
-                    <option value={0}>全て</option>
+                    <option value={100}>全て</option>
                 </select>
             </div>
 
