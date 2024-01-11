@@ -17,7 +17,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
       try {
         const imageBuffer = Buffer.from(imageBufferBase64, 'base64');
-        const imagePath = path.join(process.cwd(), 'app/(images)', `image_${tid}_${level}.jpg`);
+        const imagePath = path.join(process.cwd(), '/public/image', `image_${tid}_${level}.jpg`);
         const imagePathdata = `image_${tid}_${level}.jpg`
 
         // ディレクトリの存在を確認し、存在しなければ作成

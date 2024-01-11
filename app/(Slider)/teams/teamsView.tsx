@@ -19,7 +19,7 @@ const calculateLevel = (experience:number) => {
     level++;
   }
 
-  return 4;
+  return 6;
 };
 
 const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimageurl })=> {
@@ -62,16 +62,9 @@ const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimageurl 
               I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:`,
 
             ]
-        
-            currentimagedata.forEach((data,index)=>{
-              {
-                if(data.imageurl != `image_${data.tid}_${leveldata}.jpg`){
-                  if (teamdata.length == 2) {
-                    TestImage(pronpt[0], team.id,leveldata);
-                  }
-                }
-              }
-            })
+            if (teamdata.length == 4) {
+              TestImage(pronpt[0], team.id,leveldata);
+            }
           }
         }
       });
