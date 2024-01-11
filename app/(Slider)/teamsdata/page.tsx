@@ -6,7 +6,7 @@ const getTeamsdata = async() =>{
     const cookieStore = cookies()
     const supabase = createClient(cookieStore);
 
-    const { data: students } = await supabase.from("teams").select("*").order('teampoint', { ascending: false });
+    const { data: students } = await supabase.from("teams").select("*").order('total_evaluation_count', { ascending: false });
     if(students != null){
         console.log(students);
         return students;
