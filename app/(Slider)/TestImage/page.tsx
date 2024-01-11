@@ -1,7 +1,8 @@
 // import seveimage from "../seveImage/seveImage";
 "use server"
+import insertimagedata from "./insert";
 // @ts-ignore
-const TestImage = async(prompts, tid) => {
+const TestImage = async(prompts, tid,level) => {
   try {
     const baseUrl = process.env.NODE_ENV === 'production' ? 'https://hyouka-app.vercel.app/' : 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/generateImage`, {
@@ -34,13 +35,17 @@ const TestImage = async(prompts, tid) => {
       const compressedBase64 = compressedBuffer.toString('base64');
       const baseUrl = process.env.NODE_ENV === 'production' ? 'https://hyouka-app.vercel.app/' : 'http://localhost:3000';
       // APIルートを呼び出し、圧縮された画像をサーバーに保存
-      await fetch(`${baseUrl}/api/saveImage`, {
+      const saveimage = await fetch(`${baseUrl}/api/saveImage`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ imageBufferBase64: compressedBase64, tid }),
+        body: JSON.stringify({ imageBufferBase64: compressedBase64, tid,level }),
       });
+      const result = await saveimage.json();
+      if(result != null){
+        insertimagedata(result.imagePathdata, tid);
+      }  
     } catch (err) {
       console.error('Error compressing image:', err);
     }

@@ -36,6 +36,7 @@ const end = ()=>{
             if(uid != null && score_1 != null && score_2 != null && score_3 != null && score_4 != null && comment != null && tag != null){
                 insertdata(uid,score_1,score_2,score_3,score_4,comment,tag);
             }
+            //ここに画像生成の条件式を打ち込む
         }
     },[state])
 
@@ -76,7 +77,8 @@ const end = ()=>{
                     <div className="font-bold text-l mt-8 mr-10">
                         <button onClick={()=>{
                             setState(true)
-                            router.push("/nummber");
+
+                            router.push("/teams");
                         }} className="btn bg-black text-white">
                         送信する<span className="ml-[2px]">&gt;</span>
                         </button>

@@ -21,6 +21,7 @@ const insertdata = async(uid:string,score_1:string,score_2:string,score_3:string
     if(error){
         console.log(error);
     }
+    
 }
 
 export default insertdata
