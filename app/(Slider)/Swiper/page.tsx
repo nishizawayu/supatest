@@ -148,21 +148,28 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,teamsimagedata })=> {
                         {
                             currentimageData?.map((data,index)=>{
                                 return(
-                                    <SwiperSlide key={`imageslide${index+1}枚目`}>
+                                    <SwiperSlide className='my-8' key={`imageslide${index+1}枚目`}>
                                         <div className="card">
-                                            <input type="checkbox" id="card1" className="more" aria-hidden="true" />
+                                            <input type="checkbox" id={`card${index}`} className="more" aria-hidden="true" />
                                             <div className="content">
                                             <div className="front" style={{ backgroundImage: `url("image/${data.imageUrl}")` }}>
                                                 <div className="inner">
-                                                <label htmlFor="card1" className="button" aria-hidden="true">
-                                                    Details
+                                                <label htmlFor={`card${index}`} className="button" aria-hidden="true">
+                                                    進化の理由
                                                 </label>
                                                 </div>
                                             </div>
                                             <div className="back">
                                                 <div className="inner">
-                                                <p>あああ</p>
-                                                <label htmlFor="card1" className="button return" aria-hidden="true">
+                                                {
+                                                    currentData?.map((data,index)=>{
+                                                        return(
+                                                            <p className='mt-[40%]'>{data.name}が{data.member.length}回プレゼンをし、<br/>すごい,面白い,明るい,プロ級という評価をもらい、<br/>この姿に進化しました。</p>
+                                                    )
+                                                    })
+                                                }
+                                                <p></p>
+                                                <label htmlFor={`card${index}`} className="button return" aria-hidden="true">
                                                     <i className="fas fa-arrow-left"></i>
                                                 </label>
                                                 </div>
