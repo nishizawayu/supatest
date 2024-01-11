@@ -32,96 +32,85 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,teamsimagedata })=> {
     const [flip, setFlip] = useState<Array<boolean | null>>(Array(10).fill(null));
     const rankImages = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9,];
     const [teamId, setTeamId] = useState(1)
-
-    console.log(teamsimagedata)
-
     const currentData = useMemo(() => {
-    let result = teamsarr;
-    let imagepath = teamsimagedata
-    if(teamId === 1) {
-      result = result.filter((v) => v.tid == 1);
-      imagepath = imagepath.filter((v) => v.tid == 1);
-    } 
-    if(teamId === 2) {
-        result = result.filter((v) => v.tid == 2);
-        imagepath = imagepath.filter((v) => v.tid == 2);
-    }
-    if(teamId === 3) {
-        result = result.filter((v) => v.tid == 3);
-        imagepath = imagepath.filter((v) => v.tid == 3);
-    }
-    if(teamId === 4) {
-        result = result.filter((v) => v.tid == 4);
-        imagepath = imagepath.filter((v) => v.tid == 4);
-    }
-    if(teamId === 5) {
-        result = result.filter((v) => v.tid == 5);
-        imagepath = imagepath.filter((v) => v.tid == 5);
-    }
-    if(teamId === 6) {
-        result = result.filter((v) => v.tid == 6);
-        imagepath = imagepath.filter((v) => v.tid == 6);
-    }
-    if(teamId === 7) {
-        result = result.filter((v) => v.tid == 7);
-        imagepath = imagepath.filter((v) => v.tid == 7);
-    }
-    if(teamId === 8) {
-        result = result.filter((v) => v.tid == 8);
-        imagepath = imagepath.filter((v) => v.tid == 8);
-    }
-    if(teamId === 9) {
-        result = result.filter((v) => v.tid == 9);
-        imagepath = imagepath.filter((v) => v.tid == 9);
-    }
-    if(teamId === 10) {
-        result = result.filter((v) => v.tid == 10);
-        imagepath = imagepath.filter((v) => v.tid == 10);
-    }
-    if(teamId === 11) {
-        result = result.filter((v) => v.tid == 11);
-        imagepath = imagepath.filter((v) => v.tid == 11);
-    }
-  return result;
+        if(teamsarr != undefined){
+            let result = teamsarr;
+            if(teamId === 1) {
+                result = result.filter((v) => v.tid == 1);
+            } 
+            if(teamId === 2) {
+                result = result.filter((v) => v.tid == 2);
+            }
+            if(teamId === 3) {
+                result = result.filter((v) => v.tid == 3);
+            }
+            if(teamId === 4) {
+                result = result.filter((v) => v.tid == 4);
+            }
+            if(teamId === 5) {
+                result = result.filter((v) => v.tid == 5);
+            }
+            if(teamId === 6) {
+                result = result.filter((v) => v.tid == 6);
+            }
+            if(teamId === 7) {
+                result = result.filter((v) => v.tid == 7);
+            }
+            if(teamId === 8) {
+                result = result.filter((v) => v.tid == 8);
+            }
+            if(teamId === 9) {
+                result = result.filter((v) => v.tid == 9);
+            }
+            if(teamId === 10) {
+                result = result.filter((v) => v.tid == 10);
+            }
+            if(teamId === 11) {
+                result = result.filter((v) => v.tid == 11);
+            }
+            return result;
+        }
     },[teamId])
 
     const currentimageData = useMemo(() => {
-        let imagepath = teamsimagedata
-        if(teamId === 1) {
-          imagepath = imagepath.filter((v) => v.tid == 1);
-        } 
-        if(teamId === 2) {
-            imagepath = imagepath.filter((v) => v.tid == 2);
+        if(teamsimagedata != undefined){
+            let imagepath = teamsimagedata
+            if(teamId === 1) {
+                imagepath = imagepath.filter((v) => v.tid == 1);
+            } 
+            if(teamId === 2) {
+                imagepath = imagepath.filter((v) => v.tid == 2);
+            }
+            if(teamId === 3) {
+                imagepath = imagepath.filter((v) => v.tid == 3);
+            }
+            if(teamId === 4) {
+                imagepath = imagepath.filter((v) => v.tid == 4);
+            }
+            if(teamId === 5) {
+                imagepath = imagepath.filter((v) => v.tid == 5);
+            }
+            if(teamId === 6) {
+                imagepath = imagepath.filter((v) => v.tid == 6);
+            }
+            if(teamId === 7) {
+                imagepath = imagepath.filter((v) => v.tid == 7);
+            }
+            if(teamId === 8) {
+                imagepath = imagepath.filter((v) => v.tid == 8);
+            }
+            if(teamId === 9) {
+                imagepath = imagepath.filter((v) => v.tid == 9);
+            }
+            if(teamId === 10) {
+                imagepath = imagepath.filter((v) => v.tid == 10);
+            }
+            if(teamId === 11) {
+                imagepath = imagepath.filter((v) => v.tid == 11);
+            }
+            return imagepath;
         }
-        if(teamId === 3) {
-            imagepath = imagepath.filter((v) => v.tid == 3);
-        }
-        if(teamId === 4) {
-            imagepath = imagepath.filter((v) => v.tid == 4);
-        }
-        if(teamId === 5) {
-            imagepath = imagepath.filter((v) => v.tid == 5);
-        }
-        if(teamId === 6) {
-            imagepath = imagepath.filter((v) => v.tid == 6);
-        }
-        if(teamId === 7) {
-            imagepath = imagepath.filter((v) => v.tid == 7);
-        }
-        if(teamId === 8) {
-            imagepath = imagepath.filter((v) => v.tid == 8);
-        }
-        if(teamId === 9) {
-            imagepath = imagepath.filter((v) => v.tid == 9);
-        }
-        if(teamId === 10) {
-            imagepath = imagepath.filter((v) => v.tid == 10);
-        }
-        if(teamId === 11) {
-            imagepath = imagepath.filter((v) => v.tid == 11);
-        }
-      return imagepath;
-        },[teamId])
+    },[teamId])
 
         console.log(currentimageData)
 
@@ -157,9 +146,9 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,teamsimagedata })=> {
                             effect={'coverflow'}
                         >   
                         {
-                            currentimageData.map((data,index)=>{
+                            currentimageData?.map((data,index)=>{
                                 return(
-                                    <SwiperSlide>
+                                    <SwiperSlide key={`imageslide${index+1}枚目`}>
                                         <div className="card">
                                             <input type="checkbox" id="card1" className="more" aria-hidden="true" />
                                             <div className="content">
@@ -184,53 +173,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,teamsimagedata })=> {
                                 )
                             })
                         }
-                            
                         </Swiper>
-                        {/* <Swiper
-                            onSwiper={setThumbsSwiper}
-                            spaceBetween={30}
-                            slidesPerView={5}
-                            freeMode={true}
-                            watchSlidesProgress={true}
-                            modules={[FreeMode, Navigation, Thumbs]}
-                            className="mySwiper"
-                        >
-                            <SwiperSlide>
-                            <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                            <p>5/5</p>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                            <p>5/15</p>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                            <p>5/25</p>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                            <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                            <p>5/35</p>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                            <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-                            <p>5/50</p>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                            <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                            <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                            <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                            <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                            <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-                            </SwiperSlide>
-                        </Swiper> */}
                         <div className='flex justify-around h-[20%]'>
                             <div className=''>
                                 <p>次の進化まで</p>

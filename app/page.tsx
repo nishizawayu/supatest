@@ -4,7 +4,7 @@ import TeamRank from './(Slider)/teamrank/page'
 export default async function Index() {
   return (
     <div>
-        <TeamRank/>
+        <Students/>
     </div>
   )
 }
