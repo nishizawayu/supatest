@@ -135,7 +135,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,teamsimagedata })=> {
             {
                 currentData?.map((data:any, index:number) => {
                     return(
-                        <div className='relative w-[80%] h-[100%]'>
+                        <div key={data.id} className='relative w-[80%] h-[100%]'>
                         <h1 className='text-[48px] text-center font-bold '>{data.name}</h1>
                         <p className='text-center'>メンバー:{data.member+""}</p>
                         <Swiper
@@ -234,20 +234,21 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,teamsimagedata })=> {
                         <div className='flex justify-around h-[20%]'>
                             <div className=''>
                                 <p>次の進化まで</p>
+                                
                                 {
-                                    data.total_evaluation_count >= 1 ?
+                                    data.total_evaluation_count < data.member.length ?
                                     <p className=''><span className='text-[40px]'>{data.member.length-data.total_evaluation_count}</span>回</p> :
-                                    data.total_evaluation_count >= data.member.length ?
+                                    data.total_evaluation_count < data.member.length*3 ?
                                     <p className=''><span className='text-[40px]'>{data.member.length*3-data.total_evaluation_count}</span>回</p> :
-                                    data.total_evaluation_count >= data.member.length*3 ?
+                                    data.total_evaluation_count < data.member.length*5 ?
                                     <p className=''><span className='text-[40px]'>{data.member.length*5-data.total_evaluation_count}</span>回</p> :
-                                    data.total_evaluation_count >= data.member.length*5 ?
+                                    data.total_evaluation_count < data.member.length*7 ?
                                     <p className=''><span className='text-[40px]'>{data.member.length*7-data.total_evaluation_count}</span>回</p> :
-                                    data.total_evaluation_count >= data.member.length*7 ?
+                                    data.total_evaluation_count < data.member.length*10 ?
                                     <p className=''><span className='text-[40px]'>{data.member.length*10-data.total_evaluation_count}</span>回</p> :
                                     <p className=''><span className='text-[40px]'>{1-data.total_evaluation_count}</span>回</p>
                                 }
-                                
+
                             </div>
                             <div className='border-r'></div>
                             <div>
