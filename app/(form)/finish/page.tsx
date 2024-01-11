@@ -9,6 +9,7 @@ const end = ()=>{
     const [state,setState] = useState(false)
     const [data,setdata] = useState<string[]>([])
     const text = ["企画","デザイン","実装","プレゼン","コメント","タグ",]
+    const [uiddata,setuiddata] = useState<string>("");
     useEffect(()=>{
         // ローカルストレージから値を取得
         const uid = localStorage.getItem('filteredValue');
@@ -19,6 +20,7 @@ const end = ()=>{
         const comment = localStorage.getItem('inputText');
         const tag = localStorage.getItem('selectedTags');
         if(uid != null && score_1 != null && score_2 != null && score_3 != null && score_4 != null && comment != null && tag != null){
+            setuiddata(uid)
             const dataarr = [`${score_1}点`,`${score_2}点`,`${score_3}点`,`${score_4}点`,comment,tag];
             setdata(dataarr);
         }
@@ -78,7 +80,7 @@ const end = ()=>{
                         <button onClick={()=>{
                             setState(true)
 
-                            router.push("/teams");
+                            router.push(`/teams?uid=${uiddata}`);
                         }} className="btn bg-black text-white">
                         送信する<span className="ml-[2px]">&gt;</span>
                         </button>
