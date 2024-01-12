@@ -20,24 +20,24 @@ interface StudentViewProps {
 
 // 描画用
 const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const rankImages = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9,];
     const [studentYear, setStudentYear] = useState(0)
     const [studentJob, setStudentJob] = useState(0)
     const [studentCharacter, setStudentCharacter] = useState(0)
     const [studentserch,setStudentserch] = useState("");
 
-    useEffect(() => {
-        const loadData = async () => {
-            // 例: APIからデータを取得するなどの処理
-            // await fetchData();
+    // useEffect(() => {
+    //     const loadData = async () => {
+    //         // 例: APIからデータを取得するなどの処理
+    //         // await fetchData();
 
-            // 読み込みが完了したらloadingをfalseに設定
-            setLoading(false);
-        };
+    //         // 読み込みが完了したらloadingをfalseに設定
+    //         setLoading(false);
+    //     };
 
-        loadData()
-    }, []);
+    //     loadData()
+    // }, []);
 
     const currentData = useMemo(() => {
         let result = studentarr;
@@ -78,7 +78,6 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
 
     return (
         <>
-            {loading ? <Spinner /> : 
             <div>
                 <h1 className="text-xl font-bold text-center mt-7">
                     学生を見る
@@ -152,7 +151,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                         }
                     </ul>
                 </div>
-            </div>}
+            </div>
             
         </>
     );
