@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 const Comment: FC = () => {
     const router = useRouter()
     const [inputText, setInputText] = useState<string>('');
+    const [nodata,setnodata] = useState(true);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setInputText(e.target.value);
@@ -12,10 +13,16 @@ const Comment: FC = () => {
 
     const handleNextClick = () => {
       // ローカルストレージに値を保存
-      localStorage.setItem('inputText', inputText.toString());
+      if(inputText != ""){
+        localStorage.setItem('inputText', inputText.toString());
   
       // '/tag'ページに移動
-      router.push("/tag");
+        router.push("/tag");
+      }
+      else{
+          console.log("nodata")
+          setnodata(false)
+      }
     };
 
     return (
@@ -27,13 +34,16 @@ const Comment: FC = () => {
             <div className="flex justify-center flex-wrap">
               <div className="text-left w-full max-w-xs">
                 <h2 className="text-base font-bold">コメントを入力</h2>
-                <p className="text-xs mb-2">プレゼンの感想やアドバイスを入力してください</p>
+                <p className="text-xs">プレゼンの感想やアドバイスを入力してください</p>
+                {
+                  nodata == false ? <p className='text-xs text-red-500'>※コメントを入力してください</p> : ""
+                }
               </div>
               <textarea
                 id="textInput"
                 value={inputText}
                 onChange={handleChange}
-                className="textarea textarea-bordered w-full max-w-xs h-[116px] text-base"
+                className="textarea textarea-bordered w-full max-w-xs h-[116px] text-base mt-2"
                 placeholder="Bio"
               />
             </div>

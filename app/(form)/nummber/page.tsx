@@ -57,7 +57,7 @@ const Nummber= () => {
     
     // inputタグの処理  
     const sliceMaxLength = (elem: HTMLInputElement, maxLength: number) => {
-    elem.value = elem.value.slice(0, maxLength);
+        elem.value = elem.value.slice(0, maxLength);
     };
       
 
