@@ -22,10 +22,10 @@ const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimageurl 
       console.log(studentdata)
       if (studentdata.length > 0) {
         const teamscoredata = scoredata.filter(v => v.tid === studentdata[0].tid);
-      
+        
         if (teamscoredata.length > 0) {
           const teamdata = teamsarr.filter(v => v.tid === teamscoredata[0].tid);
-      
+          console.log(teamscoredata);
           if (teamdata.length > 0) {
             // 以降の処理
             const currentimagedata = teamsimageurl.filter((v) => v.tid === teamdata[0].tid);
