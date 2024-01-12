@@ -5,19 +5,24 @@ import { useRouter } from 'next/navigation';
 const Tag = ()=>{
 
     const router = useRouter();
-    const tagarr:string[]=["すごい","プロ級","センス⚪️","きれい","面白い","努力家","心に響く"];
+    const tagarr:string[]=["すごい","プロ級","センス○","きれい","面白い","努力家","心に響く","天才肌"];
     // タグ用
     const [selectedTags, setSelectedTags] = useState<string>("");
+    const [nodata,setnodata] = useState(true);
 
     const handleNextClick = () => {
         // ローカルストレージに値を保存
-        localStorage.setItem('selectedTags', selectedTags.toString());
-    
-        // '/finish'ページに移動
-        router.push("/finish");
+        if(selectedTags != ""){
+            localStorage.setItem('selectedTags', selectedTags.toString());
+            // '/finish'ページに移動
+            router.push("/finish");
+        }
+        else{
+            console.log("nodata")
+            setnodata(false)
+        }
       };
-
-
+      
     return(
         <div>
             <section>
@@ -27,6 +32,9 @@ const Tag = ()=>{
                     <div className="w-full max-w-xs mx-10">
                         <h2 className="text-base font-bold">タグを選択</h2>
                         <p className="text-xs">学生の特徴に合ったタグを1つ選択してください</p>
+                        {
+                            nodata == false ? <p className='text-xs text-red-500'>※タグを選択してください</p> : ""
+                        }
                     </div>
                     <div className="flex flex-wrap w-full gap-x-10 gap-y-8 justify-center my-8">
                         {

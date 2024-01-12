@@ -2,7 +2,7 @@
 import React, { useEffect, useState} from 'react'
 import { useRouter } from 'next/navigation';
 import {useSearchParams } from 'next/navigation';
-import TestImage from '@/app/(Slider)/TestImage/page'
+import TestImage from '@/app/TestImage/page'
 import Navigation from '@/components/nav'
 
 interface TeamsViewProps {
@@ -13,10 +13,11 @@ interface TeamsViewProps {
 
 const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimageurl })=> {
     const router = useRouter()
-    useEffect(() => {
-      const searchParams = useSearchParams()
+    const searchParams = useSearchParams()
       // uid
       const uid = searchParams?.get("uid") ?? "";
+    useEffect(() => {
+
       const studentdata = scoredata.filter((v) => v.uid == uid);
       console.log(studentdata)
       const teamscoredata = scoredata.filter((v)=> v.tid === studentdata[0].tid)
@@ -26,9 +27,17 @@ const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimageurl 
       if(teamdata.length != 0){
         const currentimagedata = teamsimageurl.filter((v) => v.tid === teamdata[0].tid);
         console.log(currentimagedata);
+        //タグが重複しないで全部出る
         const tag = teamscoredata.map((data,index)=>{
           return data.tag
         })
+        //タグの重複をなくす
+        // const tag = // @ts-ignore
+        // [...new Set(teamscoredata.reduce<string[]>((pre,cur) => {
+        //     pre.push(cur.tag)
+        //     return pre
+        // },[]))]
+        console.log(tag);
         const pronpt = [`これから送る条件を記憶し、モンスターを作成してください。要素
           ・漢字をいくつか渡すのでそれのイメージにあったもの
           ・イラストのテイストはファンタジーのみではなく、自由に作成してください
