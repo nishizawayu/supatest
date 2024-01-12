@@ -164,13 +164,12 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,teamsimagedata })=> {
                                                 {
                                                     currentData?.map((data,index)=>{
                                                         return(
-                                                            <p className='mt-[40%]'>{data.name}が{data.member.length}回プレゼンをし、<br/>すごい,面白い,明るい,プロ級という評価をもらい、<br/>この姿に進化しました。</p>
+                                                            <p key={`imagealt${index+1}枚目`} className='mt-[40%]'>{data.name}が{data.member.length}回プレゼンをし、<br/>すごい,面白い,明るい,プロ級という評価をもらい、<br/>この姿に進化しました。</p>
                                                     )
                                                     })
                                                 }
-                                                <p></p>
                                                 <label htmlFor={`card${index}`} className="button return" aria-hidden="true">
-                                                    <i className="fas fa-arrow-left"></i>
+                                                    <p className=' text-black'>←</p>
                                                 </label>
                                                 </div>
                                             </div>
