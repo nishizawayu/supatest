@@ -27,18 +27,6 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
     const [studentCharacter, setStudentCharacter] = useState(0)
     const [studentserch,setStudentserch] = useState("");
 
-    // useEffect(() => {
-    //     const loadData = async () => {
-    //         // 例: APIからデータを取得するなどの処理
-    //         // await fetchData();
-
-    //         // 読み込みが完了したらloadingをfalseに設定
-    //         setLoading(false);
-    //     };
-
-    //     loadData()
-    // }, []);
-
     const currentData = useMemo(() => {
         let result = studentarr;
     
