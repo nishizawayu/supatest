@@ -4,7 +4,7 @@ import insertimagedata from "./insert";
 // @ts-ignore
 const TestImage = async(prompts, tid,level) => {
   try {
-    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://hyouka-app.vercel.app/' : 'http://localhost:3000';
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://hyouka-app.vercel.app' : 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/generateImage`, {
       method: 'POST',
       headers: {
@@ -33,7 +33,7 @@ const TestImage = async(prompts, tid,level) => {
         .toBuffer();
 
       const compressedBase64 = compressedBuffer.toString('base64');
-      const baseUrl = process.env.NODE_ENV === 'production' ? 'https://hyouka-app.vercel.app/' : 'http://localhost:3000';
+      const baseUrl = process.env.NODE_ENV === 'production' ? 'https://hyouka-app.vercel.app' : 'http://localhost:3000';
       // APIルートを呼び出し、圧縮された画像をサーバーに保存
       const saveimage = await fetch(`${baseUrl}/api/saveImage`, {
         method: 'POST',
