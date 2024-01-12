@@ -6,6 +6,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
+import 'swiper/css/pagination';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { Swiper as SwiperClass } from 'swiper';
 import { EffectCoverflow, Pagination } from 'swiper/modules';
@@ -206,7 +207,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata })
                             spaceBetween={10}
                             // navigation={true}
                             thumbs={{ swiper: thumbsSwiper }}
-                            modules={[FreeMode, Navigation, Thumbs, EffectCoverflow]}
+                            modules={[FreeMode, Navigation, Thumbs, EffectCoverflow, Pagination]}
                             className="mySwiper2 h-[80%]"
                             coverflowEffect={{
                                 rotate: 50,
@@ -218,6 +219,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata })
                             grabCursor={true}
                             centeredSlides={true}
                             effect={'coverflow'}
+                            pagination={true}
                         >   
                         {
                             currentimageData?.map((data,index)=>{
@@ -296,7 +298,8 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata })
             
 
         <div className='mt-8  w-[20%] mr-6'>
-                <ul className="w-[90%] mx-6">
+            <h2 className='text-center text-[32px] font-bold ml-8'>Rank</h2>
+                <ul className="w-[90%] mx-6 my-6">
                     {
                         teamsarr?.map((data:any, index:number) => {
                             return (
