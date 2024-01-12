@@ -21,7 +21,7 @@ import rank7 from "@/app/(images)/rank7.png"
 import rank8 from "@/app/(images)/rank8.png"
 import rank9 from "@/app/(images)/rank9.png"
 import TestImage from '@/app/TestImage/page';
-
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 interface TeamsViewProps {
     teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[]}[]
@@ -29,11 +29,49 @@ interface TeamsViewProps {
     teamsimagedata:{id:number,tid:number,imageUrl:string}[]
 }
 
-const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata })=> {
+const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=> {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
     const [flip, setFlip] = useState<Array<boolean | null>>(Array(10).fill(null));
     const rankImages = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9,];
     const [teamId, setTeamId] = useState(1)
+    const supabase = createClientComponentClient();
+    const [evaluations, setEvaluations] = useState();
+    const [arreva,setarreva] = useState([]);
+    const [imagedata,setimagedata] = useState();
+
+    useEffect(() => {
+        const subscription = supabase
+        .channel('evaluation')
+        .on("postgres_changes", { event: "INSERT", schema: "public", table: "evaluation" }, (payload) => {
+            //@ts-ignore
+            scoredata.push(payload.new)
+            //@ts-ignore
+            setarreva(scoredata)
+            //@ts-ignore
+            setEvaluations(payload.new)
+            console.log(payload.new)
+        })
+        .subscribe();
+    }, []);
+
+
+    useEffect(()=>{
+        const subscription = supabase
+        .channel('teamsimageurl')
+        .on("postgres_changes", { event: "INSERT", schema: "public", table: "teamsimageurl" }, (payload) => {
+            console.log('New evaluation:', payload.new);
+            // ここで何かの処理を行う
+            //@ts-ignore
+                teamsimagedata.push(payload.new)
+                //@ts-ignore
+                setimagedata(teamsimagedata);
+            })
+        .subscribe();
+    },[])
+
+    // console.log(evaluations);
+    // console.log(imagedata);
+    
     const currentData = useMemo(() => {
         if(teamsarr != undefined){
             let result = teamsarr;
@@ -75,8 +113,8 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata })
     },[teamId])
 
     const currentimageData = useMemo(() => {
+        let imagepath = teamsimagedata
         if(teamsimagedata != undefined){
-            let imagepath = teamsimagedata
             if(teamId === 1) {
                 imagepath = imagepath.filter((v) => v.tid == 1);
             } 
@@ -110,83 +148,83 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata })
             if(teamId === 11) {
                 imagepath = imagepath.filter((v) => v.tid == 11);
             }
-            return imagepath;
+            return imagepath
         }
-    },[teamId])
+    },[teamId,imagedata])
 
     useEffect(() => {
-          const teamscoredata = scoredata.filter(v => v.tid === teamId);
-          if (teamscoredata.length > 0) {
-            const teamdata = teamsarr.filter(v => v.tid === teamscoredata[0].tid);
+        if(evaluations != undefined){
+            //@ts-ignore
+            const teamscoredata = scoredata.filter(v => v.tid === evaluations.tid);
             console.log(teamscoredata);
-            if (teamdata.length > 0) {
-              // 以降の処理
-              const currentimagedata = teamsimagedata.filter((v) => v.tid === teamdata[0].tid);
-              console.log(currentimagedata);
-              //タグが重複しないで全部出る
-              const tag = teamscoredata.map((data,index)=>{
-                return data.tag
-              })
-              //タグの重複をなくす
-              // const tag = // @ts-ignore
-              // [...new Set(teamscoredata.reduce<string[]>((pre,cur) => {
-              //     pre.push(cur.tag)
-              //     return pre
-              // },[]))]
-              console.log(tag);
-              const pronpt = [`これから送る条件を記憶し、モンスターを作成してください。要素
-                ・漢字をいくつか渡すのでそれのイメージにあったもの
-                ・イラストのテイストはファンタジーのみではなく、自由に作成してください
-                ・levelが1の時は卵
-                ・キャラクターはレベルを持っており、特定のレベルに達成すると進化します。
-                レベルについて
-                初期値:1
-                最大値:100
-                レベルが上がる＝経験を積むと捉えてください
+            //@ts-ignore
+            const teamdata = teamsarr.filter(v => v.tid === evaluations.tid);
+            console.log(teamdata);
+                if (teamdata.length > 0) {
+                    // 以降の処理
+                    const currentimagedata = teamsimagedata.filter((v) => v.tid === teamdata[0].tid);
+                    console.log(currentimagedata);
+                    //タグが重複しないで全部出る
+                    const tag = teamscoredata.map((data,index)=>{
+                        return data.tag
+                    })
+                    //タグの重複をなくす
+                    // const tag = // @ts-ignore
+                    // [...new Set(teamscoredata.reduce<string[]>((pre,cur) => {
+                    //     pre.push(cur.tag)
+                    //     return pre
+                    // },[]))]
+                    console.log(tag);
+                    const pronpt = [`これから送る条件を記憶し、モンスターを作成してください。要素
+                    ・漢字をいくつか渡すのでそれのイメージにあったもの
+                    ・イラストのテイストはファンタジーのみではなく、自由に作成してください
+                    ・levelが1の時は卵
+                    ・キャラクターはレベルを持っており、特定のレベルに達成すると進化します。
+                    レベルについて
+                    初期値:1
+                    最大値:100
+                    レベルが上がる＝経験を積むと捉えてください
+                    
+                    レベルが上がった時
+                    指定のレベルに達したらキャラクターを成長させてください
+                    
+                    成長について
+                    さらに追加で与えた要素も追加して、見た目を生成してください。
+                    
+                    イラストについて
+                    ・イラストの中に実際の漢字は含めないであくまで印象のみを反映させてください。
+                    ・周りの要素は含めずそのもの単体を1パターンだけ生成してください。
                 
-                レベルが上がった時
-                指定のレベルに達したらキャラクターを成長させてください
+                    現在のレベル
+                    ${teamdata.length}
                 
-                成長について
-                さらに追加で与えた要素も追加して、見た目を生成してください。
+                    要素（ここの言葉に含まれる意味を噛み砕いてください）
+                    ${tag}
                 
-                イラストについて
-                ・イラストの中に実際の漢字は含めないであくまで印象のみを反映させてください。
-                ・周りの要素は含めずそのもの単体を1パターンだけ生成してください。
-            
-                現在のレベル
-                ${teamdata.length}
-            
-                要素（ここの言葉に含まれる意味を噛み砕いてください）
-                ${tag}
-            
-                I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:`,
-              ]
-              
-              if (teamscoredata.length == 1) {
-                TestImage(pronpt[0], teamdata[0].id,1);
-              }
-              else if (teamscoredata.length == teamdata[0].member.length) {
-                TestImage(pronpt[0], teamdata[0].id,10);
-              }
-              else if (teamscoredata.length == teamdata[0].member.length*3) {
-                TestImage(pronpt[0], teamdata[0].id,30);
-              }
-              else if (teamscoredata.length == teamdata[0].member.length*5) {
-                TestImage(pronpt[0], teamdata[0].id,50);
-              }
-              else if (teamscoredata.length == teamdata[0].member.length*7) {
-                TestImage(pronpt[0], teamdata[0].id,70);
-              }
-              else if (teamscoredata.length == teamdata[0].member.length*10) {
-                TestImage(pronpt[0], teamdata[0].id,100);
-              }
+                    I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:`,
+                    ]
+                    
+                    if (teamscoredata.length == 1) {
+                        TestImage(pronpt[0], teamdata[0].id,1);
+                    }
+                    else if (teamscoredata.length == teamdata[0].member.length) {
+                        TestImage(pronpt[0], teamdata[0].id,10);
+                    }
+                    else if (teamscoredata.length == teamdata[0].member.length*3) {
+                        TestImage(pronpt[0], teamdata[0].id,30);
+                    }
+                    else if (teamscoredata.length == teamdata[0].member.length*5) {
+                        TestImage(pronpt[0], teamdata[0].id,50);
+                    }
+                    else if (teamscoredata.length == teamdata[0].member.length*7) {
+                        TestImage(pronpt[0], teamdata[0].id,70);
+                    }
+                    else if (teamscoredata.length == teamdata[0].member.length*10) {
+                        TestImage(pronpt[0], teamdata[0].id,100);
+                    }
             }
-          }
-      }, [teamId]);
-
-
-        console.log(currentimageData)
+        }
+    }, [arreva]);
 
     const handleClick = (index:number) => {
         const newFlip = [...flip];
