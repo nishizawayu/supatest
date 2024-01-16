@@ -2,7 +2,7 @@
 "use server"
 import insertimagedata from "./insert";
 // @ts-ignore
-const TestImage = async(prompts, tid,level) => {
+const TestImage = async(prompts,tid,level) => {
   try {
     const baseUrl = process.env.NODE_ENV === 'production' ? 'https://hyouka-app.vercel.app' : 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/generateImage`, {
