@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useState, useMemo,useEffect } from 'react';
+import React, {useState, useMemo,useEffect, isValidElement } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -37,23 +37,104 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     const [teamId, setTeamId] = useState(1)
     const supabase = createClientComponentClient();
     const [evaluations, setEvaluations] = useState();
-    const [arreva,setarreva] = useState([]);
+    const [imageact,setimageact] = useState("");
     const [imagedata,setimagedata] = useState();
+    const [anime,setanime] = useState(false)
 
+    //評価が入ったかどうかを監視
     useEffect(() => {
         const subscription = supabase
         .channel('evaluation')
         .on("postgres_changes", { event: "INSERT", schema: "public", table: "evaluation" }, (payload) => {
             //@ts-ignore
-            scoredata.push(payload.new)
+            const arr = scoredata
             //@ts-ignore
-            setarreva(scoredata)
+            arr.push(payload.new)
+            console.log(arr);
             //@ts-ignore
-            setEvaluations(payload.new)
-            console.log(payload.new)
+            setEvaluations(arr);
         })
         .subscribe();
     }, []);
+
+    //評価が入力された際の処理
+    //評価回数に応じて画像生成
+    useEffect(()=>{
+        if(evaluations != undefined){
+            ///@ts-ignore
+            console.log(evaluations);
+            //@ts-ignore
+            const teamscoredata = evaluations.filter(v => v.tid === evaluations[evaluations.length-1].tid);
+            console.log(teamscoredata);
+            //@ts-ignore
+            const teamdata = teamsarr.filter(v => v.tid === evaluations[evaluations.length-1].tid);
+            console.log(teamdata);
+                if (teamdata.length > 0) {
+                    // 以降の処理
+                    const currentimagedata = teamsimagedata.filter((v) => v.tid === teamdata[0].tid);
+                    console.log(currentimagedata);
+                    //タグが重複しないで全部出る
+                    const tag = teamscoredata.map((data:any,index:number)=>{
+                        return data.tag
+                    })
+                    //タグの重複をなくす
+                    // const tag = // @ts-ignore
+                    // [...new Set(teamscoredata.reduce<string[]>((pre,cur) => {
+                    //     pre.push(cur.tag)
+                    //     return pre
+                    // },[]))]
+                    console.log(tag);
+                    const pronpt = [`これから送る条件を記憶し、モンスターを作成してください。要素
+                    ・漢字をいくつか渡すのでそれのイメージにあったもの
+                    ・イラストのテイストはファンタジーのみではなく、自由に作成してください
+                    ・levelが1の時は卵
+                    ・キャラクターはレベルを持っており、特定のレベルに達成すると進化します。
+                    レベルについて
+                    初期値:1
+                    最大値:100
+                    レベルが上がる＝経験を積むと捉えてください
+                    
+                    レベルが上がった時
+                    指定のレベルに達したらキャラクターを成長させてください
+                    
+                    成長について
+                    さらに追加で与えた要素も追加して、見た目を生成してください。
+                    
+                    イラストについて
+                    ・イラストの中に実際の漢字は含めないであくまで印象のみを反映させてください。
+                    ・周りの要素は含めずそのもの単体を1パターンだけ生成してください。
+                
+                    現在のレベル
+                    ${teamdata.length}
+                
+                    要素（ここの言葉に含まれる意味を噛み砕いてください）
+                    ${tag}
+                
+                    I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:`,
+                    ]
+                    
+                    if (teamscoredata.length == 1) {
+                        TestImage(pronpt[0], teamdata[0].tid,1);
+                    }
+                    else if (teamscoredata.length == teamdata[0].member.length) {
+                        TestImage(pronpt[0], teamdata[0].tid,10);
+                    }
+                    else if (teamscoredata.length == teamdata[0].member.length*3) {
+                        TestImage(pronpt[0], teamdata[0].tid,30);
+                    }
+                    else if (teamscoredata.length == teamdata[0].member.length*5) {
+                        TestImage(pronpt[0], teamdata[0].tid,50);
+                    }
+                    else if (teamscoredata.length == teamdata[0].member.length*7) {
+                        TestImage(pronpt[0], teamdata[0].tid,70);
+                    }
+                    else if (teamscoredata.length == teamdata[0].member.length*10) {
+                        TestImage(pronpt[0], teamdata[0].tid,100);
+                    }
+            }
+        }
+               
+    },[evaluations])
 
 
     useEffect(()=>{
@@ -66,12 +147,16 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                 teamsimagedata.push(payload.new)
                 //@ts-ignore
                 setimagedata(teamsimagedata);
+                setimageact(payload.new.imageUrl);
             })
         .subscribe();
     },[])
 
-    // console.log(evaluations);
-    // console.log(imagedata);
+    useEffect(()=>{
+        console.log(imageact);
+        setanime(true);
+    },[imageact])
+
     
     const currentData = useMemo(() => {
         if(teamsarr != undefined){
@@ -151,89 +236,32 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             }
             return imagepath
         }
-    },[teamId,imagedata])
+    },[teamId])
 
-    useEffect(() => {
-        if(evaluations != undefined){
-            //@ts-ignore
-            const teamscoredata = scoredata.filter(v => v.tid === evaluations.tid);
-            console.log(teamscoredata);
-            //@ts-ignore
-            const teamdata = teamsarr.filter(v => v.tid === evaluations.tid);
-            console.log(teamdata);
-                if (teamdata.length > 0) {
-                    // 以降の処理
-                    const currentimagedata = teamsimagedata.filter((v) => v.tid === teamdata[0].tid);
-                    console.log(currentimagedata);
-                    //タグが重複しないで全部出る
-                    const tag = teamscoredata.map((data,index)=>{
-                        return data.tag
-                    })
-                    //タグの重複をなくす
-                    // const tag = // @ts-ignore
-                    // [...new Set(teamscoredata.reduce<string[]>((pre,cur) => {
-                    //     pre.push(cur.tag)
-                    //     return pre
-                    // },[]))]
-                    console.log(tag);
-                    const pronpt = [`これから送る条件を記憶し、モンスターを作成してください。要素
-                    ・漢字をいくつか渡すのでそれのイメージにあったもの
-                    ・イラストのテイストはファンタジーのみではなく、自由に作成してください
-                    ・levelが1の時は卵
-                    ・キャラクターはレベルを持っており、特定のレベルに達成すると進化します。
-                    レベルについて
-                    初期値:1
-                    最大値:100
-                    レベルが上がる＝経験を積むと捉えてください
-                    
-                    レベルが上がった時
-                    指定のレベルに達したらキャラクターを成長させてください
-                    
-                    成長について
-                    さらに追加で与えた要素も追加して、見た目を生成してください。
-                    
-                    イラストについて
-                    ・イラストの中に実際の漢字は含めないであくまで印象のみを反映させてください。
-                    ・周りの要素は含めずそのもの単体を1パターンだけ生成してください。
-                
-                    現在のレベル
-                    ${teamdata.length}
-                
-                    要素（ここの言葉に含まれる意味を噛み砕いてください）
-                    ${tag}
-                
-                    I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:`,
-                    ]
-                    
-                    if (teamscoredata.length == 1) {
-                        TestImage(pronpt[0], teamdata[0].id,1);
-                    }
-                    else if (teamscoredata.length == teamdata[0].member.length) {
-                        TestImage(pronpt[0], teamdata[0].id,10);
-                    }
-                    else if (teamscoredata.length == teamdata[0].member.length*3) {
-                        TestImage(pronpt[0], teamdata[0].id,30);
-                    }
-                    else if (teamscoredata.length == teamdata[0].member.length*5) {
-                        TestImage(pronpt[0], teamdata[0].id,50);
-                    }
-                    else if (teamscoredata.length == teamdata[0].member.length*7) {
-                        TestImage(pronpt[0], teamdata[0].id,70);
-                    }
-                    else if (teamscoredata.length == teamdata[0].member.length*10) {
-                        TestImage(pronpt[0], teamdata[0].id,100);
-                    }
-            }
-        }
-    }, [arreva]);
+    // const handleClick = (index:number) => {
+    //     const newFlip = [...flip];
+    //     newFlip[index] = newFlip[index] === null ? true : !newFlip[index];
+    //     setFlip(newFlip);
+    // };
 
-    const handleClick = (index:number) => {
-        const newFlip = [...flip];
-        newFlip[index] = newFlip[index] === null ? true : !newFlip[index];
-        setFlip(newFlip);
-    };
+    useEffect(()=>{
+        setInterval(()=>{
+            setanime(false)
+        },8000)
+        console.log(anime)
+    },[anime])
+
+    const url = `image/${imageact}`
     return (
-        <div className='flex'>
+        <div>
+            {
+                anime == true ?
+                <div className='h-[100vh] bg-slate-300 flex flex-col justify-center items-center absolute z-10'>
+                    <p>チームが進化しました。</p>
+                    <p><img src={url} alt="新たに生成された画像"/></p>
+                </div>: ""
+            }
+            <div className='flex'>
             {
                 currentData?.map((data:any, index:number) => {
                     return(
@@ -364,7 +392,9 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     }
                 </ul>
             </div>
-      </div>
+            </div>
+        </div>
+        
     )
 }
 
