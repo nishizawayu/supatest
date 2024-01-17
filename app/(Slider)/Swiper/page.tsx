@@ -27,7 +27,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 interface TeamsViewProps {
     teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[]}[]
     scoredata:{score_1:number, score_2:number, score_3:number,score_4:number,comment:string,tag:string,uid:string,date:string,tid:number}[]
-    teamsimagedata:{id:number,tid:number,imageUrl:string}[]
+    teamsimagedata:{id:number,tid:number,imageUrl:string,created_at:string}[]
 }
 
 const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=> {
@@ -252,6 +252,13 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     },[anime])
 
     const url = `image/${imageact}`
+
+    for (let i = 0; i < teamsimagedata.length; i++) {
+        let timestamp = (teamsimagedata[i].created_at); // Supabaseから取得したtimestamp
+        let date = new Date(timestamp); // Dateオブジェクトに変換
+        let formattedDate = date.toLocaleString("ja-JP", { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }); // フォーマットを変更
+        console.log(formattedDate); // "1月15日 15時40分"と表示されます
+      }
     return (
         <div>
             {
@@ -286,11 +293,14 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             centeredSlides={true}
                             effect={'coverflow'}
                             pagination={true}
+                            loop={true}
+                            initialSlide={currentimageData?.length}
                         >   
                         {
                             currentimageData?.map((data,index)=>{
                                 return(
                                     <SwiperSlide className='my-8' key={`imageslide${index+1}枚目`}>
+                                        <p>{data.created_at}</p>
                                         <div className="card">
                                             <input type="checkbox" id={`card${index}`} className="more" aria-hidden="true" />
                                             <div className="content">

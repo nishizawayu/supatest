@@ -2,6 +2,8 @@ import Navigation from '@/components/nav';
 import StudentView from './studentView';
 import getStudendata from "../studentsdata/page";
 import getScoredata from '../scoredata/getscoredata';
+import { Suspense } from 'react'
+import Loading from "@/app/loading";
 
 
 const Students = async () => {
@@ -10,8 +12,10 @@ const Students = async () => {
 
   return (
     <div>
-      <StudentView studentarr={studentarr} scoredata={scorearr}/>
-      <Navigation />
+      <Suspense fallback={<Loading />}>
+        <StudentView studentarr={studentarr} scoredata={scorearr}/>
+        <Navigation />
+      </Suspense>
     </div>
   );
 };
