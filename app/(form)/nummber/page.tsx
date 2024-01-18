@@ -16,31 +16,31 @@ const Nummber= () => {
     const allowedWords:string[] = [];
     for (let i=0; i<2; i++){
         if(i == 0){
-            for (let j = 1; j <= 35; j++) {
+            for (let j = 1; j <= 75; j++) {
                 if (j < 10) {
-                const num = "010" + j;
+                const num = "0" + j;
                     allowedWords.push(num);
                 } else {
-                const num = "01"+j;
+                const num = ""+ j;
                     allowedWords.push(num);
                 }
             }
-        }else if(i == 1){
-            for (let j = 1; j <= 41; j++) {
-                if (j < 10) {
-                const num = "020" + j;
-                    allowedWords.push(num);
-                } else {
-                const num = "02"+j;
-                    allowedWords.push(num);
-                }
-            }
+        // }else if(i == 1){
+        //     for (let j = 1; j <= 41; j++) {
+        //         if (j < 10) {
+        //         const num = "020" + j;
+        //             allowedWords.push(num);
+        //         } else {
+        //         const num = "02"+j;
+        //             allowedWords.push(num);
+        //         }
+        //     }
         }
     }
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         // inputの文字数の制限
-        sliceMaxLength(e.target, 4);
+        sliceMaxLength(e.target,2);
         // inputに入力された値以外の値を排除
         setInputvalue(e.target.value);
         console.log(e.target.value);
@@ -72,7 +72,7 @@ const Nummber= () => {
                             <h2 className="text-base font-bold">ブース番号を入力</h2>
                             <p className="text-xs mb-2">評価する学生のブース番号を入力してください</p>
                         </div>
-                            <input type="number" placeholder="0101" className="input input-bordered w-full max-w-xs mx-6" value={inputvalue} onInput={handleInputChange} maxLength={4}/>
+                            <input type="number" placeholder="01" className="input input-bordered w-full max-w-xs mx-6" value={inputvalue} onInput={handleInputChange} maxLength={2}/>
                             <p className="w-full max-w-xs text-[#d54747]">{errmsg}</p>
                     </div>
 

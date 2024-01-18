@@ -154,10 +154,11 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
 
     useEffect(()=>{
         console.log(imageact);
-        setanime(true);
+        if(imageact != ""){
+            setanime(true);
+        }
     },[imageact])
 
-    
     const currentData = useMemo(() => {
         if(teamsarr != undefined){
             let result = teamsarr;
@@ -239,22 +240,32 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     },[teamId])
 
     useEffect(()=>{
+        // const file =  imageact// 選択された画像を取得
+        // const filePath = `/public/image/${file}` // 画像の保存先のpathを指定
+        // const { error } = await supabase.storage
+        // .from('Image-bucket')
+        // .upload(filePath, file)
+        // if (error) {
+        // // ここでエラーハンドリング
+        //     console.error(error);
+        // }
         setInterval(()=>{
             setanime(false)
-        },8000)
+        },10000)
         console.log(anime)
     },[anime])
 
     const url = `image/${imageact}`
+
     return (
         <div className={teamId===1?"bg-[#323232]":teamId===2?"bg-[#008C7E]":teamId===3?"bg-[#4D8437]":teamId===4?"bg-[#394D98]":
                         teamId===5?"bg-[#E61D7A]":teamId===6?"bg-[#E7BE01]":teamId===7?"bg-[#E47900]":teamId===8?"bg-[#992089]":
                         teamId===9?"bg-[#015A94]":teamId===10?"bg-[#00993C]":teamId===11?"bg-[#B6002C]":""}>
             {
                 anime == true ?
-                <div className='h-[100vh] bg-slate-300 flex flex-col justify-center items-center absolute z-10'>
-                    <p>チームが進化しました。</p>
-                    <p><img src={url} alt="新たに生成された画像"/></p>
+                <div className='w-full h-[100vh] bg-slate-300 flex flex-col justify-center items-center absolute z-10'>
+                    <p className=' text-4xl'>チームが進化しました。</p>
+                    <p className='w-[40%] mt-5 mx-auto'><img src={url} alt="新たに生成された画像" className='w-full'/></p>
                 </div>: ""
             }
             <div className='flex'>
