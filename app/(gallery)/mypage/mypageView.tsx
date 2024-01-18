@@ -19,8 +19,6 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     const router = useRouter()
 
     const searchParams = useSearchParams()
-    // ブース番号
-    const usernum = searchParams?.get("id") ?? "";
     // 名前
     const username = searchParams?.get("name") ?? "";
     // uid
@@ -127,7 +125,7 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                             </h2>
                             <p className='relative z-10 text-black text-xl'>{team}</p>
                         </div>
-                        <p className='text-[84px] text-[#d8d7d7] absolute left-0 top-[-45%]'>{usernum}</p>
+                        <p className='text-[84px] text-[#d8d7d7] absolute left-0 top-[-45%]'>{uid}</p>
                     </div>
                     <div className='mt-1 pl-8 flex flex-wrap gap-2 relative z-10 text-sm'>
                         <p className='inline-block mt-3 pb-1 px-2 font-bold bg-[#e3e3e3] rounded-md'>#{goaldata[0].schoolyear}</p>

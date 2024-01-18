@@ -48,7 +48,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
             result = result.filter((v) => v.most_common_tag == "面白い");
         }
     
-        if(studentserch >= "0101"){
+        if(studentserch >= "00"){
             result = result.filter((v)=> v.uid == studentserch);
         }
     
@@ -58,8 +58,8 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
 
     const handleInputChange = (event:any) => {
         const value = event.target.value
-        if (value.length > 4) {
-            event.target.value = value.slice(0, 4); // 4桁を超える入力を切り捨て
+        if (value.length > 2) {
+            event.target.value = value.slice(0, 2); // 4桁を超える入力を切り捨て
         }
         setStudentserch(event.target.value);
     };
@@ -108,7 +108,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                             currentData?.map((data:any, index:number) => {
                                 return (
                                     <li key={data.id}>
-                                        <Link href={`/mypage?id=${data.id}&uid=${data.uid}&goal=${data.goal}&team=${data.team}&name=${encodeURIComponent(data.name)}`}>
+                                        <Link href={`/mypage?uid=${data.uid}&goal=${data.goal}&team=${data.team}&name=${encodeURIComponent(data.name)}`}>
                                             <div className="flex border-b items-center justify-between">
                                                 <div className="flex items-center">
                                                     {

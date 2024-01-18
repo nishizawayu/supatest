@@ -154,10 +154,11 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
 
     useEffect(()=>{
         console.log(imageact);
-        setanime(true);
+        if(imageact != ""){
+            setanime(true);
+        }
     },[imageact])
 
-    
     const currentData = useMemo(() => {
         if(teamsarr != undefined){
             let result = teamsarr;
@@ -244,10 +245,20 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     //     setFlip(newFlip);
     // };
 
+    //@ts-ignore
     useEffect(()=>{
+        // const file =  imageact// 選択された画像を取得
+        // const filePath = `/public/image/${file}` // 画像の保存先のpathを指定
+        // const { error } = await supabase.storage
+        // .from('Image-bucket')
+        // .upload(filePath, file)
+        // if (error) {
+        // // ここでエラーハンドリング
+        //     console.error(error);
+        // }
         setInterval(()=>{
             setanime(false)
-        },8000)
+        },10000)
         console.log(anime)
     },[anime])
 
@@ -263,9 +274,9 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
         <div>
             {
                 anime == true ?
-                <div className='h-[100vh] bg-slate-300 flex flex-col justify-center items-center absolute z-10'>
-                    <p>チームが進化しました。</p>
-                    <p><img src={url} alt="新たに生成された画像"/></p>
+                <div className='w-full h-[100vh] bg-slate-300 flex flex-col justify-center items-center absolute z-10'>
+                    <p className=' text-4xl'>チームが進化しました。</p>
+                    <p className='w-[40%] mt-5 mx-auto'><img src={url} alt="新たに生成された画像" className='w-full'/></p>
                 </div>: ""
             }
             <div className='flex'>
