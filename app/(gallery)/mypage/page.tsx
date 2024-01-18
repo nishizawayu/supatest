@@ -2,7 +2,8 @@ import Navigation from '@/components/nav';
 import getStudendata from "../studentsdata/page";
 import getScoredata from '../scoredata/getscoredata';
 import MypageView from './mypageView';
-
+import { Suspense } from 'react'
+import Loading from "@/app/loading";
 
 const Mypage = async () => {
   const studentarr = await getStudendata() ?? [];
@@ -11,8 +12,10 @@ const Mypage = async () => {
 
   return (
     <div>
-      <MypageView scoredata={scorearr} studentdata={studentarr}/>
-      <Navigation />
+      <Suspense fallback={<Loading />}>
+        <MypageView scoredata={scorearr} studentdata={studentarr}/>
+        <Navigation />
+      </Suspense>
     </div>
   );
 };
