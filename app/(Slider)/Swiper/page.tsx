@@ -239,13 +239,6 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
         }
     },[teamId])
 
-    // const handleClick = (index:number) => {
-    //     const newFlip = [...flip];
-    //     newFlip[index] = newFlip[index] === null ? true : !newFlip[index];
-    //     setFlip(newFlip);
-    // };
-
-    //@ts-ignore
     useEffect(()=>{
         // const file =  imageact// 選択された画像を取得
         // const filePath = `/public/image/${file}` // 画像の保存先のpathを指定
@@ -264,9 +257,10 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
 
     const url = `image/${imageact}`
 
-    
     return (
-        <div>
+        <div className={teamId===1?"bg-[#323232]":teamId===2?"bg-[#008C7E]":teamId===3?"bg-[#4D8437]":teamId===4?"bg-[#394D98]":
+                        teamId===5?"bg-[#E61D7A]":teamId===6?"bg-[#E7BE01]":teamId===7?"bg-[#E47900]":teamId===8?"bg-[#992089]":
+                        teamId===9?"bg-[#015A94]":teamId===10?"bg-[#00993C]":teamId===11?"bg-[#B6002C]":""}>
             {
                 anime == true ?
                 <div className='w-full h-[100vh] bg-slate-300 flex flex-col justify-center items-center absolute z-10'>
@@ -279,11 +273,11 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                 currentData?.map((data:any, index:number) => {
                     return(
                         <div key={data.id} className='relative w-[80%] h-[100%]'>
-                        <h1 className='text-[48px] text-center font-bold '>{data.name}</h1>
-                        <p className='text-center'>メンバー:{data.member+""}</p>
+                            <h1 className='text-[56px] text-center font-bold  py-5 text-white'>{data.name}</h1>
+                            {/* <p className='text-right'>メンバー:{data.member+""}</p> */}
                         <Swiper
                             slidesPerView={2}
-                            spaceBetween={10}
+                            spaceBetween={0}
                             // navigation={true}
                             thumbs={{ swiper: thumbsSwiper }}
                             modules={[FreeMode, Navigation, Thumbs, EffectCoverflow, Pagination]}
@@ -293,7 +287,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                 stretch: 0,
                                 depth: 100,
                                 modifier: 1,
-                                slideShadows: true,
+                                slideShadows: false,
                             }}
                             grabCursor={true}
                             centeredSlides={true}
@@ -306,7 +300,15 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             currentimageData?.map((data,index)=>{
                                 return(
                                     <SwiperSlide className='my-8' key={`imageslide${index+1}枚目`}>
-                                        <p>{data.created_at}</p>
+                                        <p className='text-left'>{data.created_at}</p>
+                                        <div className="rating mr-2">
+                                            {
+                                                Array.from({length: index + 1}).map((_, i) => (
+                                                    <input key={i} type="" name="rating-2" className="mask mask-star bg-white" />
+                                                ))
+                                            }
+                                        </div>
+                                            {/* <input type='' name="rating-2" className="mask mask-star bg-white" /> */}
                                         <div className="card">
                                             <input type="checkbox" id={`card${index}`} className="more" aria-hidden="true" />
                                             <div className="content">
@@ -339,9 +341,8 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                         }
                         </Swiper>
                         <div className='flex justify-around h-[20%]'>
-                            <div className=''>
+                            <div className='text-white'>
                                 <p>次の進化まで</p>
-                                
                                 {
                                     data.total_evaluation_count < data.member.length ?
                                     <p className=''><span className='text-[40px]'>{data.member.length-data.total_evaluation_count}</span>回</p> :
@@ -358,17 +359,17 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
 
                             </div>
                             <div className='border-r'></div>
-                            <div>
+                            <div className='text-white'>
                                 <p>特徴</p>
                                 <p className='text-[32px]'>面白い</p>
                             </div>
                             <div className='border-r'></div>
-                            <div>
+                            <div className='text-white'>
                                 <p>強み</p>
                                 <p className='text-[32px]'>企画力</p>
                             </div>
                             <div className='border-r'></div>
-                            <div>
+                            <div className='text-white'>
                                 <p>合計プレゼン数</p>
                                 <p className=''><span className='text-[40px]'>{data.total_evaluation_count}</span>回</p>
                             </div>
@@ -379,8 +380,8 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             }
             
 
-        <div className='mt-8  w-[20%] mr-6'>
-            <h2 className='text-center text-[32px] font-bold ml-8'>Rank</h2>
+        <div className='w-[20%] mr-6 border-l-2'>
+            <h2 className='text-center text-[32px] font-bold ml-8 mt-8 text-white'>Rank</h2>
                 <ul className="w-[90%] mx-6 my-6">
                     {
                         teamsarr?.map((data:any, index:number) => {
@@ -393,13 +394,13 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                                 {
                                                     index < 9 ? 
                                                     <Image src={rankImages[index]} alt={`${index+1}位`} width={32} className=" my-2"/> : // インデックスが3未満の場合、画像を表示します
-                                                    <p className="mx-1 text-[24px] my-2">{index+1}</p> // インデックスが3以上の場合、順位をテキストとして表示します
+                                                    <p className="mx-1 text-[24px] my-2 text-white">{index+1}</p> // インデックスが3以上の場合、順位をテキストとして表示します
                                                 }
                                                 {/* チーム名 */}
-                                                <p className="text-sm font-medium ml-6">{data.name}</p>
+                                                <p className="text-sm font-medium ml-6 text-white">{data.name}</p>
                                             </div>
                                             {/* 点数 */}
-                                            <p className="text-base font-bold">{data.total_evaluation_count}<span className="text-[10px] font-normal">回</span></p>
+                                            <p className="text-base font-bold text-white">{data.total_evaluation_count}<span className="text-[10px] font-normal">回</span></p>
                                         </div>
                                     </div>
                                 </li>
