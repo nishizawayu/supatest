@@ -264,12 +264,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
 
     const url = `image/${imageact}`
 
-    for (let i = 0; i < teamsimagedata.length; i++) {
-        let timestamp = (teamsimagedata[i].created_at); // Supabaseから取得したtimestamp
-        let date = new Date(timestamp); // Dateオブジェクトに変換
-        let formattedDate = date.toLocaleString("ja-JP", { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }); // フォーマットを変更
-        console.log(formattedDate); // "1月15日 15時40分"と表示されます
-      }
+    
     return (
         <div>
             {
