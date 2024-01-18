@@ -2,7 +2,6 @@
 import React, { useEffect, useState} from 'react'
 import { useRouter } from 'next/navigation';
 import {useSearchParams } from 'next/navigation';
-import TestImage from '@/app/TestImage/page'
 import Navigation from '@/components/nav'
 
 interface TeamsViewProps {
@@ -17,12 +16,10 @@ const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimageurl 
     // uid
     const uid = searchParams?.get("uid") ?? "";
     // useEffect(() => {
-
     //   const studentdata = scoredata.filter((v) => v.uid == uid);
     //   console.log(studentdata)
     //   if (studentdata.length > 0) {
     //     const teamscoredata = scoredata.filter(v => v.tid === studentdata[0].tid);
-        
     //     if (teamscoredata.length > 0) {
     //       const teamdata = teamsarr.filter(v => v.tid === teamscoredata[0].tid);
     //       console.log(teamscoredata);
