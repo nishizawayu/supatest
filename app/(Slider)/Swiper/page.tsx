@@ -25,14 +25,14 @@ import TestImage from '@/app/TestImage/page';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 interface TeamsViewProps {
-    teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[]}[]
+    teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[],kanji:[]}[]
     scoredata:{score_1:number, score_2:number, score_3:number,score_4:number,comment:string,tag:string,uid:string,date:string,tid:number}[]
     teamsimagedata:{id:number,tid:number,imageUrl:string,created_at:string}[]
 }
 
 const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=> {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
-    const [flip, setFlip] = useState<Array<boolean | null>>(Array(10).fill(null));
+    // const [flip, setFlip] = useState<Array<boolean | null>>(Array(10).fill(null));
     const rankImages = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9,];
     const [teamId, setTeamId] = useState(1)
     const supabase = createClientComponentClient();
@@ -87,7 +87,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     const pronpt = [`これから送る条件を記憶し、モンスターを作成してください。要素
                     ・漢字をいくつか渡すのでそれのイメージにあったもの
                     ・イラストのテイストはファンタジーのみではなく、自由に作成してください
-                    ・levelが1の時は卵
+                    ・levelが1の時は卵から生まれる様子を描いてください。
                     ・キャラクターはレベルを持っており、特定のレベルに達成すると進化します。
                     レベルについて
                     初期値:1
@@ -103,9 +103,12 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     イラストについて
                     ・イラストの中に実際の漢字は含めないであくまで印象のみを反映させてください。
                     ・周りの要素は含めずそのもの単体を1パターンだけ生成してください。
+
+                    漢字について
+                    ${teamdata[0].kanji}
                 
                     現在のレベル
-                    ${teamdata.length}
+                    ${teamscoredata.length}
                 
                     要素（ここの言葉に含まれる意味を噛み砕いてください）
                     ${tag}
@@ -263,7 +266,6 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     },[anime])
 
     const url = `image/${imageact}`
-
     
     return (
         <div>
