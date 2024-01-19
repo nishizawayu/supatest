@@ -14,6 +14,16 @@ module.exports = {
           'background-hover': 'hsl(var(--btn-background-hover))',
         },
       },
+      keyframes: {
+        slide: {
+          '0%': { transform: 'translatey(0)' },
+          '100%': { transform: 'translatey(100%)' },
+        }
+      },
+      animation: {
+        slide: 'slide 5s linear infinite',
+      }
+  
     },
   },
   plugins: [require("daisyui")],

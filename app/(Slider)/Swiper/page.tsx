@@ -117,7 +117,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     ]
                     
                     if (teamscoredata.length == 1) {
-                        TestImage(pronpt[0], teamdata[0].tid,1);
+                        TestImage(pronpt[0], teamdata[0].tid,2);
                     }
                     else if (teamscoredata.length == teamdata[0].member.length) {
                         TestImage(pronpt[0], teamdata[0].tid,10);
@@ -158,7 +158,9 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     useEffect(()=>{
         console.log(imageact);
         if(imageact != ""){
-            setanime(true);
+            setTimeout(()=>{
+                setanime(true);
+            },10000)
         }
     },[imageact])
 
@@ -167,7 +169,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             let result = teamsarr;
             if(teamId === 1) {
                 result = result.filter((v) => v.tid == 1);
-            } 
+            }
             if(teamId === 2) {
                 result = result.filter((v) => v.tid == 2);
             }
@@ -252,24 +254,86 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
         // // ここでエラーハンドリング
         //     console.error(error);
         // }
-        setInterval(()=>{
-            setanime(false)
-        },10000)
+        if(anime != false){
+            setInterval(()=>{
+                setanime(false)
+                setTeamId(teamsimagedata[teamsimagedata.length-1].tid)
+            },10000)
+        }
         console.log(anime)
     },[anime])
 
     const url = `image/${imageact}`
 
+    const [balls, setBalls] = useState<JSX.Element[]>([]);
+
+    useEffect(() => {
+        if(imageact != ""){
+        // 球を追加する関数
+        const addBalls = () => {
+          const newBalls = Array.from({ length: 700 }).map((_, index) => {
+            const size = Math.random() * 15 + 10; // 10pxから25pxのランダムなサイズ
+            const top = Math.random() * 100;
+            const left = Math.random() * 100;
+    
+            return (
+              <div
+                key={`ball-${balls.length + index}`}
+                className="absolute bg-white rounded-full"
+                style={{
+                  width: `${size}px`,
+                  height: `${size}px`,
+                  top: `${top}%`,
+                  left: `${left}%`
+                }}
+              ></div>
+            );
+          });
+    
+          setBalls(prevBalls => [...prevBalls, ...newBalls]);
+        };
+    
+        // 球を定期的に追加
+        const intervalAdd = setInterval(addBalls, 300); // 0.3秒ごとに700個の球を追加
+    
+        // 5秒後に球の追加を停止
+        const timeoutStop = setTimeout(() => {
+          clearInterval(intervalAdd);
+        }, 4000);
+    
+        // 球を削除する関数
+         // 球を削除
+         const removeBalls = () => {
+            setBalls(prevBalls => prevBalls.slice(1400));
+          };
+      
+          const intervalRemove = ()=>{
+              setInterval(removeBalls, 300); // 5秒ごとに700個の球を削除
+          }
+  
+          const resetremoove = setInterval(intervalRemove,4000)
+    
+        return () => {
+          clearInterval(intervalAdd);
+          clearTimeout(timeoutStop);
+          clearInterval(resetremoove);
+        };
+    }
+      }, [imageact]);
+  
     return (
         <div className={teamId===1?"bg-[#323232]":teamId===2?"bg-[#008C7E]":teamId===3?"bg-[#4D8437]":teamId===4?"bg-[#394D98]":
                         teamId===5?"bg-[#E61D7A]":teamId===6?"bg-[#E7BE01]":teamId===7?"bg-[#E47900]":teamId===8?"bg-[#992089]":
                         teamId===9?"bg-[#015A94]":teamId===10?"bg-[#00993C]":teamId===11?"bg-[#B6002C]":""}>
             {
+                currentData != undefined?
                 anime == true ?
-                <div className='w-full h-[100vh] bg-slate-300 flex flex-col justify-center items-center absolute z-10'>
-                    <p className=' text-4xl'>チームが進化しました。</p>
+                <div className='w-full h-[100vh] bg-white bg-opacity-75 flex flex-col justify-center items-center absolute z-10'>
+                    {balls}
+                    <p className='text-4xl'>{currentData[currentData?.length-1].name}が進化しました。</p>
                     <p className='w-[40%] mt-5 mx-auto'><img src={url} alt="新たに生成された画像" className='w-full'/></p>
                 </div>: ""
+                :""
             }
             <div className='flex'>
             {

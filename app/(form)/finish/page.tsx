@@ -80,8 +80,8 @@ const end = ()=>{
                         <button onClick={()=>{
                             setState(true)
 
-                            // router.push(`/teams?uid=${uiddata}`);
-                            router.push(`/nummber`);
+                            router.push(`/teams?uid=${uiddata}`);
+                            // router.push(`/nummber`);
                         }} className="btn bg-black text-white">
                         送信する<span className="ml-[2px]">&gt;</span>
                         </button>
