@@ -25,7 +25,8 @@ import TestImage from '@/app/TestImage/page';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 interface TeamsViewProps {
-    teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[],kanji:[],}[]
+
+    teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[],total_team_score:number,kanji:[]}[]
     scoredata:{score_1:number, score_2:number, score_3:number,score_4:number,comment:string,tag:string,uid:string,date:string,tid:number}[]
     teamsimagedata:{id:number,tid:number,imageUrl:string,created_at:string,name:string}[]
 }
@@ -352,7 +353,6 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     return(
                         <div key={data.id} className='relative w-[80%] h-[100%]'>
                             <h1 className='text-[56px] text-center font-bold  py-5 text-white'>{data.name}</h1>
-                            {/* <p className='text-right'>メンバー:{data.member+""}</p> */}
                         <Swiper
                             slidesPerView={2}
                             spaceBetween={0}
@@ -371,15 +371,16 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             centeredSlides={true}
                             effect={'coverflow'}
                             pagination={true}
-                            loop={true}
+                            //@ts-ignore
+                            loop={currentimageData?.length >= 3}
                             initialSlide={currentimageData?.length}
                         >   
                         {
                             currentimageData?.map((data,index)=>{
                                 return(
                                     <SwiperSlide className='my-8' key={`imageslide${index+1}枚目`}>
-                                        <p className='text-left'>{data.created_at}</p>
-                                        <div className="rating mr-2">
+                                        <p className='text-left text-white'>{data.created_at}</p>
+                                        <div className="rating mr-3 my-3">
                                             {
                                                 Array.from({length: index + 1}).map((_, i) => (
                                                     <input key={i} type="" name="rating-2" className="mask mask-star bg-white" />
@@ -399,13 +400,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                             </div>
                                             <div className="back">
                                                 <div className="inner">
-                                                {
-                                                    currentData?.map((data,index)=>{
-                                                        return(
-                                                            <p key={`imagealt${index+1}枚目`} className='mt-[40%]'>{data.name}が{data.member.length}回プレゼンをし、<br/>すごい,面白い,明るい,プロ級という評価をもらい、<br/>この姿に進化しました。</p>
-                                                    )
-                                                    })
-                                                }
+                                                <p className='mt-[40%]'>{data.name}が{index == 1 ? currentData[0].member.length*3 : index == 2 ? currentData[0].member.length*5 : index == 3 ? currentData[0].member.length*7 : index == 4 ? currentData[0].member.length*10 : currentData[0].member.length}回プレゼンをし、<br/>という評価をもらい、<br/>この姿に進化しました。</p>
                                                 <label htmlFor={`card${index}`} className="button return" aria-hidden="true">
                                                     <p className=' text-black'>←</p>
                                                 </label>
@@ -418,28 +413,29 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             })
                         }
                         </Swiper>
-                        <div className='flex justify-around h-[20%]'>
+                        <div className='flex justify-around h-[20%] mb-1 text-center'>
                             <div className='text-white'>
                                 <p>次の進化まで</p>
                                 {
+                                    data.total_evaluation_count === 0 ?
+                                    <p className=''><span className='text-[40px]'>1</span>人</p>:
                                     data.total_evaluation_count < data.member.length ?
-                                    <p className=''><span className='text-[40px]'>{data.member.length-data.total_evaluation_count}</span>回</p> :
+                                    <p className=''><span className='text-[40px]'>{data.member.length-data.total_evaluation_count}</span>人</p> :
                                     data.total_evaluation_count < data.member.length*3 ?
-                                    <p className=''><span className='text-[40px]'>{data.member.length*3-data.total_evaluation_count}</span>回</p> :
+                                    <p className=''><span className='text-[40px]'>{data.member.length*3-data.total_evaluation_count}</span>人</p> :
                                     data.total_evaluation_count < data.member.length*5 ?
-                                    <p className=''><span className='text-[40px]'>{data.member.length*5-data.total_evaluation_count}</span>回</p> :
+                                    <p className=''><span className='text-[40px]'>{data.member.length*5-data.total_evaluation_count}</span>人</p> :
                                     data.total_evaluation_count < data.member.length*7 ?
-                                    <p className=''><span className='text-[40px]'>{data.member.length*7-data.total_evaluation_count}</span>回</p> :
+                                    <p className=''><span className='text-[40px]'>{data.member.length*7-data.total_evaluation_count}</span>人</p> :
                                     data.total_evaluation_count < data.member.length*10 ?
-                                    <p className=''><span className='text-[40px]'>{data.member.length*10-data.total_evaluation_count}</span>回</p> :
-                                    <p className=''><span className='text-[40px]'>{1-data.total_evaluation_count}</span>回</p>
+                                    <p className=''><span className='text-[40px]'>{data.member.length*10-data.total_evaluation_count}</span>人</p> :
+                                    <p></p>
                                 }
-
                             </div>
                             <div className='border-r'></div>
                             <div className='text-white'>
-                                <p>特徴</p>
-                                <p className='text-[32px]'>面白い</p>
+                                <p>合計点</p>
+                                <p className='text-[40px]'>{data.total_team_score}<span className='text-base'>点</span></p>
                             </div>
                             <div className='border-r'></div>
                             <div className='text-white'>
@@ -459,28 +455,22 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             
 
         <div className='w-[20%] mr-6 border-l-2'>
-            <h2 className='text-center text-[32px] font-bold ml-8 mt-8 text-white'>Rank</h2>
+            <h2 className='text-center text-[24px] font-bold ml-8  mt-10 text-white'>ランキング</h2>
                 <ul className="w-[90%] mx-6 my-6">
                     {
                         teamsarr?.map((data:any, index:number) => {
                             return (
-                                <li key={data.id}  onClick={()=>{setTeamId(data.tid)}}>
-                                    <div>
-                                        <div className="flex border-b items-center justify-between">
+                                <li key={data.id}  onClick={()=>{setTeamId(data.tid)}}> 
+                                        <div className="flex border-b items-center justify-between py-2">
                                             <div className="flex items-center">
-                                                {/* 順位 */}
-                                                {
-                                                    index < 9 ? 
-                                                    <Image src={rankImages[index]} alt={`${index+1}位`} width={32} className=" my-2"/> : // インデックスが3未満の場合、画像を表示します
-                                                    <p className="mx-1 text-[24px] my-2 text-white">{index+1}</p> // インデックスが3以上の場合、順位をテキストとして表示します
-                                                }
-                                                {/* チーム名 */}
-                                                <p className="text-sm font-medium ml-6 text-white">{data.name}</p>
+                                            {/* 順位 */}
+                                                <p className="mx-1 text-[24px] my-2 text-white">{index+1}</p>
+                                            {/* チーム名 */}
+                                                <p className={index < 9 ?" text-lg font-medium ml-5 text-white":"text-lg font-medium ml-2 text-white"}>{data.name}</p>
                                             </div>
                                             {/* 点数 */}
                                             <p className="text-base font-bold text-white">{data.total_evaluation_count}<span className="text-[10px] font-normal">回</span></p>
                                         </div>
-                                    </div>
                                 </li>
                             )
                         })
