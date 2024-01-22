@@ -25,7 +25,8 @@ import TestImage from '@/app/TestImage/page';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 interface TeamsViewProps {
-    teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[],total_team_score:number}[]
+
+    teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[],total_team_score:number,kanji:[]}[]
     scoredata:{score_1:number, score_2:number, score_3:number,score_4:number,comment:string,tag:string,uid:string,date:string,tid:number}[]
     teamsimagedata:{id:number,tid:number,imageUrl:string,created_at:string,name:string}[]
 }
@@ -36,32 +37,34 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     const rankImages = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9,];
     const [teamId, setTeamId] = useState(1)
     const supabase = createClientComponentClient();
-    const [evaluations, setEvaluations] = useState();
+    const [evaluations, setEvaluations] = useState(scoredata);
     const [imageact,setimageact] = useState("");
-    const [imagedata,setimagedata] = useState();
+    const [teamname,setteamname] = useState("");
+    const [insetdata,setinsertdata] = useState<boolean>(false);
+    // const [imagedata,setimagedata] = useState();
+    const [imagedata,setimagedata] = useState(teamsimagedata);
     const [anime,setanime] = useState(false)
 
-    //評価が入ったかどうかを監視
     useEffect(() => {
         const subscription = supabase
-        .channel('evaluation')
-        .on("postgres_changes", { event: "INSERT", schema: "public", table: "evaluation" }, (payload) => {
-            //@ts-ignore
-            const arr = scoredata
-            //@ts-ignore
-            arr.push(payload.new)
-            console.log(arr);
-            //@ts-ignore
-            setEvaluations(arr);
-        })
-        .subscribe();
+            .channel('evaluation')
+            .on("postgres_changes", { event: "INSERT", schema: "public", table: "evaluation" }, (payload) => {
+                setinsertdata(true)
+                //@ts-ignore
+                setEvaluations(prevEvals => [...prevEvals, payload.new]); // 新しい評価を追加
+            })
+            .subscribe();
+
+        return () => {
+            subscription.unsubscribe(); // クリーンアップ
+        };
     }, []);
 
     //評価が入力された際の処理
     //評価回数に応じて画像生成
     useEffect(()=>{
         if(evaluations != undefined){
-            ///@ts-ignore
+            if(evaluations.length != 0){
             console.log(evaluations);
             //@ts-ignore
             const teamscoredata = evaluations.filter(v => v.tid === evaluations[evaluations.length-1].tid);
@@ -116,29 +119,38 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:`,
                     ]
                     
-                    if (teamscoredata.length == 1) {
-                        TestImage(pronpt[0], teamdata[0].tid,2);
+                    if(insetdata == true){
+                        if (teamscoredata.length == 1) {
+                            TestImage(pronpt[0], teamdata[0].tid,2);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length) {
+                            TestImage(pronpt[0], teamdata[0].tid,10);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*3) {
+                            TestImage(pronpt[0], teamdata[0].tid,30);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*5) {
+                            TestImage(pronpt[0], teamdata[0].tid,50);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*7) {
+                            TestImage(pronpt[0], teamdata[0].tid,70);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*10) {
+                            TestImage(pronpt[0], teamdata[0].tid,100);
+                            setinsertdata(false)
+                        }
+    
                     }
-                    else if (teamscoredata.length == teamdata[0].member.length) {
-                        TestImage(pronpt[0], teamdata[0].tid,10);
-                    }
-                    else if (teamscoredata.length == teamdata[0].member.length*3) {
-                        TestImage(pronpt[0], teamdata[0].tid,30);
-                    }
-                    else if (teamscoredata.length == teamdata[0].member.length*5) {
-                        TestImage(pronpt[0], teamdata[0].tid,50);
-                    }
-                    else if (teamscoredata.length == teamdata[0].member.length*7) {
-                        TestImage(pronpt[0], teamdata[0].tid,70);
-                    }
-                    else if (teamscoredata.length == teamdata[0].member.length*10) {
-                        TestImage(pronpt[0], teamdata[0].tid,100);
-                    }
+                }
             }
         }
                
     },[evaluations])
-    
 
     useEffect(()=>{
         const subscription = supabase
@@ -147,9 +159,10 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             console.log('New evaluation:', payload.new);
             // ここで何かの処理を行う
             //@ts-ignore
-                teamsimagedata.push(payload.new)
-                //@ts-ignore
-                setimagedata(teamsimagedata);
+                setimagedata(prevEvals => [...prevEvals, payload.new]); // 新しい評価を追加
+                // teamsimagedata.push(payload.new)
+                // //@ts-ignore
+                // setimagedata(teamsimagedata);
                 setimageact(payload.new.imageUrl);
             })
         .subscribe();
@@ -159,7 +172,10 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
         console.log(imageact);
         if(imageact != ""){
             setTimeout(()=>{
+                setteamname(imagedata[imagedata.length-1].name);
+                setTeamId(0);
                 setanime(true);
+                //チームの名前
             },10000)
         }
     },[imageact])
@@ -205,7 +221,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     },[teamId])
 
     const currentimageData = useMemo(() => {
-        let imagepath = teamsimagedata
+        let imagepath = imagedata
         if(teamsimagedata != undefined){
             if(teamId === 1) {
                 imagepath = imagepath.filter((v) => v.tid == 1);
@@ -245,19 +261,10 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     },[teamId])
 
     useEffect(()=>{
-        // const file =  imageact// 選択された画像を取得
-        // const filePath = `/public/image/${file}` // 画像の保存先のpathを指定
-        // const { error } = await supabase.storage
-        // .from('Image-bucket')
-        // .upload(filePath, file)
-        // if (error) {
-        // // ここでエラーハンドリング
-        //     console.error(error);
-        // }
         if(anime != false){
             setInterval(()=>{
                 setanime(false)
-                setTeamId(teamsimagedata[teamsimagedata.length-1].tid)
+                setTeamId(imagedata[imagedata.length-1].tid)
             },10000)
         }
         console.log(anime)
@@ -265,16 +272,77 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
 
     const url = `image/${imageact}`
 
+    const [balls, setBalls] = useState<JSX.Element[]>([]);
+
+    // useEffect(() => {
+    //     if(imageact != ""){
+    //     // 球を追加する関数
+    //     const addBalls = () => {
+    //       const newBalls = Array.from({ length: 700 }).map((_, index) => {
+    //         const size = Math.random() * 15 + 10; // 10pxから25pxのランダムなサイズ
+    //         const top = Math.random() * 100;
+    //         const left = Math.random() * 100;
+    
+    //         return (
+    //           <div
+    //             key={`ball-${balls.length + index}`}
+    //             className="absolute bg-white rounded-full"
+    //             style={{
+    //               width: `${size}px`,
+    //               height: `${size}px`,
+    //               top: `${top}%`,
+    //               left: `${left}%`
+    //             }}
+    //           ></div>
+    //         );
+    //       });
+    
+    //       setBalls(prevBalls => [...prevBalls, ...newBalls]);
+    //     };
+    
+    //     // 球を定期的に追加
+    //     const intervalAdd = setInterval(addBalls, 300); // 0.3秒ごとに700個の球を追加
+    
+    //     // 5秒後に球の追加を停止
+    //     const timeoutStop = setTimeout(() => {
+    //       clearInterval(intervalAdd);
+    //     }, 4000);
+    
+    //     // 球を削除する関数
+    //      // 球を削除
+    //      const removeBalls = () => {
+    //         setBalls(prevBalls => prevBalls.slice(1400));
+    //       };
+      
+    //       const intervalRemove = ()=>{
+    //           setInterval(removeBalls, 300); // 5秒ごとに700個の球を削除
+    //       }
+  
+    //       const resetremoove = setInterval(intervalRemove,4000)
+    
+    //     return () => {
+    //       clearInterval(intervalAdd);
+    //       clearTimeout(timeoutStop);
+    //       clearInterval(resetremoove);
+    //     };
+    // }
+    //   }, [imageact]);
+
+    useEffect(()=>{
+
+    },[imageact])
+  
     return (
         <div className={teamId===1?"bg-[#323232]":teamId===2?"bg-[#008C7E]":teamId===3?"bg-[#4D8437]":teamId===4?"bg-[#394D98]":
                         teamId===5?"bg-[#E61D7A]":teamId===6?"bg-[#E7BE01]":teamId===7?"bg-[#E47900]":teamId===8?"bg-[#992089]":
                         teamId===9?"bg-[#015A94]":teamId===10?"bg-[#00993C]":teamId===11?"bg-[#B6002C]":""}>
             {
-                currentData != undefined?
+                teamname != ""?
                 anime == true ?
-                <div className='w-full h-[100vh] bg-white bg-opacity-75 flex flex-col justify-center items-center absolute z-10'>
+                <div className='w-full h-[100vh] bg-white flex flex-col justify-center items-center absolute z-10'>
                     {balls}
-                    <p className='text-4xl'>{currentData[currentData?.length-1].name}が進化しました。</p>
+                    {/* @ts-ignore */}
+                    <p className='text-4xl'>{teamname}が進化しました。</p>
                     <p className='w-[40%] mt-5 mx-auto'><img src={url} alt="新たに生成された画像" className='w-full'/></p>
                 </div>: ""
                 :""
