@@ -32,7 +32,7 @@ interface TeamsViewProps {
 
 const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=> {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
-    const [flip, setFlip] = useState<Array<boolean | null>>(Array(10).fill(null));
+    // const [flip, setFlip] = useState<Array<boolean | null>>(Array(10).fill(null));
     const rankImages = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9,];
     const [teamId, setTeamId] = useState(1)
     const supabase = createClientComponentClient();
@@ -87,7 +87,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     const pronpt = [`これから送る条件を記憶し、モンスターを作成してください。要素
                     ・漢字をいくつか渡すのでそれのイメージにあったもの
                     ・イラストのテイストはファンタジーのみではなく、自由に作成してください
-                    ・levelが1の時は卵
+                    ・levelが1の時は卵から生まれる様子を描いてください。
                     ・キャラクターはレベルを持っており、特定のレベルに達成すると進化します。
                     レベルについて
                     初期値:1
@@ -103,9 +103,12 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     イラストについて
                     ・イラストの中に実際の漢字は含めないであくまで印象のみを反映させてください。
                     ・周りの要素は含めずそのもの単体を1パターンだけ生成してください。
+
+                    漢字について
+                    ${teamdata[0].kanji}
                 
                     現在のレベル
-                    ${teamdata.length}
+                    ${teamscoredata.length}
                 
                     要素（ここの言葉に含まれる意味を噛み砕いてください）
                     ${tag}
@@ -114,13 +117,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     ]
                     
                     if (teamscoredata.length == 1) {
-                        TestImage(pronpt[0], teamdata[0].tid,1);
-                        // localStorage.setItem(`${teamdata[0].tid}_1_tag`, tag.toString());
-                        // localStorage.setItem(`${teamdata[0].tid}_1_teamsarr`, teamsarr[teamdata[0].tid].toString());
-                        // let teamsObj = {};
-                        // //@ts-ignore
-                        // teamsObj[`${teamdata[0].tid}_1_teamsarr`] = localStorage.getItem(`${teamdata[0].tid}_1_teamsarr`);
-                        // console.log(teamsObj);
+                        TestImage(pronpt[0], teamdata[0].tid,2);
                     }
                     else if (teamscoredata.length == teamdata[0].member.length) {
                         TestImage(pronpt[0], teamdata[0].tid,10);
@@ -161,7 +158,9 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     useEffect(()=>{
         console.log(imageact);
         if(imageact != ""){
-            setanime(true);
+            setTimeout(()=>{
+                setanime(true);
+            },10000)
         }
     },[imageact])
 
@@ -170,7 +169,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             let result = teamsarr;
             if(teamId === 1) {
                 result = result.filter((v) => v.tid == 1);
-            } 
+            }
             if(teamId === 2) {
                 result = result.filter((v) => v.tid == 2);
             }
@@ -255,26 +254,30 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
         // // ここでエラーハンドリング
         //     console.error(error);
         // }
-        setInterval(()=>{
-            setanime(false)
-        },10000)
+        if(anime != false){
+            setInterval(()=>{
+                setanime(false)
+                setTeamId(teamsimagedata[teamsimagedata.length-1].tid)
+            },10000)
+        }
         console.log(anime)
     },[anime])
 
     const url = `image/${imageact}`
-
-    
 
     return (
         <div className={teamId===1?"bg-[#323232]":teamId===2?"bg-[#008C7E]":teamId===3?"bg-[#4D8437]":teamId===4?"bg-[#394D98]":
                         teamId===5?"bg-[#E61D7A]":teamId===6?"bg-[#E7BE01]":teamId===7?"bg-[#E47900]":teamId===8?"bg-[#992089]":
                         teamId===9?"bg-[#015A94]":teamId===10?"bg-[#00993C]":teamId===11?"bg-[#B6002C]":""}>
             {
+                currentData != undefined?
                 anime == true ?
-                <div className='w-full h-[100vh] bg-slate-300 flex flex-col justify-center items-center absolute z-10'>
-                    <p className=' text-4xl'>チームが進化しました。</p>
+                <div className='w-full h-[100vh] bg-white bg-opacity-75 flex flex-col justify-center items-center absolute z-10'>
+                    {balls}
+                    <p className='text-4xl'>{currentData[currentData?.length-1].name}が進化しました。</p>
                     <p className='w-[40%] mt-5 mx-auto'><img src={url} alt="新たに生成された画像" className='w-full'/></p>
                 </div>: ""
+                :""
             }
             <div className='flex'>
             {

@@ -44,7 +44,7 @@ const Comment: FC = () => {
                 value={inputText}
                 onChange={handleChange}
                 className="textarea textarea-bordered w-full max-w-xs h-[116px] text-base mt-2"
-                placeholder="Bio"
+                placeholder="コメントを入力してください"
               />
             </div>
             <div className="flex justify-between">
