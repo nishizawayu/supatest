@@ -28,7 +28,7 @@ const TestImage = async(prompts,tid,level) => {
     const sharp = require('sharp');
     try {
       const compressedBuffer = await sharp(imageBuffer)
-        .resize(800, 800)
+        .resize(600, 600)
         .toFormat('jpeg', { quality: 80 })
         .toBuffer();
 
