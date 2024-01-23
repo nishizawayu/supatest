@@ -37,13 +37,13 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
     // 全体の評価された人数
     const nop = currentData.length;
     // 1日目の評価された人数
-    const day1arr = currentData.filter((v)=> v.date == "2024-01-09");
+    const day1arr = currentData.filter((v)=> v.date == "2024-01-25");
     const day1 = day1arr.length;
     // 2日目の評価された人数
-    const day2arr = currentData.filter((v)=> v.date == "2024-01-10");
+    const day2arr = currentData.filter((v)=> v.date == "2024-01-26");
     const day2 = day2arr.length;
     // 3日目の評価された人数
-    const day3arr = currentData.filter((v)=> v.date == "2024-01-11");
+    const day3arr = currentData.filter((v)=> v.date == "2024-01-27");
     const day3 = day3arr.length;
 
     let sum:[number,number,number,number] = [0,0,0,0];
@@ -119,15 +119,15 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                 </div>
                 <section className='w-[90%] mt-8 mx-auto pb-20'>
                     <div className='relative'>
-                        <div className='pl-8 inline-flex flex-wrap flex-col-reverse gap-1'>   
+                        <div className='pl-4 inline-flex flex-wrap flex-col-reverse gap-1 mt-1'>   
                             <h2 className='text-2xl text-black font-bold relative z-10'>
                                 {username}
                             </h2>
                             <p className='relative z-10 text-black text-xl'>{team}</p>
                         </div>
-                        <p className='text-[84px] text-[#d8d7d7] absolute left-0 top-[-45%]'>{uid}</p>
                     </div>
-                    <div className='mt-1 pl-8 flex flex-wrap gap-2 relative z-10 text-sm'>
+                    <p className='text-[104px] text-[#484848] absolute right-[5%] top-0'>{uid}</p>
+                    <div className='mt-1 pl-2 flex flex-wrap gap-2 relative z-10 text-sm'>
                         <p className='inline-block mt-3 pb-1 px-2 font-bold bg-[#e3e3e3] rounded-md'>#{goaldata[0].schoolyear}</p>
                         <p className='inline-block mt-3 pb-1 px-2 font-bold bg-[#e3e3e3] rounded-md'>#{goaldata[0].job}</p>
                         {

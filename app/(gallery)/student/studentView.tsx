@@ -11,7 +11,6 @@ import rank6 from "@/app/(images)/rank6.png"
 import rank7 from "@/app/(images)/rank7.png"
 import rank8 from "@/app/(images)/rank8.png"
 import rank9 from "@/app/(images)/rank9.png"
-import Spinner from "@/components/Spinner"
 
 interface StudentViewProps {
     studentarr: {id:number, uid:string, name:string, job:string, team:string, school_year:string, most_common_tag:string}[]
@@ -45,7 +44,19 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
         if(studentCharacter === 5) {
             result = result.filter((v) => v.most_common_tag == "すごい");
         } else if(studentCharacter === 6) {
+            result = result.filter((v) => v.most_common_tag == "センス○");
+        }else if(studentCharacter === 7) {
             result = result.filter((v) => v.most_common_tag == "面白い");
+        }else if(studentCharacter === 8) {
+            result = result.filter((v) => v.most_common_tag == "心に響く");
+        }else if(studentCharacter === 9) {
+            result = result.filter((v) => v.most_common_tag == "プロ級");
+        }else if(studentCharacter === 10) {
+            result = result.filter((v) => v.most_common_tag == "きれい");
+        }else if(studentCharacter === 11) {
+            result = result.filter((v) => v.most_common_tag == "努力家");
+        }else if(studentCharacter === 12) {
+            result = result.filter((v) => v.most_common_tag == "天才肌");
         }
     
         if(studentserch >= "00"){
@@ -72,7 +83,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                 </h1>
 
                 <div className="join flex justify-center mt-8">
-                    <input className="input border-black join-item w-[282px]" type="number" placeholder="番号で探す" value={studentserch} onChange={handleInputChange}/>
+                    <input className="input border-black join-item w-[282px]" type="number" placeholder="ブース番号で探す" value={studentserch} onChange={handleInputChange}/>
                     {/* <button className="btn join-item w-[63px] bg-black text-white border-black">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5q0-2.725 1.888-4.612T9.5 3q2.725 0 4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5q0-1.875-1.312-3.187T9.5 5Q7.625 5 6.313 6.313T5 9.5q0 1.875 1.313 3.188T9.5 14"/></svg>
                     </button> */}
@@ -92,11 +103,17 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                         <option value={4}>デザイナー</option>
                         <option value={100}>全て</option>
                     </select>
-
+                    {/* タグのソート */}
                     <select value={studentCharacter} className="select select-primary pl-3 pr-12" onChange={(e) => setStudentCharacter(parseInt(e.target.value))}>
                         <option disabled value={0}>特徴</option>
                         <option value={5}>すごい</option>
-                        <option value={6}>面白い</option>
+                        <option value={6}>センス○</option>
+                        <option value={7}>面白い</option>
+                        <option value={8}>心に響く</option>
+                        <option value={9}>プロ級</option>
+                        <option value={10}>きれい</option>
+                        <option value={11}>努力家</option>
+                        <option value={12}>天才肌</option>
                         <option value={100}>全て</option>
                     </select>
                 </div>

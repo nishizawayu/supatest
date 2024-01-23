@@ -61,7 +61,6 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     }, []);
 
     //評価が入力された際の処理
-    //評価回数に応じて画像生成
     useEffect(()=>{
         if(evaluations != undefined){
             if(evaluations.length != 0){
@@ -87,11 +86,15 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     //     return pre
                     // },[]))]
                     console.log(tag);
+                    // 生成されるイメージ
+                    const animal =["ドラゴン","天使","恐竜"]
+                    // プロンプト
                     const pronpt = [`これから送る条件を記憶し、モンスターを作成してください。要素
                     ・漢字をいくつか渡すのでそれのイメージにあったもの
                     ・イラストのテイストはファンタジーのみではなく、自由に作成してください
                     ・levelが1の時は卵から生まれる様子を描いてください。
                     ・キャラクターはレベルを持っており、特定のレベルに達成すると進化します。
+                    ・キャラクターのイメージは${animal[teamdata[0].tid-1]}
                     レベルについて
                     初期値:1
                     最大値:100
@@ -119,6 +122,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:`,
                     ]
                     
+                    //評価回数に応じて画像生成
                     if(insetdata == true){
                         if (teamscoredata.length == 1) {
                             TestImage(pronpt[0], teamdata[0].tid,2);
@@ -168,12 +172,22 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
         .subscribe();
     },[])
 
+    const [audio] = useState(typeof Audio !== "undefined" ? new Audio("/sound/sound_1.mp3") : undefined);
+
+    const onsound = ()=>{
+        if(audio) {
+            console.log("soundplay")
+            audio.play();
+        }
+    }
+
     useEffect(()=>{
         console.log(imageact);
         if(imageact != ""){
             setTimeout(()=>{
                 setteamname(imagedata[imagedata.length-1].name);
                 setTeamId(0);
+                onsound();
                 setanime(true);
                 //チームの名前
             },10000)
@@ -272,7 +286,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
 
     const url = `image/${imageact}`
 
-    const [balls, setBalls] = useState<JSX.Element[]>([]);
+    // const [balls, setBalls] = useState<JSX.Element[]>([]);
 
     // useEffect(() => {
     //     if(imageact != ""){
@@ -340,7 +354,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                 teamname != ""?
                 anime == true ?
                 <div className='w-full h-[100vh] bg-white flex flex-col justify-center items-center absolute z-10'>
-                    {balls}
+                    {/* {balls} */}
                     {/* @ts-ignore */}
                     <p className='text-4xl'>{teamname}が進化しました。</p>
                     <p className='w-[40%] mt-5 mx-auto'><img src={url} alt="新たに生成された画像" className='w-full'/></p>
