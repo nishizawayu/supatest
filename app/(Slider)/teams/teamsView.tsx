@@ -24,7 +24,6 @@ const TeamsView: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimageurl 
           <p className="text-xl font-bold text-center mt-6">評価を受け取りました。</p>
           <p className="text-xl font-bold text-center mt-6">ご協力ありがとうございます。</p>
           <p className="text-base font-bold text-center mt-6">※3秒後に自動で戻ります</p>
-          <Navigation/>
         </div>
     )
 }
