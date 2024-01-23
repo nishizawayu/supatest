@@ -87,7 +87,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     // },[]))]
                     console.log(tag);
                     // 生成されるイメージ
-                    const animal =["ドラゴン","天使","恐竜"]
+                    const animal =["虎","猫","羊","宇宙人","ミニ豚","狼","天使","不死鳥","鮫","鹿","馬"]
                     // プロンプト
                     const pronpt = [`これから送る条件を記憶し、モンスターを作成してください。要素
                     ・漢字をいくつか渡すのでそれのイメージにあったもの
@@ -187,13 +187,9 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     useEffect(()=>{
         console.log(imageact);
         if(imageact != ""){
-            setTimeout(()=>{
-                setteamname(imagedata[imagedata.length-1].name);
-                setTeamId(0);
-                onsound();
-                setanime(true);
-                //チームの名前
-            },10000)
+            setteamname(imagedata[imagedata.length-1].name);
+            onsound();
+            setanime(true);
         }
     },[imageact])
 
@@ -278,12 +274,11 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
 
     useEffect(()=>{
         if(anime != false){
-            setInterval(()=>{
-                setanime(false)
+            setTimeout(()=>{
                 setTeamId(imagedata[imagedata.length-1].tid)
+                setanime(false)
             },10000)
         }
-        console.log(anime)
     },[anime])
 
     const url = `image/${imageact}`
