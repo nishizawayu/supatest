@@ -125,27 +125,27 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     //評価回数に応じて画像生成
                     if(insetdata == true){
                         if (teamscoredata.length == 1) {
-                            TestImage(pronpt[0], teamdata[0].tid,2);
+                            TestImage(pronpt[0], teamdata[0].tid,2,tag);
                             setinsertdata(false)
                         }
                         else if (teamscoredata.length == teamdata[0].member.length) {
-                            TestImage(pronpt[0], teamdata[0].tid,10);
+                            TestImage(pronpt[0], teamdata[0].tid,10,tag);
                             setinsertdata(false)
                         }
                         else if (teamscoredata.length == teamdata[0].member.length*3) {
-                            TestImage(pronpt[0], teamdata[0].tid,30);
+                            TestImage(pronpt[0], teamdata[0].tid,30,tag);
                             setinsertdata(false)
                         }
                         else if (teamscoredata.length == teamdata[0].member.length*5) {
-                            TestImage(pronpt[0], teamdata[0].tid,50);
+                            TestImage(pronpt[0], teamdata[0].tid,50,tag);
                             setinsertdata(false)
                         }
                         else if (teamscoredata.length == teamdata[0].member.length*7) {
-                            TestImage(pronpt[0], teamdata[0].tid,70);
+                            TestImage(pronpt[0], teamdata[0].tid,70,tag);
                             setinsertdata(false)
                         }
                         else if (teamscoredata.length == teamdata[0].member.length*10) {
-                            TestImage(pronpt[0], teamdata[0].tid,100);
+                            TestImage(pronpt[0], teamdata[0].tid,100,tag);
                             setinsertdata(false)
                         }
     

@@ -2,7 +2,7 @@
 "use server"
 import insertimagedata from "./insert";
 // @ts-ignore
-const TestImage = async(prompts,tid,level) => {
+const TestImage = async(prompts,tid,level,tag) => {
   try {
     const baseUrl = process.env.NODE_ENV === 'production' ? 'https://hyouka-app.vercel.app' : 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/generateImage`, {
@@ -44,7 +44,7 @@ const TestImage = async(prompts,tid,level) => {
       });
       const result = await saveimage.json();
       if(result != null){
-        insertimagedata(result.imagePathdata, tid);
+        insertimagedata(result.imagePathdata, tid,tag);
       }  
     } catch (err) {
       console.error('Error compressing image:', err);

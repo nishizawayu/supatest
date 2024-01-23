@@ -83,7 +83,7 @@ const end = ()=>{
                             router.push(`/teams?uid=${uiddata}`);
                             // router.push(`/nummber`);
                         }} className="btn bg-black text-white">
-                        送信する<span className="ml-[2px]">&gt;</span>
+                        評価を送る<span className="ml-[2px]">&gt;</span>
                         </button>
                     </div>
                 </div>

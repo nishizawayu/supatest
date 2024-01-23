@@ -119,14 +119,15 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
                 </div>
                 <section className='w-[90%] mt-8 mx-auto pb-20'>
                     <div className='relative'>
-                        <div className='pl-4 inline-flex flex-wrap flex-col-reverse gap-1 mt-1'>   
+                        <div className='pl-8 inline-flex flex-wrap flex-col-reverse gap-1 mt-1'>   
                             <h2 className='text-2xl text-black font-bold relative z-10'>
                                 {username}
                             </h2>
                             <p className='relative z-10 text-black text-xl'>{team}</p>
+                            <p className='text-[84px] text-[#c5c5c5] absolute left-0 top-[-45%]'>{uid}</p>
                         </div>
                     </div>
-                    <p className='text-[104px] text-[#484848] absolute right-[5%] top-0'>{uid}</p>
+                    <p className='text-[16px] text-[#000000] absolute right-[5%] top-8'>ブース番号:{uid}</p>
                     <div className='mt-1 pl-2 flex flex-wrap gap-2 relative z-10 text-sm'>
                         <p className='inline-block mt-3 pb-1 px-2 font-bold bg-[#e3e3e3] rounded-md'>#{goaldata[0].schoolyear}</p>
                         <p className='inline-block mt-3 pb-1 px-2 font-bold bg-[#e3e3e3] rounded-md'>#{goaldata[0].job}</p>
