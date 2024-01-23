@@ -28,7 +28,7 @@ interface TeamsViewProps {
 
     teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[],total_team_score:number,kanji:[]}[]
     scoredata:{score_1:number, score_2:number, score_3:number,score_4:number,comment:string,tag:string,uid:string,date:string,tid:number}[]
-    teamsimagedata:{id:number,tid:number,imageUrl:string,created_at:string,name:string}[]
+    teamsimagedata:{id:number,tid:number,imageUrl:string,created_at:string,name:string,formattedTimestamp:string}[]
 }
 
 const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=> {
@@ -162,6 +162,9 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
         .on("postgres_changes", { event: "INSERT", schema: "public", table: "teamsimageurl" }, (payload) => {
             console.log('New evaluation:', payload.new);
             // ここで何かの処理を行う
+            let timestamp = new Date(payload.new.created_at);
+            let formattedTimestamp = timestamp.toLocaleDateString('ja-JP', { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            payload.new.formattedTimestamp = formattedTimestamp;
             //@ts-ignore
                 setimagedata(prevEvals => [...prevEvals, payload.new]); // 新しい評価を追加
                 // teamsimagedata.push(payload.new)
@@ -233,7 +236,6 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             return result;
         }
     },[teamId])
-
     const currentimageData = useMemo(() => {
         let imagepath = imagedata
         if(teamsimagedata != undefined){
@@ -393,7 +395,11 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             currentimageData?.map((data,index)=>{
                                 return(
                                     <SwiperSlide className='my-8' key={`imageslide${index+1}枚目`}>
-                                        <p className='text-left text-white'>{data.created_at}</p>
+                                        {
+                                            index > 0 ?
+                                            <p key={`imageslide${index+1}枚目`} className='text-white text-center' >{data.formattedTimestamp}に進化しました</p>:
+                                            <p></p>
+                                        }
                                         <div className="rating mr-3 my-3">
                                             {
                                                 Array.from({length: index + 1}).map((_, i) => (
@@ -414,7 +420,11 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                             </div>
                                             <div className="back">
                                                 <div className="inner">
-                                                <p className='mt-[40%]'>{data.name}が{index == 1 ? currentData[0].member.length*3 : index == 2 ? currentData[0].member.length*5 : index == 3 ? currentData[0].member.length*7 : index == 4 ? currentData[0].member.length*10 : currentData[0].member.length}回プレゼンをし、<br/>という評価をもらい、<br/>この姿に進化しました。</p>
+                                                {
+                                                    index == 0 ?
+                                                    <p className='mt-[40%]'>{data.name}のメンバーが大切にしている漢字{currentData[0].kanji}から<br/>チームのキャラクターの卵が産まれました</p>:
+                                                    <p className='mt-[40%]'>{data.name}が{index == 1 ? 1 : index == 2 ? currentData[0].member.length : index == 3 ? currentData[0].member.length*3 : index == 4 ? currentData[0].member.length*5 :  index == 5 ? currentData[0].member.length*7 : index == 6 ? currentData[0].member.length*10 : currentData[0].member.length}回プレゼンをし、<br/>という評価をもらい、<br/>この姿に進化しました。</p>
+                                                }
                                                 <label htmlFor={`card${index}`} className="button return" aria-hidden="true">
                                                     <p className=' text-black'>←</p>
                                                 </label>
@@ -480,7 +490,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                             {/* 順位 */}
                                                 <p className="mx-1 text-[24px] my-2 text-white">{index+1}</p>
                                             {/* チーム名 */}
-                                                <p className={index < 9 ?" text-lg font-medium ml-5 text-white":"text-lg font-medium ml-2 text-white"}>{data.name}</p>
+                                                <p className={index < 9 ?" text-base font-medium ml-5 text-white":"text-base font-medium ml-2 text-white"}>{data.name}</p>
                                             </div>
                                             {/* 点数 */}
                                             <p className="text-base font-bold text-white">{data.total_evaluation_count}<span className="text-[10px] font-normal">回</span></p>
