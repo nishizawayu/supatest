@@ -261,7 +261,6 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             return imagepath
         }
     },[teamId])
-    console.log(currentimageData);
 
     useEffect(()=>{
         if(anime != false){
