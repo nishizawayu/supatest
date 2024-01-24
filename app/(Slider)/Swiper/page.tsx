@@ -189,8 +189,24 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             TestImage(pronpt[0], teamdata[0].tid,2,tag);
                             setinsertdata(false)
                         }
+                        else if (teamscoredata.length == 2) {
+                            TestImage(pronpt[0], teamdata[0].tid,3,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == 3) {
+                            TestImage(pronpt[0], teamdata[0].tid,4,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == 4) {
+                            TestImage(pronpt[0], teamdata[0].tid,5,tag);
+                            setinsertdata(false)
+                        }
                         else if (teamscoredata.length == teamdata[0].member.length) {
                             TestImage(pronpt[0], teamdata[0].tid,10,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*2) {
+                            TestImage(pronpt[0], teamdata[0].tid,20,tag);
                             setinsertdata(false)
                         }
                         else if (teamscoredata.length == teamdata[0].member.length*3) {
@@ -503,6 +519,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             <div className='text-white'>
                                 <p>次の進化まで</p>
                                 {
+                                    teamId >= 1?
                                     teams[teamId-1].total_evaluation_count === 0 ?
                                     <p className=''><span className='text-[40px]'>1</span>人</p>:
                                     teams[teamId-1].total_evaluation_count < data.member.length ?
@@ -515,23 +532,33 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                     <p className=''><span className='text-[40px]'>{data.member.length*7-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     teams[teamId-1].total_evaluation_count < data.member.length*10 ?
                                     <p className=''><span className='text-[40px]'>{data.member.length*10-teams[teamId-1].total_evaluation_count}</span>人</p> :
-                                    <p></p>
+                                    <p></p>:""
                                 }
                             </div>
                             <div className='border-r'></div>
                             <div className='text-white'>
                                 <p>合計点</p>
-                                <p className='text-[40px]'>{teams[teamId-1].total_team_score}<span className='text-base'>点</span></p>
+                                {
+                                    teamId >= 1?
+                                    <p className='text-[40px]'>{teams[teamId-1].total_team_score}<span className='text-base'>点</span></p>:""
+                                    
+                                }
                             </div>
                             <div className='border-r'></div>
                             <div className='text-white'>
                                 <p>特徴</p>
-                                <p className='text-[32px]'>{teams[teamId-1].most_team_tag}</p>
+                                {
+                                    teamId >= 1?
+                                    <p className='text-[32px]'>{teams[teamId-1].most_team_tag}</p>:""
+                                }       
                             </div>
                             <div className='border-r'></div>
                             <div className='text-white'>
                                 <p>合計プレゼン数</p>
-                                <p className=''><span className='text-[40px]'>{teams[teamId-1].total_evaluation_count}</span>回</p>
+                                {
+                                    teamId >= 1?
+                                    <p className=''><span className='text-[40px]'>{teams[teamId-1].total_evaluation_count}</span>回</p>:""
+                                }
                             </div>
                         </div>
                     </div>
