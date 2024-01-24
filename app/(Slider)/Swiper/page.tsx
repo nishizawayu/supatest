@@ -11,30 +11,19 @@ import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { Swiper as SwiperClass } from 'swiper';
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 import 'swiper/css/effect-coverflow';
-import Image from 'next/image';
-import rank1 from "@/app/(images)/rank1.png"
-import rank2 from "@/app/(images)/rank2.png"
-import rank3 from "@/app/(images)/rank3.png"
-import rank4 from "@/app/(images)/rank4.png"
-import rank5 from "@/app/(images)/rank5.png"
-import rank6 from "@/app/(images)/rank6.png"
-import rank7 from "@/app/(images)/rank7.png"
-import rank8 from "@/app/(images)/rank8.png"
-import rank9 from "@/app/(images)/rank9.png"
 import TestImage from '@/app/TestImage/page';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 interface TeamsViewProps {
 
-    teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[],total_team_score:number,kanji:[]}[]
+    teamsarr: {id:number,name:string,tid:number,teampoint:number,level:number,total_evaluation_count:number,member:[],total_team_score:number,kanji:[],most_team_tag:string}[]
     scoredata:{score_1:number, score_2:number, score_3:number,score_4:number,comment:string,tag:string,uid:string,date:string,tid:number}[]
-    teamsimagedata:{id:number,tid:number,imageUrl:string,created_at:string,name:string,formattedTimestamp:string}[]
+    teamsimagedata:{id:number,tid:number,imageUrl:string,created_at:string,name:string,formattedTimestamp:string,tag:[]}[]
 }
 
 const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=> {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
     // const [flip, setFlip] = useState<Array<boolean | null>>(Array(10).fill(null));
-    const rankImages = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9,];
     const [teamId, setTeamId] = useState(1)
     const supabase = createClientComponentClient();
     const [evaluations, setEvaluations] = useState(scoredata);
@@ -44,21 +33,93 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     // const [imagedata,setimagedata] = useState();
     const [imagedata,setimagedata] = useState(teamsimagedata);
     const [anime,setanime] = useState(false)
+    const [teamrank, setTeamrank] = useState(teamsarr);
+    const [teams, setTeams] = useState(teamsarr);
 
+    //ランキングリアルタイム更新
     useEffect(() => {
         const subscription = supabase
-            .channel('evaluation')
-            .on("postgres_changes", { event: "INSERT", schema: "public", table: "evaluation" }, (payload) => {
-                setinsertdata(true)
+          .channel('teamrank')
+          .on("postgres_changes", { event: "*", schema: "public", table: "teams" }, (payload) => {
+            console.log('Change received!', payload);
+            // 状態を更新する
+            //@ts-ignore
+            setTeamrank(prevTeamrank => {
+              // 更新されたチームのデータを見つける
+              //@ts-ignore
+              const updatedTeamIndex = prevTeamrank.findIndex(team => team.id === payload.new.id);
+              if (updatedTeamIndex === -1) {
+                // 新しいチームのデータを追加
                 //@ts-ignore
-                setEvaluations(prevEvals => [...prevEvals, payload.new]); // 新しい評価を追加
-            })
-            .subscribe();
-
+                return [...prevTeamrank, payload.new].sort((a, b) => b.total_evaluation_count - a.total_evaluation_count); // 降順に並び替え
+              } else {
+                // 既存のチームのデータを更新
+                const updatedTeamrank = [...prevTeamrank];
+                updatedTeamrank[updatedTeamIndex] = {
+                  ...updatedTeamrank[updatedTeamIndex],
+                  ...payload.new
+                };
+                return updatedTeamrank.sort((a, b) => b.total_evaluation_count - a.total_evaluation_count); // 降順に並び替え
+              }
+            });
+          })
+          .subscribe();
+      
         return () => {
-            subscription.unsubscribe(); // クリーンアップ
+          subscription.unsubscribe(); // クリーンアップ
         };
-    }, []);
+      }, []);
+    console.log(teamrank);
+
+    //チームの特徴リアルタイム更新
+    useEffect(() => {
+        const subscription = supabase
+          .channel('teams')
+          .on("postgres_changes", { event: "*", schema: "public", table: "teams" }, (payload) => {
+            console.log('Change received!', payload);
+            // 状態を更新する
+            //@ts-ignore
+            setTeams(prevTeams => {
+              // 更新されたチームのデータを見つける
+              //@ts-ignore
+              const updatedTeamIndex = prevTeams.findIndex(team => team.id === payload.new.id);
+              if (updatedTeamIndex === -1) {
+                // 新しいチームのデータを追加
+                return [...prevTeams, payload.new];
+              } else {
+                // 既存のチームのデータを更新
+                const updatedTeams = [...prevTeams];
+                updatedTeams[updatedTeamIndex] = {
+                  ...updatedTeams[updatedTeamIndex],
+                  ...payload.new
+                };
+                return updatedTeams;
+              }
+            });
+          })
+          .subscribe();
+
+            return () => {
+            subscription.unsubscribe(); // クリーンアップ
+            };
+        }, []);
+
+        //評価が入ったか監視
+        useEffect(() => {
+            const subscription = supabase
+                .channel('evaluation')
+                .on("postgres_changes", { event: "INSERT", schema: "public", table: "evaluation" }, (payload) => {
+                    setinsertdata(true)
+                    //@ts-ignore
+                    setEvaluations(prevEvals => [...prevEvals, payload.new]); // 新しい評価を追加
+                })
+                .subscribe();
+    
+            return () => {
+                subscription.unsubscribe(); // クリーンアップ
+            };
+        }, []);
+    
 
     //評価が入力された際の処理
     useEffect(()=>{
@@ -153,7 +214,6 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                 }
             }
         }
-               
     },[evaluations])
 
     useEffect(()=>{
@@ -271,6 +331,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             return imagepath
         }
     },[teamId])
+
 
     useEffect(()=>{
         if(anime != false){
@@ -391,9 +452,11 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                 return(
                                     <SwiperSlide className='my-8' key={`imageslide${index+1}枚目`}>
                                         {
-                                            index > 0 ?
+                                            index == 0 ?
+                                            <div className="h-7"></div>:
+                                            data.formattedTimestamp != null ?
                                             <p key={`imageslide${index+1}枚目`} className='text-white text-center' >{data.formattedTimestamp}に進化しました</p>:
-                                            <p></p>
+                                            <p key={`imageslide${index+1}枚目`} className='text-white text-center' >{data.created_at}に進化しました</p>
                                         }
                                         <div className="rating mr-3 my-3">
                                             {
@@ -418,7 +481,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                                 {
                                                     index == 0 ?
                                                     <p className='mt-[40%]'>{data.name}のメンバーが大切にしている漢字{currentData[0].kanji}から<br/>チームのキャラクターの卵が産まれました</p>:
-                                                    <p className='mt-[40%]'>{data.name}が{index == 1 ? 1 : index == 2 ? currentData[0].member.length : index == 3 ? currentData[0].member.length*3 : index == 4 ? currentData[0].member.length*5 :  index == 5 ? currentData[0].member.length*7 : index == 6 ? currentData[0].member.length*10 : currentData[0].member.length}回プレゼンをし、<br/>という評価をもらい、<br/>この姿に進化しました。</p>
+                                                    <p className='mt-[40%]'>{data.name}が{index == 1 ? 1 : index == 2 ? currentData[0].member.length : index == 3 ? currentData[0].member.length*3 : index == 4 ? currentData[0].member.length*5 :  index == 5 ? currentData[0].member.length*7 : index == 6 ? currentData[0].member.length*10 : currentData[0].member.length}回プレゼンをし、<br/>{data.tag}<br/>という評価をもらい、この姿に進化しました。</p>
                                                 }
                                                 <label htmlFor={`card${index}`} className="button return" aria-hidden="true">
                                                     <p className=' text-black'>←</p>
@@ -436,35 +499,35 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             <div className='text-white'>
                                 <p>次の進化まで</p>
                                 {
-                                    data.total_evaluation_count === 0 ?
+                                    teams[teamId-1].total_evaluation_count === 0 ?
                                     <p className=''><span className='text-[40px]'>1</span>人</p>:
-                                    data.total_evaluation_count < data.member.length ?
-                                    <p className=''><span className='text-[40px]'>{data.member.length-data.total_evaluation_count}</span>人</p> :
-                                    data.total_evaluation_count < data.member.length*3 ?
-                                    <p className=''><span className='text-[40px]'>{data.member.length*3-data.total_evaluation_count}</span>人</p> :
-                                    data.total_evaluation_count < data.member.length*5 ?
-                                    <p className=''><span className='text-[40px]'>{data.member.length*5-data.total_evaluation_count}</span>人</p> :
-                                    data.total_evaluation_count < data.member.length*7 ?
-                                    <p className=''><span className='text-[40px]'>{data.member.length*7-data.total_evaluation_count}</span>人</p> :
-                                    data.total_evaluation_count < data.member.length*10 ?
-                                    <p className=''><span className='text-[40px]'>{data.member.length*10-data.total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*3 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*3-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*5 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*5-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*7 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*7-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*10 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*10-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     <p></p>
                                 }
                             </div>
                             <div className='border-r'></div>
                             <div className='text-white'>
                                 <p>合計点</p>
-                                <p className='text-[40px]'>{data.total_team_score}<span className='text-base'>点</span></p>
+                                <p className='text-[40px]'>{teams[teamId-1].total_team_score}<span className='text-base'>点</span></p>
                             </div>
                             <div className='border-r'></div>
                             <div className='text-white'>
-                                <p>強み</p>
-                                <p className='text-[32px]'>企画力</p>
+                                <p>特徴</p>
+                                <p className='text-[32px]'>{teams[teamId-1].most_team_tag}</p>
                             </div>
                             <div className='border-r'></div>
                             <div className='text-white'>
                                 <p>合計プレゼン数</p>
-                                <p className=''><span className='text-[40px]'>{data.total_evaluation_count}</span>回</p>
+                                <p className=''><span className='text-[40px]'>{teams[teamId-1].total_evaluation_count}</span>回</p>
                             </div>
                         </div>
                     </div>
@@ -477,7 +540,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             <h2 className='text-center text-[24px] font-bold ml-8  mt-10 text-white'>ランキング</h2>
                 <ul className="w-[90%] mx-6 my-6">
                     {
-                        teamsarr?.map((data:any, index:number) => {
+                        teamrank?.map((data:any, index:number) => {
                             return (
                                 <li key={data.id}  onClick={()=>{setTeamId(data.tid)}}> 
                                         <div className="flex border-b items-center justify-between py-2">
