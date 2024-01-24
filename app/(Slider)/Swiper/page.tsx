@@ -235,7 +235,10 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
         .subscribe();
     },[])
 
-    const [audio] = useState(typeof Audio !== "undefined" ? new Audio("/sound/sound_1.mp3") : undefined);
+    const audiodata = ["sound_1.mp3","sound_2.mp3","sound_3.mp3","sound_4.mp3","sound_5.mp3","sound_6.mp3","sound_7.mp3","sound_8.mp3","sound_9.mp3","sound_10.mp3","sound_11.mp3"]
+
+    const [audio] = useState(typeof Audio !== "undefined" ? new Audio(`/sound/${audiodata[imagedata[imagedata.length-1].tid-1]}`) : undefined);
+
 
     const onsound = ()=>{
         if(audio) {

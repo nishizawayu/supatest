@@ -1,11 +1,16 @@
 'use client'
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
 const Comment: FC = () => {
     const router = useRouter()
     const [inputText, setInputText] = useState<string>('');
     const [nodata,setnodata] = useState(true);
+
+    useEffect(()=>{
+        const data1 = localStorage.getItem("inputText")
+        data1 ? setInputText(data1):""
+    },[])
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setInputText(e.target.value);

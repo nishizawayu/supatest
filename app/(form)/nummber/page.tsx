@@ -1,7 +1,7 @@
 'use client'
 import Navigation from "@/components/nav";
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent,useState } from 'react';
+import React, { ChangeEvent,useEffect,useState } from 'react';
 
 // interface NummberProps {
 //     studentarr: {id:number, uid:string, name:string}[]
@@ -12,6 +12,15 @@ const Nummber= () => {
     const [inputvalue,setInputvalue] = useState<string>("");
     const [errmsg,setErrMsg] = useState<string>("");
 
+    useEffect(()=>{
+        localStorage.removeItem("filteredValue");
+        localStorage.removeItem("score_1");
+        localStorage.removeItem("score_2");
+        localStorage.removeItem("score_3");
+        localStorage.removeItem("score_4");
+        localStorage.removeItem("inputText");
+        localStorage.removeItem("selectedTags");
+    },[])
 
     const allowedWords:string[] = [];
     for (let i=0; i<2; i++){

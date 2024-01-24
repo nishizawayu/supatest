@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 const Tag = ()=>{
@@ -9,6 +9,11 @@ const Tag = ()=>{
     // タグ用
     const [selectedTags, setSelectedTags] = useState<string>("");
     const [nodata,setnodata] = useState(true);
+
+    useEffect(()=>{
+        const data1 = localStorage.getItem("selectedTags")
+        data1 ? setSelectedTags(data1):""
+      },[])
 
     const handleNextClick = () => {
         // ローカルストレージに値を保存
@@ -38,11 +43,11 @@ const Tag = ()=>{
                     </div>
                     <div className="flex flex-wrap w-full gap-x-10 gap-y-8 justify-center my-8">
                         {
-                            tagarr.map((deta:string,index:number)=>(
-                                <p key={index} className={`w-[130px] border rounded-lg border-[#000000] text-base font-bold text-center py-4 cursor-pointer ${selectedTags.includes(deta) ? 'bg-gray-300' : ''}`}
+                            tagarr.map((data:string,index:number)=>(
+                                <p key={index} className={`w-[130px] border rounded-lg border-[#000000] text-base font-bold text-center py-4 cursor-pointer ${selectedTags.includes(data) ? 'bg-gray-300' : ''}`}
                                 onClick={()=>{
-                                    setSelectedTags(deta);
-                                }}>#{deta}</p>
+                                    setSelectedTags(data);
+                                }}>#{data}</p>
                             ))
                         }
                     </div>
