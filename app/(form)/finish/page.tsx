@@ -8,7 +8,7 @@ const end = ()=>{
     const router = useRouter()
     const [state,setState] = useState(false)
     const [data,setdata] = useState<string[]>([])
-    const text = ["企画","デザイン","実装","プレゼン","コメント","タグ",]
+    const text = ["企画","デザイン","実装","プレゼン","コメント","特徴",]
     const [uiddata,setuiddata] = useState<string>("");
     useEffect(()=>{
         // ローカルストレージから値を取得
