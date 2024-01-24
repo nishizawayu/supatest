@@ -13,7 +13,7 @@ import rank8 from "@/app/(images)/rank8.png"
 import rank9 from "@/app/(images)/rank9.png"
 
 interface StudentViewProps {
-    studentarr: {id:number, uid:string, name:string, job:string, team:string, school_year:string, most_common_tag:string}[]
+    studentarr: {id:number, uid:string, name:string, job:string, team:string, school_year:string, most_common_tag:string,tid:number}[]
     scoredata : {score_1:number, score_2:number, score_3:number, comment:string, tag:string, uid:string, date:string}[]
 }
 
@@ -24,6 +24,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
     const [studentYear, setStudentYear] = useState(0)
     const [studentJob, setStudentJob] = useState(0)
     const [studentCharacter, setStudentCharacter] = useState(0)
+    const [team, setTeam] = useState(0)
     const [studentserch,setStudentserch] = useState("");
 
     const currentData = useMemo(() => {
@@ -36,27 +37,51 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
         }
     
         if(studentJob === 3) {
-            result = result.filter((v) => v.job == "エンジニア");
+            result = result.filter((v) => v.job == "エンジニア" || v.job == "エンジニア #デザイナー");
         } else if(studentJob === 4) {
-            result = result.filter((v) => v.job == "デザイナー");
+            result = result.filter((v) => v.job == "デザイナー" || v.job == "エンジニア #デザイナー");
         }
     
         if(studentCharacter === 5) {
-            result = result.filter((v) => v.most_common_tag == "すごい");
+            result = result.filter((v) => v.most_common_tag == "可能性の塊");
         } else if(studentCharacter === 6) {
-            result = result.filter((v) => v.most_common_tag == "センス○");
+            result = result.filter((v) => v.most_common_tag == "自信家");
         }else if(studentCharacter === 7) {
-            result = result.filter((v) => v.most_common_tag == "面白い");
+            result = result.filter((v) => v.most_common_tag == "天才");
         }else if(studentCharacter === 8) {
-            result = result.filter((v) => v.most_common_tag == "心に響く");
+            result = result.filter((v) => v.most_common_tag == "真面目");
         }else if(studentCharacter === 9) {
-            result = result.filter((v) => v.most_common_tag == "プロ級");
+            result = result.filter((v) => v.most_common_tag == "明るい");
         }else if(studentCharacter === 10) {
-            result = result.filter((v) => v.most_common_tag == "きれい");
-        }else if(studentCharacter === 11) {
             result = result.filter((v) => v.most_common_tag == "努力家");
+        }else if(studentCharacter === 11) {
+            result = result.filter((v) => v.most_common_tag == "個性的");
         }else if(studentCharacter === 12) {
-            result = result.filter((v) => v.most_common_tag == "天才肌");
+            result = result.filter((v) => v.most_common_tag == "謙虚");
+        }
+
+        if(team === 13){
+            result = result.filter((v) => v.team == "卒業・進級制作展チーム");
+        }else if(team === 14){
+            result = result.filter((v) => v.team == "株式会社 良");
+        }else if(team === 15){
+            result = result.filter((v) => v.team == "creative cloud japan");
+        }else if(team === 16){
+            result = result.filter((v) => v.team == "U:FUTURE株式会社");
+        }else if(team === 17){
+            result = result.filter((v) => v.team == "合同会社アソビゴコロ");
+        }else if(team === 18){
+            result = result.filter((v) => v.team == "ファインディング");
+        }else if(team === 19){
+            result = result.filter((v) => v.team == "ourly");
+        }else if(team === 20){
+            result = result.filter((v) => v.team == "スポカレ");
+        }else if(team === 21){
+            result = result.filter((v) => v.team == "ヘッドスパ");
+        }else if(team === 22){
+            result = result.filter((v) => v.team == "gokucha");
+        }else if(team === 23){
+            result = result.filter((v) => v.team == "ソロトリ");
         }
     
         if(studentserch >= "00"){
@@ -64,7 +89,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
         }
     
         return result;
-    }, [studentJob,studentYear,studentCharacter,studentserch]);
+    }, [studentJob,studentYear,studentCharacter,studentserch,team]);
     
 
     const handleInputChange = (event:any) => {
@@ -81,45 +106,59 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                 <h1 className="text-xl font-bold text-center mt-7">
                     学生を見る
                 </h1>
+                <div  className="py-8 px-4 sticky top-0 bg-[#fafafa]">
+                    <div className="flex justify-between">
+                        <input className="input border-black w-[160px]" type="number" placeholder="ブース番号で探す" value={studentserch} onChange={handleInputChange}/>
+                        <select value={team} className="select select-primary pl-3 pr-8"  onChange={(e) => setTeam(parseInt(e.target.value))}>
+                            <option disabled value={0}>チーム</option>
+                            <option value={13}>卒業・進級制作展</option>
+                            <option value={14}>株式会社 良</option>
+                            <option value={15}>creative cloud japan</option>
+                            <option value={16}>U:FUTURE株式会社</option>
+                            <option value={17}>合同会社アソビゴコロ</option>
+                            <option value={18}>ファインディング</option>
+                            <option value={19}>ourly</option>
+                            <option value={20}>スポカレ</option>
+                            <option value={21}>ヘッドスパ</option>
+                            <option value={22}>gokucha</option>
+                            <option value={23}>ソロトリ</option>
+                            <option value={100}>全て</option>
+                        </select>
+                    </div>
+                    
+                    <div className="flex justify-between mt-4">
+                        <select value={studentYear} className="select select-primary pl-3 pr-8"  onChange={(e) => setStudentYear(parseInt(e.target.value))}>
+                            <option disabled value={0}>学生</option>
+                            <option value={1}>1年</option>
+                            <option value={2}>2年</option>
+                            <option value={100}>全て</option>
+                        </select>
 
-                <div className="join flex justify-center mt-8">
-                    <input className="input border-black join-item w-[282px]" type="number" placeholder="ブース番号で探す" value={studentserch} onChange={handleInputChange}/>
-                    {/* <button className="btn join-item w-[63px] bg-black text-white border-black">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5q0-2.725 1.888-4.612T9.5 3q2.725 0 4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5q0-1.875-1.312-3.187T9.5 5Q7.625 5 6.313 6.313T5 9.5q0 1.875 1.313 3.188T9.5 14"/></svg>
-                    </button> */}
+                        <select value={studentJob} className="select select-primary pl-3" onChange={(e) => setStudentJob(parseInt(e.target.value))}>
+                            <option disabled value={0}>職種</option>
+                            <option value={3}>エンジニア</option>
+                            <option value={4}>デザイナー</option>
+                            <option value={100}>全て</option>
+                        </select>
+                        {/* タグのソート */}
+                        <select value={studentCharacter} className="select select-primary pl-3 pr-12" onChange={(e) => setStudentCharacter(parseInt(e.target.value))}>
+                            <option disabled value={0}>特徴</option>
+                            <option value={5}>可能性の塊</option>
+                            <option value={6}>自信家</option>
+                            <option value={7}>天才</option>
+                            <option value={8}>真面目</option>
+                            <option value={9}>明るい</option>
+                            <option value={10}>努力家</option>
+                            <option value={11}>個性的</option>
+                            <option value={12}>謙虚</option>
+                            <option value={100}>全て</option>
+                        </select>
+                    </div>
                 </div>
-
-                <div className="flex justify-between mx-6 mt-8 sticky top-5 bottom-5">
-                    <select value={studentYear} className="select select-primary pl-3 pr-8"  onChange={(e) => setStudentYear(parseInt(e.target.value))}>
-                        <option disabled value={0}>学生</option>
-                        <option value={1}>1年</option>
-                        <option value={2}>2年</option>
-                        <option value={100}>全て</option>
-                    </select>
-
-                    <select value={studentJob} className="select select-primary pl-3" onChange={(e) => setStudentJob(parseInt(e.target.value))}>
-                        <option disabled value={0}>職種</option>
-                        <option value={3}>エンジニア</option>
-                        <option value={4}>デザイナー</option>
-                        <option value={100}>全て</option>
-                    </select>
-                    {/* タグのソート */}
-                    <select value={studentCharacter} className="select select-primary pl-3 pr-12" onChange={(e) => setStudentCharacter(parseInt(e.target.value))}>
-                        <option disabled value={0}>特徴</option>
-                        <option value={5}>すごい</option>
-                        <option value={6}>センス○</option>
-                        <option value={7}>面白い</option>
-                        <option value={8}>心に響く</option>
-                        <option value={9}>プロ級</option>
-                        <option value={10}>きれい</option>
-                        <option value={11}>努力家</option>
-                        <option value={12}>天才肌</option>
-                        <option value={100}>全て</option>
-                    </select>
-                </div>
+                
 
 
-                <div className='pb-[120px] mt-8'>
+                <div className='pb-[120px] '>
                     <ul className="w-[90%] mx-6">
                         {
                             currentData?.map((data:any, index:number) => {
