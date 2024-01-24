@@ -37,6 +37,13 @@ const end = ()=>{
         if(state === true){
             if(uid != null && score_1 != null && score_2 != null && score_3 != null && score_4 != null && comment != null && tag != null){
                 insertdata(uid,score_1,score_2,score_3,score_4,comment,tag);
+                localStorage.removeItem("filteredValue");
+                localStorage.removeItem("score_1");
+                localStorage.removeItem("score_2");
+                localStorage.removeItem("score_3");
+                localStorage.removeItem("score_4");
+                localStorage.removeItem("inputText");
+                localStorage.removeItem("selectedTags");
             }
             //ここに画像生成の条件式を打ち込む
         }

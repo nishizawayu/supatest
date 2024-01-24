@@ -1,5 +1,5 @@
 'use client'
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 
@@ -30,10 +30,22 @@ const AccordionItem: FC<AccordionItemProps> = ({ title, content }) => {
 };
 
 const Score: FC = () => {
+
   const [score_1, setScore_1] = useState(50);
   const [score_2, setScore_2] = useState(50);
   const [score_3, setScore_3] = useState(50);
   const [score_4, setScore_4] = useState(50);
+
+  useEffect(()=>{
+    const data1 = localStorage.getItem("score_1")
+    data1 ? setScore_1(Number(data1)):""
+    const data2 = localStorage.getItem("score_2")
+    data1 ? setScore_2(Number(data2)):""
+    const data3 = localStorage.getItem("score_3")
+    data1 ? setScore_3(Number(data3)):""
+    const data4 = localStorage.getItem("score_4")
+    data1 ? setScore_4(Number(data4)):""
+  },[])
 
   const router = useRouter();
 
