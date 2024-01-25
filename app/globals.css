@@ -113,12 +113,14 @@
     grid-template-rows: 1fr 2fr 1fr 2fr 14fr 1fr 1fr;
     justify-items: center;
     align-items: center;
+    overflow-y: scroll;
+    
   }
 
   .button {
     grid-column: 1/-1;
     justify-self: center;
-    border: 1px solid black
+    border: 1px solid black;
   }
 }
 
