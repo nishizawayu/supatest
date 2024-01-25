@@ -264,6 +264,26 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             TestImage(pronpt[0], teamdata[0].tid,150,tag);
                             setinsertdata(false)
                         }
+                        else if (teamscoredata.length == teamdata[0].member.length*16) {
+                            TestImage(pronpt[0], teamdata[0].tid,160,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*17) {
+                            TestImage(pronpt[0], teamdata[0].tid,170,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*18) {
+                            TestImage(pronpt[0], teamdata[0].tid,180,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*19) {
+                            TestImage(pronpt[0], teamdata[0].tid,190,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*20) {
+                            TestImage(pronpt[0], teamdata[0].tid,200,tag);
+                            setinsertdata(false)
+                        }
 
                     }
                 }
@@ -558,6 +578,11 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                                                                         index == 16 ? currentData[0].member.length*13 :
                                                                                         index == 17 ? currentData[0].member.length*14 :
                                                                                         index == 18 ? currentData[0].member.length*15 :
+                                                                                        index == 19 ? currentData[0].member.length*16 :
+                                                                                        index == 20 ? currentData[0].member.length*17 :
+                                                                                        index == 21 ? currentData[0].member.length*18 :
+                                                                                        index == 22 ? currentData[0].member.length*19 :
+                                                                                        index == 23 ? currentData[0].member.length*20 :
                                                                                         currentData[0].member.length}回プレゼンをし、<br/>{data.tag}<br/>という評価をもらい、この姿に進化しました。</p>
                                                 }
                                                 <label htmlFor={`card${index}`} className="button return" aria-hidden="true">
@@ -609,6 +634,16 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                     <p className=''><span className='text-[40px]'>{data.member.length*14-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     teams[teamId-1].total_evaluation_count < data.member.length*15 ?
                                     <p className=''><span className='text-[40px]'>{data.member.length*15-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*16 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*16-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*17 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*17-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*18 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*18-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*19 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*19-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*20 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*20-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     <p></p>:""
                                 }
                             </div>
