@@ -549,15 +549,15 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                                                                         index == 7 ? currentData[0].member.length+5 :
                                                                                         index == 8 ? currentData[0].member.length*2 :
                                                                                         index == 9 ? currentData[0].member.length*3 :
-                                                                                        index == 8 ? currentData[0].member.length*5 :
-                                                                                        index == 9 ? currentData[0].member.length*7 :
-                                                                                        index == 10 ? currentData[0].member.length*9 :
-                                                                                        index == 11 ? currentData[0].member.length*10 :
-                                                                                        index == 12 ? currentData[0].member.length*11 :
-                                                                                        index == 13 ? currentData[0].member.length*12 :
-                                                                                        index == 14 ? currentData[0].member.length*13 :
-                                                                                        index == 15 ? currentData[0].member.length*14 :
-                                                                                        index == 16 ? currentData[0].member.length*15 :
+                                                                                        index == 10 ? currentData[0].member.length*5 :
+                                                                                        index == 11 ? currentData[0].member.length*7 :
+                                                                                        index == 12 ? currentData[0].member.length*9 :
+                                                                                        index == 13 ? currentData[0].member.length*10 :
+                                                                                        index == 14 ? currentData[0].member.length*11 :
+                                                                                        index == 15 ? currentData[0].member.length*12 :
+                                                                                        index == 16 ? currentData[0].member.length*13 :
+                                                                                        index == 17 ? currentData[0].member.length*14 :
+                                                                                        index == 18 ? currentData[0].member.length*15 :
                                                                                         currentData[0].member.length}回プレゼンをし、<br/>{data.tag}<br/>という評価をもらい、この姿に進化しました。</p>
                                                 }
                                                 <label htmlFor={`card${index}`} className="button return" aria-hidden="true">
