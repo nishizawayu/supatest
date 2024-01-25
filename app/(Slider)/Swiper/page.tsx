@@ -208,15 +208,15 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             setinsertdata(false)
                         }
                         else if (teamscoredata.length == teamdata[0].member.length+1) {
-                            TestImage(pronpt[0], teamdata[0].tid,10,tag);
+                            TestImage(pronpt[0], teamdata[0].tid,12,tag);
                             setinsertdata(false)
                         }
                         else if (teamscoredata.length == teamdata[0].member.length+3) {
-                            TestImage(pronpt[0], teamdata[0].tid,10,tag);
+                            TestImage(pronpt[0], teamdata[0].tid,14,tag);
                             setinsertdata(false)
                         }
                         else if (teamscoredata.length == teamdata[0].member.length+5) {
-                            TestImage(pronpt[0], teamdata[0].tid,10,tag);
+                            TestImage(pronpt[0], teamdata[0].tid,16,tag);
                             setinsertdata(false)
                         }
                         else if (teamscoredata.length == teamdata[0].member.length*2) {
