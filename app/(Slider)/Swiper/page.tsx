@@ -13,6 +13,11 @@ import { EffectCoverflow, Pagination } from 'swiper/modules';
 import 'swiper/css/effect-coverflow';
 import TestImage from '@/app/TestImage/page';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import rank1 from "@/app/(images)/rank1.png"
+import rank2 from "@/app/(images)/rank2.png"
+import rank3 from "@/app/(images)/rank3.png"
+import Image from 'next/image';
+
 
 interface TeamsViewProps {
 
@@ -35,6 +40,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
     const [anime,setanime] = useState(false)
     const [teamrank, setTeamrank] = useState(teamsarr);
     const [teams, setTeams] = useState(teamsarr);
+    const rankImages = [rank1, rank2, rank3];
 
     //ランキングリアルタイム更新
     useEffect(() => {
@@ -577,7 +583,11 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                         <div className="flex border-b items-center justify-between py-2">
                                             <div className="flex items-center">
                                             {/* 順位 */}
-                                                <p className="mx-1 text-[24px] my-2 text-white">{index+1}</p>
+                                                {
+                                                    index < 3 ?
+                                                    <Image src={rankImages[index]} alt={`${index+1}位`} width={32} className=" my-2"/> : 
+                                                    <p className="mx-1 text-[24px] my-2 text-white">{index+1}</p>
+                                                }
                                             {/* チーム名 */}
                                                 <p className={index < 9 ?" text-base font-medium ml-5 text-white":"text-base font-medium ml-2 text-white"}>{data.name}</p>
                                             </div>
