@@ -534,10 +534,18 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                 <p>次の進化まで</p>
                                 {
                                     teamId >= 1?
-                                    teams[teamId-1].total_evaluation_count === 0 ?
+                                    teams[teamId-1].total_evaluation_count <= 3 ?
                                     <p className=''><span className='text-[40px]'>1</span>人</p>:
                                     teams[teamId-1].total_evaluation_count < data.member.length ?
                                     <p className=''><span className='text-[40px]'>{data.member.length-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length+1 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length+1-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length+3 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length+3-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length+5 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length+5-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*2 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*2-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     teams[teamId-1].total_evaluation_count < data.member.length*3 ?
                                     <p className=''><span className='text-[40px]'>{data.member.length*3-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     teams[teamId-1].total_evaluation_count < data.member.length*5 ?
