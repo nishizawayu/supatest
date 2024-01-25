@@ -166,6 +166,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                     初期値:1
                     最大値:100
                     レベルが上がる＝経験を積むと捉えてください
+                    100をこえたら限界突破したと考え、超過分に応じた変化を与えてください（壮大なイメージ）
                     
                     レベルが上がった時
                     指定のレベルに達したらキャラクターを成長させてください
@@ -235,11 +236,35 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             TestImage(pronpt[0], teamdata[0].tid,70,tag);
                             setinsertdata(false)
                         }
+                        else if (teamscoredata.length == teamdata[0].member.length*9) {
+                            TestImage(pronpt[0], teamdata[0].tid,90,tag);
+                            setinsertdata(false)
+                        }
                         else if (teamscoredata.length == teamdata[0].member.length*10) {
                             TestImage(pronpt[0], teamdata[0].tid,100,tag);
                             setinsertdata(false)
                         }
-    
+                        else if (teamscoredata.length == teamdata[0].member.length*11) {
+                            TestImage(pronpt[0], teamdata[0].tid,110,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*12) {
+                            TestImage(pronpt[0], teamdata[0].tid,120,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*13) {
+                            TestImage(pronpt[0], teamdata[0].tid,130,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*14) {
+                            TestImage(pronpt[0], teamdata[0].tid,140,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*15) {
+                            TestImage(pronpt[0], teamdata[0].tid,150,tag);
+                            setinsertdata(false)
+                        }
+
                     }
                 }
             }
@@ -515,7 +540,25 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                                 {
                                                     index == 0 ?
                                                     <p className='mt-[40%]'>{data.name}のメンバーが大切にしている漢字{currentData[0].kanji}から<br/>チームのキャラクターの卵が産まれました</p>:
-                                                    <p className='mt-[40%]'>{data.name}が{index == 1 ? 1 : index == 2 ? currentData[0].member.length : index == 3 ? currentData[0].member.length*3 : index == 4 ? currentData[0].member.length*5 :  index == 5 ? currentData[0].member.length*7 : index == 6 ? currentData[0].member.length*10 : currentData[0].member.length}回プレゼンをし、<br/>{data.tag}<br/>という評価をもらい、この姿に進化しました。</p>
+                                                    <p className='mt-[40%]'>{data.name}が{index == 1 ? 1 :
+                                                                                        index == 2 ? 2:
+                                                                                        index == 3 ? 3:
+                                                                                        index == 4 ? currentData[0].member.length :
+                                                                                        index == 5 ? currentData[0].member.length+1 :
+                                                                                        index == 6 ? currentData[0].member.length+3 :
+                                                                                        index == 7 ? currentData[0].member.length+5 :
+                                                                                        index == 8 ? currentData[0].member.length*2 :
+                                                                                        index == 9 ? currentData[0].member.length*3 :
+                                                                                        index == 8 ? currentData[0].member.length*5 :
+                                                                                        index == 9 ? currentData[0].member.length*7 :
+                                                                                        index == 10 ? currentData[0].member.length*9 :
+                                                                                        index == 11 ? currentData[0].member.length*10 :
+                                                                                        index == 12 ? currentData[0].member.length*11 :
+                                                                                        index == 13 ? currentData[0].member.length*12 :
+                                                                                        index == 14 ? currentData[0].member.length*13 :
+                                                                                        index == 15 ? currentData[0].member.length*14 :
+                                                                                        index == 16 ? currentData[0].member.length*15 :
+                                                                                        currentData[0].member.length}回プレゼンをし、<br/>{data.tag}<br/>という評価をもらい、この姿に進化しました。</p>
                                                 }
                                                 <label htmlFor={`card${index}`} className="button return" aria-hidden="true">
                                                     <p className=' text-black'>←</p>
@@ -552,8 +595,20 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                     <p className=''><span className='text-[40px]'>{data.member.length*5-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     teams[teamId-1].total_evaluation_count < data.member.length*7 ?
                                     <p className=''><span className='text-[40px]'>{data.member.length*7-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*9 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*9-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     teams[teamId-1].total_evaluation_count < data.member.length*10 ?
                                     <p className=''><span className='text-[40px]'>{data.member.length*10-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*11 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*11-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*12 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*12-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*13 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*13-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*14 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*14-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*15 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*15-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     <p></p>:""
                                 }
                             </div>
