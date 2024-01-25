@@ -676,11 +676,11 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                                 </div>
                                             </div>
                                             <div className="back">
-                                                <div className="inner">
+                                                <div className="inner">                           
                                                 {
                                                     index == 0 ?
                                                     <p className='mt-[40%]'>{data.name}のメンバーが大切にしている漢字{currentData[0].kanji}から<br/>チームのキャラクターの卵が産まれました</p>:
-                                                    <p className='mt-[40%]'>{data.name}が{index == 1 ? 1 :
+                                                    <p className={index >= 10 ?'':'mt-[40%]'}>{data.name}が{index == 1 ? 1 :
                                                                                         index == 2 ? 2:
                                                                                         index == 3 ? 3:
                                                                                         index == 4 ? currentData[0].member.length :
@@ -734,7 +734,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                                                                         index == 52 ? currentData[0].member.length*49 :
                                                                                         index == 53 ? currentData[0].member.length*50 :
                                                                                         currentData[0].member.length}回プレゼンをし、<br/>{data.tag}<br/>という評価をもらい、この姿に進化しました。</p>
-                                                }
+                                                }                                
                                                 <label htmlFor={`card${index}`} className="button return" aria-hidden="true">
                                                     <p className=' text-black'>←</p>
                                                 </label>
