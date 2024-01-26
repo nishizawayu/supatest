@@ -659,9 +659,14 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                         }
                                         <div className="rating mr-3 my-3">
                                             {
+                                                index <= 6 ?
                                                 Array.from({length: index + 1}).map((_, i) => (
                                                     <input key={i} type="" name="rating-2" className="mask mask-star bg-white" />
-                                                ))
+                                                )):
+                                                <div className='flex'>
+                                                    <input type="" name="rating-2" className="mask mask-star bg-white" />
+                                                    <p>×{index+1}</p>
+                                                </div>
                                             }
                                         </div>
                                             {/* <input type='' name="rating-2" className="mask mask-star bg-white" /> */}
