@@ -5,8 +5,10 @@ import Navigation from '@/components/nav';
 import {useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import blueman from "@/app/(images)/blue-man.png" 
+import greenman from "@/app/(images)/greenman.png"
 import man from "@/app/(images)/man.png"
 import orangeman from "@/app/(images)/orangeman.png"
+import redman from "@/app/(images)/redman.png"
 import { useRouter } from 'next/navigation';
 
 interface MypageViewProps {
@@ -98,6 +100,22 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
             }
             for(let i=0; i<goaldata[0].goal; i++){
                 items.push(<li key={`remaining-${i}`}><Image src={blueman} width={22} height={22} alt="プレゼンした人数" /></li>)
+            }
+        }
+        else if(currentData.length > goaldata[0].goal*2){
+            for(let i=0; i<currentData.length-goaldata[0].goal*2; i++){
+                items.push(<li key={`presented-${i}`}><Image src={greenman} width={22} height={22} alt="プレゼンした人数" /></li>)
+            }
+            for(let i=0; i<goaldata[0].goal; i++){
+                items.push(<li key={`remaining-${i}`}><Image src={orangeman} width={22} height={22} alt="プレゼンした人数" /></li>)
+            }
+        }
+        else if(currentData.length > goaldata[0].goal*3){
+            for(let i=0; i<currentData.length-goaldata[0].goal*3; i++){
+                items.push(<li key={`presented-${i}`}><Image src={redman} width={22} height={22} alt="プレゼンした人数" /></li>)
+            }
+            for(let i=0; i<goaldata[0].goal; i++){
+                items.push(<li key={`remaining-${i}`}><Image src={greenman} width={22} height={22} alt="プレゼンした人数" /></li>)
             }
         }
         
