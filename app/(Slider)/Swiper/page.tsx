@@ -537,7 +537,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             setTimeout(()=>{
                 setTeamId(imagedata[imagedata.length-1].tid)
                 setanime(false)
-            },10000)
+            },2000)
         }
     },[anime])
 
