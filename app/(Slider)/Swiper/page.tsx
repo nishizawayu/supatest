@@ -537,7 +537,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
             setTimeout(()=>{
                 setTeamId(imagedata[imagedata.length-1].tid)
                 setanime(false)
-            },2000)
+            },5000)
         }
     },[anime])
 
@@ -663,7 +663,7 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                                 Array.from({length: index + 1}).map((_, i) => (
                                                     <input key={i} type="" name="rating-2" className="mask mask-star bg-white" />
                                                 )):
-                                                <div className='flex'>
+                                                <div className='flex text-white'>
                                                     <input type="" name="rating-2" className="mask mask-star bg-white" />
                                                     <p>×{index+1}</p>
                                                 </div>
