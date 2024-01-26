@@ -11,6 +11,8 @@ import rank6 from "@/app/(images)/rank6.png"
 import rank7 from "@/app/(images)/rank7.png"
 import rank8 from "@/app/(images)/rank8.png"
 import rank9 from "@/app/(images)/rank9.png"
+import { Suspense } from 'react'
+import Loading from "@/app/loading";
 
 interface StudentViewProps {
     studentarr: {id:number, uid:string, name:string, job:string, team:string, school_year:string, most_common_tag:string,tid:number}[]
@@ -164,6 +166,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                             currentData?.map((data:any, index:number) => {
                                 return (
                                     <li key={data.id}>
+                                        <Suspense fallback={<Loading />}>
                                         <Link href={`/mypage?uid=${data.uid}&goal=${data.goal}&team=${data.team}&name=${encodeURIComponent(data.name)}`}>
                                             <div className="flex border-b items-center justify-between">
                                                 <div className="flex items-center">
@@ -189,6 +192,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                                             </div>
 
                                         </Link>
+                                        </Suspense>
                                     </li>
                                 )
                             })
