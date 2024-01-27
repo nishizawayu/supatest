@@ -181,7 +181,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                                                             <p className="text-[10px] font-medium ml-1">{data.ruby}</p>
                                                         </div>
                                                         
-                                                        <div className="flex text-xs mb-4 font-normal">
+                                                        <div className="flex text-[10px] mb-4 font-normal">
                                                             <p>#{data.schoolyear}</p>
                                                             <p className="ml-2">#{data.job}</p>
                                                             <p className="ml-2">#{data.most_common_tag}</p>

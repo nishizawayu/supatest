@@ -96,31 +96,53 @@ const MypageView :React.FC<MypageViewProps> = ({scoredata,studentdata}) => {
         }
         else if(currentData.length > goaldata[0].goal){
             if(currentData.length > goaldata[0].goal*2){
-                for(let i=0; i<currentData.length-goaldata[0].goal*2; i++){
-                    items.push(<li key={`presented-${i}`}><Image src={greenman} width={22} height={22} alt="プレゼンした人数" /></li>)
+                if(currentData.length > goaldata[0].goal*3){
+                    if(currentData.length > goaldata[0].goal*4){
+                        if(currentData.length > goaldata[0].goal*5){
+                            for(let i=0; i<currentData.length-goaldata[0].goal*5; i++){
+                                items.push(<li key={`presented-${i}`}><Image src={orangeman} width={22} height={22} alt="プレゼンした人数" /></li>)
+                            }
+                            for(let i=0; i<goaldata[0].goal-(currentData.length-goaldata[0].goal*3); i++){
+                                items.push(<li key={`remaining-${i}`}><Image src={blueman} width={22} height={22} alt="プレゼンした人数" /></li>)
+                            }
+                        }
+                        else{
+                            for(let i=0; i<currentData.length-goaldata[0].goal*4; i++){
+                                items.push(<li key={`presented-${i}`}><Image src={blueman} width={22} height={22} alt="プレゼンした人数" /></li>)
+                            }
+                            for(let i=0; i<goaldata[0].goal-(currentData.length-goaldata[0].goal*3); i++){
+                                items.push(<li key={`remaining-${i}`}><Image src={redman} width={22} height={22} alt="プレゼンした人数" /></li>)
+                            }
+                        }  
+                    }
+                    else{
+                        for(let i=0; i<currentData.length-goaldata[0].goal*3; i++){
+                            items.push(<li key={`presented-${i}`}><Image src={redman} width={22} height={22} alt="プレゼンした人数" /></li>)
+                        }
+                        for(let i=0; i<goaldata[0].goal-(currentData.length-goaldata[0].goal*3); i++){
+                            items.push(<li key={`remaining-${i}`}><Image src={greenman} width={22} height={22} alt="プレゼンした人数" /></li>)
+                        }
+                    }
                 }
-                for(let i=0; i<goaldata[0].goal; i++){
-                    items.push(<li key={`remaining-${i}`}><Image src={orangeman} width={22} height={22} alt="プレゼンした人数" /></li>)
-                }
-            }else if(currentData.length > goaldata[0].goal*3){
-                for(let i=0; i<currentData.length-goaldata[0].goal*3; i++){
-                    items.push(<li key={`presented-${i}`}><Image src={redman} width={22} height={22} alt="プレゼンした人数" /></li>)
-                }
-                for(let i=0; i<goaldata[0].goal; i++){
-                    items.push(<li key={`remaining-${i}`}><Image src={greenman} width={22} height={22} alt="プレゼンした人数" /></li>)
+                else{
+                    for(let i=0; i<currentData.length-goaldata[0].goal*2; i++){
+                        items.push(<li key={`presented-${i}`}><Image src={greenman} width={22} height={22} alt="プレゼンした人数" /></li>)
+                    }
+                    for(let i=0; i<goaldata[0].goal-(currentData.length-goaldata[0].goal*2); i++){
+                        items.push(<li key={`remaining-${i}`}><Image src={orangeman} width={22} height={22} alt="プレゼンした人数" /></li>)
+                    }
                 }
             }
             else{
                 for(let i=0; i<currentData.length-goaldata[0].goal; i++){
                     items.push(<li key={`presented-${i}`}><Image src={orangeman} width={22} height={22} alt="プレゼンした人数" /></li>)
                 }
-                for(let i=0; i<goaldata[0].goal; i++){
+                for(let i=0; i< goaldata[0].goal-(currentData.length-goaldata[0].goal); i++){
                     items.push(<li key={`remaining-${i}`}><Image src={blueman} width={22} height={22} alt="プレゼンした人数" /></li>)
                 }
-            }
+            } 
+            
         }
-        
-        
         return items;
     }
 
