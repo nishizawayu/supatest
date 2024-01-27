@@ -404,6 +404,86 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                             TestImage(pronpt[0], teamdata[0].tid,500,tag);
                             setinsertdata(false)
                         }
+                        else if (teamscoredata.length == teamdata[0].member.length*51) {
+                            TestImage(pronpt[0], teamdata[0].tid,510,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*52) {
+                            TestImage(pronpt[0], teamdata[0].tid,520,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*53) {
+                            TestImage(pronpt[0], teamdata[0].tid,530,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*54) {
+                            TestImage(pronpt[0], teamdata[0].tid,540,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*55) {
+                            TestImage(pronpt[0], teamdata[0].tid,550,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*56) {
+                            TestImage(pronpt[0], teamdata[0].tid,560,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*57) {
+                            TestImage(pronpt[0], teamdata[0].tid,570,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*58) {
+                            TestImage(pronpt[0], teamdata[0].tid,580,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*59) {
+                            TestImage(pronpt[0], teamdata[0].tid,590,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*60) {
+                            TestImage(pronpt[0], teamdata[0].tid,600,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*61) {
+                            TestImage(pronpt[0], teamdata[0].tid,610,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*62) {
+                            TestImage(pronpt[0], teamdata[0].tid,620,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*63) {
+                            TestImage(pronpt[0], teamdata[0].tid,630,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*64) {
+                            TestImage(pronpt[0], teamdata[0].tid,640,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*65) {
+                            TestImage(pronpt[0], teamdata[0].tid,650,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*66) {
+                            TestImage(pronpt[0], teamdata[0].tid,660,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*67) {
+                            TestImage(pronpt[0], teamdata[0].tid,670,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*68) {
+                            TestImage(pronpt[0], teamdata[0].tid,680,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*69) {
+                            TestImage(pronpt[0], teamdata[0].tid,690,tag);
+                            setinsertdata(false)
+                        }
+                        else if (teamscoredata.length == teamdata[0].member.length*70) {
+                            TestImage(pronpt[0], teamdata[0].tid,700,tag);
+                            setinsertdata(false)
+                        }
 
                     }
                 }
@@ -738,6 +818,26 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                                                                         index == 51 ? currentData[0].member.length*48 :
                                                                                         index == 52 ? currentData[0].member.length*49 :
                                                                                         index == 53 ? currentData[0].member.length*50 :
+                                                                                        index == 54 ? currentData[0].member.length*51 :
+                                                                                        index == 55 ? currentData[0].member.length*52 :
+                                                                                        index == 56 ? currentData[0].member.length*53 :
+                                                                                        index == 57 ? currentData[0].member.length*54 :
+                                                                                        index == 58 ? currentData[0].member.length*55 :
+                                                                                        index == 59 ? currentData[0].member.length*56 :
+                                                                                        index == 60 ? currentData[0].member.length*57 :
+                                                                                        index == 61 ? currentData[0].member.length*58 :
+                                                                                        index == 62 ? currentData[0].member.length*59 :
+                                                                                        index == 63 ? currentData[0].member.length*60 :
+                                                                                        index == 64 ? currentData[0].member.length*61 :
+                                                                                        index == 65 ? currentData[0].member.length*62 :
+                                                                                        index == 66 ? currentData[0].member.length*63 :
+                                                                                        index == 67 ? currentData[0].member.length*64 :
+                                                                                        index == 68 ? currentData[0].member.length*65 :
+                                                                                        index == 69 ? currentData[0].member.length*66 :
+                                                                                        index == 70 ? currentData[0].member.length*67 :
+                                                                                        index == 71 ? currentData[0].member.length*68 :
+                                                                                        index == 72 ? currentData[0].member.length*69 :
+                                                                                        index == 73 ? currentData[0].member.length*70 :
                                                                                         currentData[0].member.length}回プレゼンをし、<br/>{data.tag}<br/>という評価をもらい、この姿に進化しました。</p>
                                                 }                                
                                                 <label htmlFor={`card${index}`} className="button return" aria-hidden="true">
@@ -859,6 +959,46 @@ const Slider: React.FC<TeamsViewProps> = ({ teamsarr,scoredata,teamsimagedata})=
                                     <p className=''><span className='text-[40px]'>{data.member.length*49-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     teams[teamId-1].total_evaluation_count < data.member.length*50 ?
                                     <p className=''><span className='text-[40px]'>{data.member.length*50-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*51 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*51-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*52 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*52-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*53 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*53-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*54 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*54-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*55 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*55-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*56 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*56-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*57 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*57-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*58 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*58-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*59 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*59-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*60 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*60-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*61 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*61-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*62 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*62-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*63 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*63-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*64 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*64-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*65 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*65-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*66 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*66-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*67 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*67-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*68 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*68-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*69 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*69-teams[teamId-1].total_evaluation_count}</span>人</p> :
+                                    teams[teamId-1].total_evaluation_count < data.member.length*70 ?
+                                    <p className=''><span className='text-[40px]'>{data.member.length*70-teams[teamId-1].total_evaluation_count}</span>人</p> :
                                     <p></p>:""
                                 }
                             </div>
