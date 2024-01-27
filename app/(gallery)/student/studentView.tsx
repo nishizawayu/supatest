@@ -63,7 +63,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
         }
 
         if(team === 13){
-            result = result.filter((v) => v.team == "卒業・進級制作展チーム");
+            result = result.filter((v) => v.team == "制作展チーム");
         }else if(team === 14){
             result = result.filter((v) => v.team == "株式会社 良");
         }else if(team === 15){
@@ -79,9 +79,9 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
         }else if(team === 20){
             result = result.filter((v) => v.team == "スポカレ");
         }else if(team === 21){
-            result = result.filter((v) => v.team == "ヘッドスパ");
+            result = result.filter((v) => v.team == "ヘッドスパ-TIRA-");
         }else if(team === 22){
-            result = result.filter((v) => v.team == "gokucha");
+            result = result.filter((v) => v.team == "GOKUCHA");
         }else if(team === 23){
             result = result.filter((v) => v.team == "ソロトリ");
         }
@@ -113,7 +113,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                         <input className="input border-black w-[160px]" type="number" placeholder="ブース番号で探す" value={studentserch} onChange={handleInputChange}/>
                         <select value={team} className="select select-primary pl-3 pr-8"  onChange={(e) => setTeam(parseInt(e.target.value))}>
                             <option disabled value={0}>チーム</option>
-                            <option value={13}>卒業・進級制作展</option>
+                            <option value={13}>制作展チーム</option>
                             <option value={14}>株式会社 良</option>
                             <option value={15}>creative cloud japan</option>
                             <option value={16}>U:FUTURE株式会社</option>
@@ -121,8 +121,8 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                             <option value={18}>ファインディング</option>
                             <option value={19}>ourly</option>
                             <option value={20}>スポカレ</option>
-                            <option value={21}>ヘッドスパ</option>
-                            <option value={22}>gokucha</option>
+                            <option value={21}>ヘッドスパ-TIRA-</option>
+                            <option value={22}>GOKUCHA</option>
                             <option value={23}>ソロトリ</option>
                             <option value={100}>全て</option>
                         </select>
