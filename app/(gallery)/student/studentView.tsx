@@ -113,7 +113,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                         <input className="input border-black w-[160px]" type="number" placeholder="ブース番号で探す" value={studentserch} onChange={handleInputChange}/>
                         <select value={team} className="select select-primary pl-3 pr-8"  onChange={(e) => setTeam(parseInt(e.target.value))}>
                             <option disabled value={0}>チーム</option>
-                            <option value={13}>卒業・進級制作展</option>
+                            <option value={13}>制作展チーム</option>
                             <option value={14}>株式会社 良</option>
                             <option value={15}>creative cloud japan</option>
                             <option value={16}>U:FUTURE株式会社</option>
@@ -121,8 +121,8 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                             <option value={18}>ファインディング</option>
                             <option value={19}>ourly</option>
                             <option value={20}>スポカレ</option>
-                            <option value={21}>ヘッドスパ</option>
-                            <option value={22}>gokucha</option>
+                            <option value={21}>ヘッドスパ-TIRA-</option>
+                            <option value={22}>GOKUCHA</option>
                             <option value={23}>ソロトリ</option>
                             <option value={100}>全て</option>
                         </select>
@@ -181,7 +181,7 @@ const StudentView: React.FC<StudentViewProps> = ({ studentarr }) => {
                                                             <p className="text-[10px] font-medium ml-1">{data.ruby}</p>
                                                         </div>
                                                         
-                                                        <div className="flex text-xs mb-4 font-normal">
+                                                        <div className="flex text-[10px] mb-4 font-normal">
                                                             <p>#{data.schoolyear}</p>
                                                             <p className="ml-2">#{data.job}</p>
                                                             <p className="ml-2">#{data.most_common_tag}</p>
